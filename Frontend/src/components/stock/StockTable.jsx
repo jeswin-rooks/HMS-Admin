@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StockTable = ({ columns, rows, loading, error }) => {
+const StockTable = ({ columns, rows, loading, error, isPurchaseTable, onEditPurchase }) => {
   return (
     <div className="stock-table-wrap">
       {loading ? <p className="stock-empty">Loading data...</p> : null}
@@ -21,6 +21,20 @@ const StockTable = ({ columns, rows, loading, error }) => {
                 <tr key={row.id}>
                   {columns.map((column) => {
                     const value = row[column.key]
+
+                    if (column.key === 'action' && isPurchaseTable) {
+                      return (
+                        <td key={column.key}>
+                          <button
+                            type="button"
+                            className="edit-action-btn"
+                            onClick={() => onEditPurchase(row)}
+                          >
+                            {value || '✎'}
+                          </button>
+                        </td>
+                      )
+                    }
 
                     if (column.key === 'total' || column.key === 'totalBill' || column.key === 'unitPrice') {
                       return <td key={column.key}>${value.toLocaleString()}</td>

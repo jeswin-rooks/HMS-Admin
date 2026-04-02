@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import StatsOverviewSection from '../components/layout/StatsOverviewSection'
+import PurchaseEditModal from '../components/stock/PurchaseEditModal'
 import StockFilters from '../components/stock/StockFilters'
 import StockPagination from '../components/stock/StockPagination'
 import StockStatusTabs from '../components/stock/StockStatusTabs'
@@ -31,6 +32,8 @@ const StockPage = () => {
   const [error, setError] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [activeStatus, setActiveStatus] = useState('Available')
+  const [isEditOpen, setIsEditOpen] = useState(false)
+  const [editingPurchase, setEditingPurchase] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -190,6 +193,31 @@ const StockPage = () => {
   const startIndex = (currentPage - 1) * pageSize
   const paginatedRows = filteredRows.slice(startIndex, startIndex + pageSize)
 
+  const purchasePaymentMethods = useMemo(
+    () => paymentMethodOptions.filter((item) => item !== 'All Methods'),
+    [],
+  )
+
+  const handleEditPurchase = (row) => {
+    setEditingPurchase(row)
+    setIsEditOpen(true)
+  }
+
+  const handleCloseEdit = () => {
+    setIsEditOpen(false)
+    setEditingPurchase(null)
+  }
+
+  const handleSavePurchase = (updatedPurchase) => {
+    setData((prev) => ({
+      ...prev,
+      purchases: prev.purchases.map((item) =>
+        item.id === updatedPurchase.id ? updatedPurchase : item,
+      ),
+    }))
+    handleCloseEdit()
+  }
+
   useEffect(() => {
     if (currentPage > totalPages) {
       setCurrentPage(totalPages)
@@ -234,6 +262,8 @@ const StockPage = () => {
           rows={paginatedRows}
           loading={loading}
           error={error}
+          isPurchaseTable={!isInventory}
+          onEditPurchase={handleEditPurchase}
         />
 
         {!loading && !error ? (
@@ -244,6 +274,14 @@ const StockPage = () => {
           />
         ) : null}
       </section>
+
+      <PurchaseEditModal
+        isOpen={isEditOpen}
+        purchase={editingPurchase}
+        paymentMethods={purchasePaymentMethods}
+        onClose={handleCloseEdit}
+        onSave={handleSavePurchase}
+      />
     </>
   )
 }

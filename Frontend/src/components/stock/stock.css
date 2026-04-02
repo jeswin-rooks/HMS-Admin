@@ -113,6 +113,108 @@
   color: #2f363b;
 }
 
+.edit-action-btn {
+  border: 0;
+  background: #edf2f4;
+  border-radius: 6px;
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  font-size: 0.95rem;
+}
+
+.purchase-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(18, 22, 28, 0.66);
+  display: grid;
+  place-items: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.purchase-modal-card {
+  width: min(680px, 100%);
+  background: #f6f8f9;
+  border-radius: 10px;
+  border: 1px solid #d8dee3;
+  overflow: hidden;
+}
+
+.purchase-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid #dce3e8;
+}
+
+.purchase-modal-header h3 {
+  margin: 0;
+  font-size: 1.8rem;
+  color: #1f3339;
+}
+
+.purchase-modal-close {
+  border: 0;
+  background: transparent;
+  color: #51616a;
+  font-size: 1.7rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.purchase-modal-body {
+  padding: 1.2rem;
+}
+
+.purchase-grid-two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.7rem;
+}
+
+.purchase-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.7rem;
+}
+
+.purchase-field span {
+  color: #6a737a;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.purchase-field input,
+.purchase-field select {
+  border: 1px solid #d5dce1;
+  border-radius: 7px;
+  background: #edf1f4;
+  padding: 0.72rem 0.75rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.purchase-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 1.2rem 1.2rem;
+}
+
+.purchase-save-btn {
+  border: 0;
+  border-radius: 8px;
+  background: #062f32;
+  color: #fff;
+  min-width: 84px;
+  height: 42px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
 .stock-empty {
   text-align: center;
   color: #6f767c;
@@ -186,6 +288,10 @@
     gap: 1rem;
     overflow-x: auto;
     padding-bottom: 0.2rem;
+  }
+
+  .purchase-grid-two {
+    grid-template-columns: 1fr;
   }
 
   .stock-table {
