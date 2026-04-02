@@ -1,0 +1,23 @@
+:root {
+  --bg: #f1f1f1;
+  --surface: #ffffff;
+  --mint: #ace3ce;
+  --ink: #202a2e;
+  --muted: #5f6f77;
+  --line: #dce3e8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Poppins, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+#app {
+  min-height: 100vh;
+}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, NavLink, Outlet } from 'react-router-dom'
+import './layout.css'
 
 const menuItems = [
   { path: '/', label: 'Facility & Bed Management', icon: '▭' },
