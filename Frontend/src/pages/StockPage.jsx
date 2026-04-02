@@ -1,15 +1,16 @@
 import React from 'react'
+import { useData } from '../context/DataContext'
 import StatsOverviewSection from '../components/layout/StatsOverviewSection'
 
-const stats = [
-  { title: 'Total Medicines', value: 428, icon: '📦', tone: 'blue' },
-  { title: 'Low Stock', value: 26, icon: '!', tone: 'red' },
-  { title: 'Purchase Orders', value: 14, icon: '+', tone: 'green' },
-  { title: 'Expiring Soon', value: 9, icon: '⏳', tone: 'yellow' },
-]
-
 const StockPage = () => {
-  return <StatsOverviewSection stats={stats} />
+  const { stock } = useData()
+
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4">Stock Management</h1>
+      <p>Data linked to context!</p>
+    </div>
+  )
 }
 
 export default StockPage

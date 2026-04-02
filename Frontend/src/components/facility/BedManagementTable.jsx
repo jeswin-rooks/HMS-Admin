@@ -1,0 +1,232 @@
+import React, { useState } from 'react';
+import { Search, Edit, X, Check, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react';
+import { useData } from '../../context/DataContext';
+
+const BedManagementTable = ({
+  data,
+  departments,
+  statuses,
+  searchQuery,
+  setSearchQuery,
+  departmentFilter,
+  setDepartmentFilter,
+  statusFilter,
+  setStatusFilter,
+  onAddNew,
+  activeTab
+}) => {
+  const { updateBedStatus } = useData();
+  const [editingId, setEditingId] = useState(null);
+  const [editStatus, setEditStatus] = useState('');
+
+  // Filter data based on search and dropdown filters
+  const filteredData = data.filter((row) => {
+    const matchesSearch = row.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          row.roomNo.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesDept = departmentFilter ? row.department === departmentFilter : true;
+    const matchesStatus = statusFilter ? row.status === statusFilter : true;
+    return matchesSearch && matchesDept && matchesStatus;
+  });
+
+  return (
+    <div className="flex-1 overflow-hidden flex flex-col bg-white">
+      {/* Action Bar */}
+      <div className="p-6 flex flex-col md:flex-row justify-between items-center md:gap-4 gap-4 bg-white border-b border-[rgba(130,143,143,0.25)]">
+        <div className="relative w-full md:w-[350px]">
+          <div className="absolute inset-y-0 left-0 pl-[15px] flex items-center pointer-events-none">
+            <Search className="h-5 w-5 text-[#666666]" />
+          </div>
+          <input
+            type="text"
+            className="block w-full pl-10 pr-3 h-[48px] border border-[rgba(130,143,143,0.25)] rounded-xl bg-[#F3F6F9] placeholder-[#666666] text-[#666666] text-[14px] focus:outline-none focus:ring-1 focus:ring-teal-500"
+            placeholder="Enter name or Patient Id"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        <div className="flex gap-[30px] items-end w-full md:w-auto">
+          <div className="flex flex-col w-[169px]">
+            <label className="text-[16px] leading-[24px] font-medium text-[#666666] mb-[15px]" htmlFor="dept-filter">Department</label>
+            <div className="relative">
+              <select
+                id="dept-filter"
+                className="appearance-none bg-[#F3F6F9] border border-[rgba(130,143,143,0.25)] text-[#212121] text-[16px] h-[48px] rounded-lg focus:ring-teal-500 block w-full px-[10px]"
+                value={departmentFilter}
+                onChange={(e) => setDepartmentFilter(e.target.value)}
+              >
+                <option value="">All</option>
+                {departments.map((dept, idx) => (
+                  <option key={idx} value={dept}>{dept}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="flex flex-col w-[169px]">
+            <label className="text-[16px] leading-[24px] font-medium text-[#666666] mb-[15px]" htmlFor="status-filter">Status</label>
+            <div className="relative">
+              <select
+                id="status-filter"
+                className="appearance-none bg-[#F3F6F9] border border-[rgba(130,143,143,0.25)] text-[#212121] text-[16px] h-[48px] rounded-lg focus:ring-teal-500 block w-full px-[10px]"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+              >
+                <option value="">All</option>
+                {statuses.map((status, idx) => (
+                  <option key={idx} value={status}>{status}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {activeTab !== 'cleaningManagement' && (
+            <button
+              type="button"
+              onClick={onAddNew}
+              className="flex flex-row justify-center items-center py-[10px] px-[16px] gap-[10px] w-[104px] h-[48px] bg-[#051F20] text-white hover:bg-[#031112] shadow-[0px_4px_8px_3px_rgba(0,0,0,0.15),_0px_1px_3px_rgba(0,0,0,0.3)] rounded-[8px] text-[16px] font-medium leading-[24px] cursor-pointer transition-colors"
+            >
+              Add New
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Table Section */}
+      <div className="flex-1 overflow-x-auto overflow-y-auto">
+        <table className="min-w-full divide-y divide-[rgba(130,143,143,0.25)]">
+          <thead className="bg-[#F3F6F9] sticky top-0">
+            <tr className="h-[69px]">
+              <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
+                Bed ID
+              </th>
+              <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
+                Room No
+              </th>
+              <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
+                Department
+              </th>
+              <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
+                Discharge date
+              </th>
+              <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
+                Status
+              </th>
+              <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-[rgba(130,143,143,0.25)]">
+            {filteredData.map((bed, idx) => (
+              <tr key={idx} className="h-[69px] hover:bg-gray-50 transition-colors">
+                <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
+                  {bed.id}
+                </td>
+                <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
+                  {bed.roomNo}
+                </td>
+                <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
+                  {bed.department}
+                </td>
+                <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
+                  {bed.dischargeDate || '12-08-2000'}
+                </td>
+                <td className="px-[24px] whitespace-nowrap">
+                  {editingId === bed.id ? (
+                    <select
+                      className="border border-[#235347] rounded-md px-2 py-1 text-[13px] bg-white text-[#212121]"
+                      value={editStatus}
+                      onChange={(e) => setEditStatus(e.target.value)}
+                    >
+                      {statuses.map((st, i) => (
+                        <option key={i} value={st}>{st}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <span className={`px-[10px] py-[4px] h-[32px] inline-flex flex-row items-center gap-[6px] text-[13px] leading-[24px] rounded-full ${
+                      bed.status === 'Available' ? 'bg-[#D4EDDA] text-[#28A745]' : 
+                      bed.status === 'Cleaning Required' ? 'bg-[#FAD7DA] text-[#E63946]' : 'bg-[#FFF3CD] text-[#A16207]'
+                    }`}>
+                      {bed.status}
+                    </span>
+                  )}
+                </td>
+                <td className="px-[24px] whitespace-nowrap text-sm font-medium">
+                  {editingId === bed.id ? (
+                    <div className="flex items-center gap-2">
+                      <button 
+                        onClick={() => {
+                          updateBedStatus(bed.id, editStatus);
+                          setEditingId(null);
+                        }}
+                        className="text-green-600 hover:text-green-900 transition-colors w-[24px] h-[24px]"
+                      >
+                        <Check size={20} />
+                      </button>
+                      <button 
+                        onClick={() => setEditingId(null)}
+                        className="text-red-600 hover:text-red-900 transition-colors w-[24px] h-[24px]"
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+                  ) : (
+                    <button 
+                      onClick={() => {
+                        setEditingId(bed.id);
+                        setEditStatus(bed.status);
+                      }}
+                      className="bg-[#1D4ED8] hover:bg-blue-800 transition-colors w-[24px] h-[24px] flex items-center justify-center rounded-[4px]"
+                    >
+                      <Edit size={14} className="text-white" />
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      {/* Pagination */}
+      <div className="bg-[#F3F6F9] h-[73px] px-[16px] flex items-center justify-center border-[rgba(130,143,143,0.25)] rounded-b-[12px] border-t-[1px]">
+        <nav className="relative z-0 inline-flex flex-row items-start px-[6px] gap-[6px] w-[512px] h-[40px]" aria-label="Pagination">
+          
+          <button className="box-border relative w-[40px] h-[40px] opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] bg-transparent">
+            <ChevronsLeft size={22} className="opacity-40" />
+            <span className="sr-only">First Page</span>
+          </button>
+          
+          <button className="box-border relative w-[40px] h-[40px] opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] bg-transparent">
+            <ChevronLeft size={22} className="opacity-40"/>
+            <span className="sr-only">Previous Page</span>
+          </button>
+          
+          <button className="box-border relative w-[40px] h-[40px] bg-[#D6F1E6] border border-[#235347] rounded-[100px] flex items-center justify-center">
+            <span className="font-['Poppins'] font-medium text-[14px] leading-[21px] text-center text-[#051F20]">1</span>
+          </button>
+          
+          {[2, 3, 4, 5, 6, 7].map(num => (
+            <button key={num} className="box-border relative w-[40px] h-[40px] bg-[rgba(130,143,143,0.25)] border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center">
+              <span className="font-['Poppins'] font-medium text-[14px] leading-[21px] text-center text-[#212121]">{num}</span>
+            </button>
+          ))}
+
+          <button className="box-border relative w-[40px] h-[40px] bg-white opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121]">
+            <ChevronRight size={22} className="opacity-40"/>
+            <span className="sr-only">Next Page</span>
+          </button>
+
+          <button className="box-border relative w-[40px] h-[40px] bg-white opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121]">
+            <ChevronsRight size={22} className="opacity-40"/>
+            <span className="sr-only">Last Page</span>
+          </button>
+
+        </nav>
+      </div>
+    </div>
+  );
+};
+
+export default BedManagementTable;

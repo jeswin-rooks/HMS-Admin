@@ -1,12 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { useData } from '../context/DataContext';
 
 const PatientsPage = () => {
-  return (
-    <section className="page-card">
-      <h1>Patients</h1>
-      <p>Patient registration and in-patient modules can be plugged in here.</p>
-    </section>
-  )
-}
+  const { patients } = useData();
 
-export default PatientsPage
+  return (
+    <div className="p-8">
+      <h1 className="text-2xl font-bold mb-4">Patients Directory</h1>
+      <p>Data linked to context!</p>
+    </div>
+  );
+};
+
+export default PatientsPage;

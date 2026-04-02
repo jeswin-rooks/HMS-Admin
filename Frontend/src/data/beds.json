@@ -1,0 +1,72 @@
+[
+  {
+    "id": "B101",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Available"
+  },
+  {
+    "id": "B102",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Available"
+  },
+  {
+    "id": "B103",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Cleaning Required"
+  },
+  {
+    "id": "B104",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Available"
+  },
+  {
+    "id": "B105",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Cleaning Required"
+  },
+  {
+    "id": "B106",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Available"
+  },
+  {
+    "id": "B107",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Cleaning Required"
+  },
+  {
+    "id": "B108",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Available"
+  },
+  {
+    "id": "B109",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Cleaning Required"
+  },
+  {
+    "id": "B110",
+    "roomNo": "101",
+    "department": "Cardiology",
+    "dischargeDate": "12-08-2000",
+    "status": "Cleaning Required"
+  }
+]

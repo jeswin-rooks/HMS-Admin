@@ -1,0 +1,6 @@
+[
+  { "id": "total", "title": "Total Beds", "value": 19, "icon": "Bed", "color": "blue" },
+  { "id": "occupied", "title": "Occupied", "value": 10, "icon": "Ban", "color": "red" },
+  { "id": "available", "title": "Available", "value": 4, "icon": "CheckCircle", "color": "green" },
+  { "id": "cleaning", "title": "Cleaning Required", "value": 5, "icon": "Trash2", "color": "yellow" }
+]
