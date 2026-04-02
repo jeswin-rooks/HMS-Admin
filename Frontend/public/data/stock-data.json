@@ -1,0 +1,74 @@
+{
+  "fallbackStats": [
+    { "title": "Total", "value": 1100, "icon": "📦", "tone": "blue" },
+    { "title": "Available", "value": 900, "icon": "✔", "tone": "green" },
+    { "title": "Low Stock", "value": 150, "icon": "!", "tone": "yellow" },
+    { "title": "Out Of Stock", "value": 150, "icon": "✕", "tone": "red" }
+  ],
+  "columns": {
+    "inventory": [
+      { "key": "name", "label": "Name" },
+      { "key": "category", "label": "Category" },
+      { "key": "stock", "label": "Stock" },
+      { "key": "batch", "label": "Batches" },
+      { "key": "purchaseDate", "label": "Purchase Date" }
+    ],
+    "purchases": [
+      { "key": "date", "label": "Date" },
+      { "key": "invoiceId", "label": "Invoice" },
+      { "key": "paidBy", "label": "Paid By" },
+      { "key": "paymentMethod", "label": "Payment Method" },
+      { "key": "category", "label": "Category" },
+      { "key": "name", "label": "Name" },
+      { "key": "quantity", "label": "Quantity" },
+      { "key": "unitPrice", "label": "Unit Price" },
+      { "key": "totalBill", "label": "Total Bill" },
+      { "key": "action", "label": "Action" }
+    ]
+  },
+  "summary": [
+    { "title": "Total", "value": 1100, "icon": "📦", "tone": "blue" },
+    { "title": "Available", "value": 900, "icon": "✔", "tone": "green" },
+    { "title": "Low Stock", "value": 150, "icon": "!", "tone": "yellow" },
+    { "title": "Out Of Stock", "value": 150, "icon": "✕", "tone": "red" }
+  ],
+  "inventory": [
+    { "id": 1, "name": "Amoxicillin 500mg", "category": "Medicine", "stock": 1240, "batch": "#BN-99201-X", "purchaseDate": "11 Aug 2025", "status": "Available" },
+    { "id": 2, "name": "Syringe 10ml", "category": "Supplies", "stock": 450, "batch": "#BN-99210-X", "purchaseDate": "12 Aug 2025", "status": "Available" },
+    { "id": 3, "name": "Nebulizer Kit", "category": "Equipment", "stock": 12, "batch": "#BN-99214-X", "purchaseDate": "13 Aug 2025", "status": "Low Stock" },
+    { "id": 4, "name": "Paracetamol 650mg", "category": "Medicine", "stock": 5000, "batch": "#BN-99216-X", "purchaseDate": "14 Aug 2025", "status": "Available" },
+    { "id": 5, "name": "IV Set", "category": "Supplies", "stock": 0, "batch": "#BN-99218-X", "purchaseDate": "15 Aug 2025", "status": "Out Of Stock" },
+    { "id": 6, "name": "Patient Monitor", "category": "Equipment", "stock": 4, "batch": "#BN-99220-X", "purchaseDate": "16 Aug 2025", "status": "Low Stock" },
+    { "id": 7, "name": "Azithromycin 250mg", "category": "Medicine", "stock": 860, "batch": "#BN-99222-X", "purchaseDate": "17 Aug 2025", "status": "Available" },
+    { "id": 8, "name": "Latex Gloves", "category": "Supplies", "stock": 2100, "batch": "#BN-99224-X", "purchaseDate": "18 Aug 2025", "status": "Available" },
+    { "id": 9, "name": "ECG Electrodes", "category": "Equipment", "stock": 40, "batch": "#BN-99226-X", "purchaseDate": "19 Aug 2025", "status": "Low Stock" },
+    { "id": 10, "name": "Cefixime 200mg", "category": "Medicine", "stock": 300, "batch": "#BN-99228-X", "purchaseDate": "20 Aug 2025", "status": "Available" },
+    { "id": 11, "name": "Cannula 20G", "category": "Supplies", "stock": 0, "batch": "#BN-99230-X", "purchaseDate": "21 Aug 2025", "status": "Out Of Stock" },
+    { "id": 12, "name": "Defibrillator Pads", "category": "Equipment", "stock": 18, "batch": "#BN-99232-X", "purchaseDate": "22 Aug 2025", "status": "Low Stock" },
+    { "id": 13, "name": "Metformin 500mg", "category": "Medicine", "stock": 980, "batch": "#BN-99234-X", "purchaseDate": "23 Aug 2025", "status": "Available" },
+    { "id": 14, "name": "Surgical Masks", "category": "Supplies", "stock": 3200, "batch": "#BN-99236-X", "purchaseDate": "24 Aug 2025", "status": "Available" },
+    { "id": 15, "name": "Pulse Oximeter", "category": "Equipment", "stock": 9, "batch": "#BN-99238-X", "purchaseDate": "25 Aug 2025", "status": "Low Stock" },
+    { "id": 16, "name": "Insulin 30/70", "category": "Medicine", "stock": 120, "batch": "#BN-99240-X", "purchaseDate": "26 Aug 2025", "status": "Available" },
+    { "id": 17, "name": "Saline 500ml", "category": "Supplies", "stock": 0, "batch": "#BN-99242-X", "purchaseDate": "27 Aug 2025", "status": "Out Of Stock" },
+    { "id": 18, "name": "Infusion Pump", "category": "Equipment", "stock": 6, "batch": "#BN-99244-X", "purchaseDate": "28 Aug 2025", "status": "Low Stock" },
+    { "id": 19, "name": "Dolo 650", "category": "Medicine", "stock": 740, "batch": "#BN-99246-X", "purchaseDate": "29 Aug 2025", "status": "Available" }
+  ],
+  "purchases": [
+    { "id": 101, "date": "02 Apr 2026", "invoiceId": "INV-24001", "paidBy": "MediPlus Pharma", "paymentMethod": "Card", "category": "Medicine", "name": "Amoxicillin 500mg", "quantity": 32, "unitPrice": 2562, "totalBill": 81984, "action": "✎", "status": "Received" },
+    { "id": 102, "date": "01 Apr 2026", "invoiceId": "INV-24002", "paidBy": "HealthCore Supplies", "paymentMethod": "UPI", "category": "Supplies", "name": "Syringe 10ml", "quantity": 14, "unitPrice": 2250, "totalBill": 31500, "action": "✎", "status": "In Transit" },
+    { "id": 103, "date": "30 Mar 2026", "invoiceId": "INV-24003", "paidBy": "Nova Med Equip", "paymentMethod": "UPI", "category": "Equipment", "name": "Patient Monitor", "quantity": 6, "unitPrice": 15750, "totalBill": 94500, "action": "✎", "status": "Received" },
+    { "id": 104, "date": "28 Mar 2026", "invoiceId": "INV-24004", "paidBy": "CareLine Distributors", "paymentMethod": "Cash", "category": "Medicine", "name": "Paracetamol 650mg", "quantity": 8, "unitPrice": 3450, "totalBill": 27600, "action": "✎", "status": "Pending" },
+    { "id": 105, "date": "02 Apr 2026", "invoiceId": "INV-24005", "paidBy": "Prime Surgical", "paymentMethod": "Card", "category": "Supplies", "name": "Surgical Masks", "quantity": 40, "unitPrice": 650, "totalBill": 26000, "action": "✎", "status": "Received" },
+    { "id": 106, "date": "01 Apr 2026", "invoiceId": "INV-24006", "paidBy": "MedLine Traders", "paymentMethod": "UPI", "category": "Medicine", "name": "Cefixime 200mg", "quantity": 18, "unitPrice": 1450, "totalBill": 26100, "action": "✎", "status": "In Transit" },
+    { "id": 107, "date": "30 Mar 2026", "invoiceId": "INV-24007", "paidBy": "Apex BioCare", "paymentMethod": "Cash", "category": "Equipment", "name": "Infusion Pump", "quantity": 3, "unitPrice": 18200, "totalBill": 54600, "action": "✎", "status": "Received" },
+    { "id": 108, "date": "28 Mar 2026", "invoiceId": "INV-24008", "paidBy": "CareLine Distributors", "paymentMethod": "Cash", "category": "Supplies", "name": "Cannula 20G", "quantity": 22, "unitPrice": 550, "totalBill": 12100, "action": "✎", "status": "Pending" },
+    { "id": 109, "date": "02 Apr 2026", "invoiceId": "INV-24009", "paidBy": "MediBridge Labs", "paymentMethod": "Card", "category": "Medicine", "name": "Metformin 500mg", "quantity": 26, "unitPrice": 980, "totalBill": 25480, "action": "✎", "status": "Received" },
+    { "id": 110, "date": "01 Apr 2026", "invoiceId": "INV-24010", "paidBy": "HealthCore Supplies", "paymentMethod": "UPI", "category": "Supplies", "name": "Latex Gloves", "quantity": 35, "unitPrice": 700, "totalBill": 24500, "action": "✎", "status": "In Transit" },
+    { "id": 111, "date": "30 Mar 2026", "invoiceId": "INV-24011", "paidBy": "Nova Med Equip", "paymentMethod": "UPI", "category": "Equipment", "name": "Defibrillator Pads", "quantity": 7, "unitPrice": 3150, "totalBill": 22050, "action": "✎", "status": "Received" },
+    { "id": 112, "date": "28 Mar 2026", "invoiceId": "INV-24012", "paidBy": "CareLine Distributors", "paymentMethod": "Cash", "category": "Medicine", "name": "Insulin 30/70", "quantity": 10, "unitPrice": 2100, "totalBill": 21000, "action": "✎", "status": "Pending" },
+    { "id": 113, "date": "02 Apr 2026", "invoiceId": "INV-24013", "paidBy": "MediPlus Pharma", "paymentMethod": "Card", "category": "Medicine", "name": "Dolo 650", "quantity": 44, "unitPrice": 410, "totalBill": 18040, "action": "✎", "status": "Received" },
+    { "id": 114, "date": "01 Apr 2026", "invoiceId": "INV-24014", "paidBy": "Prime Surgical", "paymentMethod": "UPI", "category": "Supplies", "name": "IV Set", "quantity": 20, "unitPrice": 980, "totalBill": 19600, "action": "✎", "status": "In Transit" },
+    { "id": 115, "date": "30 Mar 2026", "invoiceId": "INV-24015", "paidBy": "Apex BioCare", "paymentMethod": "Card", "category": "Equipment", "name": "Pulse Oximeter", "quantity": 5, "unitPrice": 4200, "totalBill": 21000, "action": "✎", "status": "Received" },
+    { "id": 116, "date": "28 Mar 2026", "invoiceId": "INV-24016", "paidBy": "MedLine Traders", "paymentMethod": "Cash", "category": "Supplies", "name": "Saline 500ml", "quantity": 24, "unitPrice": 520, "totalBill": 12480, "action": "✎", "status": "Pending" }
+  ]
+}
