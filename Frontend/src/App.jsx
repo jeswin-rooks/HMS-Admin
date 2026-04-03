@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import MainLayout from './components/layout/MainLayout'
 import DashboardPage from './pages/DashboardPage'
 import PatientsPage from './pages/PatientsPage'
-import SalesCourierPage from './pages/SalesCourierPage'
+import FinancePage from './pages/FinancePage'
 import StockPage from './pages/StockPage'
 import FollowUpPage from './pages/FollowUpPage'
 import { DataProvider } from './context/DataContext'
@@ -13,13 +13,13 @@ const App = () => {
   return (
     <DataProvider>
       <BrowserRouter>
-        <div className="min-h-screen bg-gray-50 flex flex-col font-sans text-gray-900 overflow-x-hidden">
+        <div className="min-h-screen bg-[#F1F1F1] font-sans text-gray-900 overflow-x-hidden flex flex-col">
           <MainLayout>
             <Routes>
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/follow-up" element={<FollowUpPage />} />
               <Route path="/patients" element={<PatientsPage />} />
-              <Route path="/sales-couriers" element={<SalesCourierPage />} />
+              <Route path="/finance" element={<FinancePage />} />
               <Route path="/stock" element={<StockPage />} />
               <Route path="/" element={<Navigate to="/dashboard" replace />} />
             </Routes>

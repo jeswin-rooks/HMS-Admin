@@ -1,0 +1,12 @@
+[
+  { "id": 1, "date": "11 Aug 2025", "subCategory": "Electricity", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "Card", "totalBill": "₹ 4,20,000" },
+  { "id": 2, "date": "11 Aug 2025", "subCategory": "Water", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "Card", "totalBill": "₹ 4,20,000" },
+  { "id": 3, "date": "11 Aug 2025", "subCategory": "Internet", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "Card", "totalBill": "₹ 4,20,000" },
+  { "id": 4, "date": "11 Aug 2025", "subCategory": "Security", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "Card", "totalBill": "₹ 4,20,000" },
+  { "id": 5, "date": "11 Aug 2025", "subCategory": "Electricity", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "UPI", "totalBill": "₹ 4,20,000" },
+  { "id": 6, "date": "11 Aug 2025", "subCategory": "Water", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "UPI", "totalBill": "₹ 4,20,000" },
+  { "id": 7, "date": "11 Aug 2025", "subCategory": "Internet", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "UPI", "totalBill": "₹ 4,20,000" },
+  { "id": 8, "date": "11 Aug 2025", "subCategory": "Security", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "Cash", "totalBill": "₹ 4,20,000" },
+  { "id": 9, "date": "11 Aug 2025", "subCategory": "Security", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "Cash", "totalBill": "₹ 4,20,000" },
+  { "id": 10, "date": "11 Aug 2025", "subCategory": "Security", "invoiceId": "#INV-8821", "paidBy": "Johnathan Smith", "pid": "#88219", "paymentMethod": "Cash", "totalBill": "₹ 4,20,000" }
+]

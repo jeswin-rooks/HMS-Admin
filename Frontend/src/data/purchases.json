@@ -1,0 +1,12 @@
+[
+  { "date": "11 Aug 2025", "invoice": "", "paidByName": "", "paidByPid": "", "method": "", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" },
+  { "date": "11 Aug 2025", "invoice": "#INV-8821", "paidByName": "Johnathan Smith", "paidByPid": "PID: #88219", "method": "Card", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" },
+  { "date": "11 Aug 2025", "invoice": "#INV-8821", "paidByName": "Johnathan Smith", "paidByPid": "PID: #88219", "method": "Card", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" },
+  { "date": "11 Aug 2025", "invoice": "#INV-8821", "paidByName": "Johnathan Smith", "paidByPid": "PID: #88219", "method": "Card", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" },
+  { "date": "11 Aug 2025", "invoice": "#INV-8821", "paidByName": "Johnathan Smith", "paidByPid": "PID: #88219", "method": "UPI", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" },
+  { "date": "11 Aug 2025", "invoice": "#INV-8821", "paidByName": "Johnathan Smith", "paidByPid": "PID: #88219", "method": "UPI", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" },
+  { "date": "11 Aug 2025", "invoice": "#INV-8821", "paidByName": "Johnathan Smith", "paidByPid": "PID: #88219", "method": "UPI", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" },
+  { "date": "11 Aug 2025", "invoice": "#INV-8821", "paidByName": "Johnathan Smith", "paidByPid": "PID: #88219", "method": "Cash", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" },
+  { "date": "11 Aug 2025", "invoice": "#INV-8821", "paidByName": "Johnathan Smith", "paidByPid": "PID: #88219", "method": "Cash", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" },
+  { "date": "11 Aug 2025", "invoice": "#INV-8821", "paidByName": "Johnathan Smith", "paidByPid": "PID: #88219", "method": "Cash", "category": "Medicine", "name": "Amoxicillin 500mg", "qty": "100", "price": "₹ 4,20,000", "total": "₹ 4,20,000" }
+]

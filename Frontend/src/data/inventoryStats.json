@@ -1,0 +1,6 @@
+[
+  { "title": "Total", "value": "1,100", "iconName": "Package", "iconBg": "bg-[#DBEAFE]", "iconColor": "text-[#1D4ED8]" },
+  { "title": "Available", "value": "900", "iconName": "Check", "iconBg": "bg-[#D4EDDA]", "iconColor": "text-[#28A745]" },
+  { "title": "Low Stock", "value": "150", "iconName": "AlertTriangle", "iconBg": "bg-[#FFF3CD]", "iconColor": "text-[#FFC107]" },
+  { "title": "Out Of Stock", "value": "150", "iconName": "X", "iconBg": "bg-[#FAD7DA]", "iconColor": "text-[#E63946]" }
+]

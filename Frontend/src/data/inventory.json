@@ -1,0 +1,12 @@
+[
+  { "name": "Amoxicillin 500mg", "category": "Medicine", "stock": "1,240", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
+  { "name": "Amoxicillin 500mg", "category": "Supplies", "stock": "450", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
+  { "name": "Amoxicillin 500mg", "category": "Equipment", "stock": "450", "batch": "BN-99201-X", "date": "11 Aug 2025" },
+  { "name": "Amoxicillin 500mg", "category": "Medicine", "stock": "450", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
+  { "name": "Amoxicillin 500mg", "category": "Supplies", "stock": "1,240", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
+  { "name": "Amoxicillin 500mg", "category": "Equipment", "stock": "12", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
+  { "name": "Amoxicillin 500mg", "category": "Medicine", "stock": "5,000", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
+  { "name": "Amoxicillin 500mg", "category": "Supplies", "stock": "5,000", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
+  { "name": "Amoxicillin 500mg", "category": "Equipment", "stock": "12", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
+  { "name": "Amoxicillin 500mg", "category": "Medicine", "stock": "1,240", "batch": "#BN-99201-X", "date": "11 Aug 2025" }
+]
