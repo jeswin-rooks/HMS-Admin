@@ -1,142 +1,356 @@
-import React from 'react'
+import React, { useState, useMemo } from 'react'
 import { Search, ChevronDown, Pencil } from 'lucide-react'
 
+const ROWS_PER_PAGE = 7
+
+const SUB_TABS = [
+  { key: 'utilities',     label: 'Utilities' },
+  { key: 'maintenance',   label: 'Maintenance' },
+  { key: 'salary',        label: 'Salary' },
+  { key: 'security',      label: 'Security' },
+  { key: 'miscellaneous', label: 'Miscellaneous' },
+]
+
 const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
+  const [searchQuery, setSearchQuery]         = useState('')
+  const [selectedDate, setSelectedDate]       = useState('All')
+  const [selectedSubCat, setSelectedSubCat]   = useState('All')
+  const [selectedMethod, setSelectedMethod]   = useState('All')
+  const [currentPage, setCurrentPage]         = useState(1)
+
+  /* ── Reset page whenever the active tab changes ── */
+  const handleSubTabChange = (key) => {
+    onSubTabChange(key)
+    setCurrentPage(1)
+    setSearchQuery('')
+    setSelectedSubCat('All')
+    setSelectedMethod('All')
+    setSelectedDate('All')
+  }
+
+  /* ── Derive data for the active sub-tab ── */
+  const tabData = useMemo(
+    () => expensesData.filter(r => r.category === activeSubTab),
+    [expensesData, activeSubTab]
+  )
+
+  const isSalary = activeSubTab === 'salary'
+
+  /* ── Unique filter options from the active tab data ── */
+  const subCatOptions = useMemo(
+    () => isSalary
+      ? ['All', ...new Set(tabData.map(r => r['Role']))]
+      : ['All', ...new Set(tabData.map(r => r.subCategory))],
+    [tabData, isSalary]
+  )
+  const methodOptions = useMemo(
+    () => ['All', ...new Set(tabData.map(r => r.paymentMethod))],
+    [tabData]
+  )
+  const dateOptions = useMemo(
+    () => ['All', ...new Set(tabData.map(r => r.date))],
+    [tabData]
+  )
+
+  /* ── Apply filters ── */
+  const filtered = useMemo(() => {
+    return tabData.filter(r => {
+      const q = searchQuery.toLowerCase()
+      const matchSearch = isSalary
+        ? !q ||
+          (r['Staff Name'] || '').toLowerCase().includes(q) ||
+          (r['Invoice Id'] || '').toLowerCase().includes(q) ||
+          (r['Role'] || '').toLowerCase().includes(q)
+        : !q ||
+          (r.subCategory || '').toLowerCase().includes(q) ||
+          (r.invoiceId || '').toLowerCase().includes(q) ||
+          (r.paidBy || '').toLowerCase().includes(q)
+      const matchDate   = selectedDate   === 'All' || r.date === selectedDate
+      const matchSubCat = isSalary
+        ? selectedSubCat === 'All' || r['Role'] === selectedSubCat
+        : selectedSubCat === 'All' || r.subCategory === selectedSubCat
+      const matchMethod = selectedMethod === 'All' || r.paymentMethod === selectedMethod
+      return matchSearch && matchDate && matchSubCat && matchMethod
+    })
+  }, [tabData, searchQuery, selectedDate, selectedSubCat, selectedMethod, isSalary])
+
+  /* ── Pagination ── */
+  const totalPages   = Math.max(1, Math.ceil(filtered.length / ROWS_PER_PAGE))
+  const safePage     = Math.min(currentPage, totalPages)
+  const pagedRows    = filtered.slice((safePage - 1) * ROWS_PER_PAGE, safePage * ROWS_PER_PAGE)
+
+  const goTo = (p) => setCurrentPage(Math.max(1, Math.min(p, totalPages)))
+
+  /* ── Page numbers to render (show up to 5 pages around current) ── */
+  const pageNumbers = useMemo(() => {
+    const pages = []
+    const start = Math.max(1, safePage - 2)
+    const end   = Math.min(totalPages, start + 4)
+    for (let i = start; i <= end; i++) pages.push(i)
+    return pages
+  }, [safePage, totalPages])
+
+  /* ── Counts per tab ── */
+  const counts = useMemo(() => {
+    const c = {}
+    SUB_TABS.forEach(t => {
+      c[t.key] = expensesData.filter(r => r.category === t.key).length
+    })
+    return c
+  }, [expensesData])
+
   return (
     <div className="flex flex-col gap-[20px]">
-      
-      {/* Filtering and Search toolbar */}
+
+      {/* ── Toolbar ── */}
       <div className="bg-white rounded-[12px] p-[20px] flex justify-between items-center shadow-[0px_4px_10px_rgba(0,0,0,0.03)] border border-[#E9E9E9]">
-        
+
+        {/* Search */}
         <div className="flex items-center gap-[10px] w-[340px] h-[48px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-[16px]">
           <Search size={20} className="text-[#9CA3AF]" />
-          <input 
-            type="text" 
-            placeholder="Enter Doctor Name etc.." 
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1) }}
+            placeholder="Search by name, invoice, sub-category…"
             className="bg-transparent border-none outline-none text-[14px] text-[#4B5563] w-full"
           />
         </div>
 
-        <div className="flex items-center gap-[20px]">
+        <div className="flex items-center gap-[16px]">
+
+          {/* Date filter */}
           <div className="flex flex-col gap-[4px]">
             <span className="text-[12px] font-medium text-[#666666]">Date</span>
-            <div className="flex items-center justify-between w-[140px] h-[44px] px-[16px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg cursor-pointer">
-              <span className="text-[14px] text-[#212121]">Today</span>
-              <ChevronDown size={16} className="text-[#666666]" />
-            </div>
-          </div>
-          
-          <div className="flex flex-col gap-[4px]">
-            <span className="text-[12px] font-medium text-[#666666]">Sub Category</span>
-            <div className="flex items-center justify-between w-[140px] h-[44px] px-[16px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg cursor-pointer">
-              <span className="text-[14px] text-[#212121]">Medicine</span>
-              <ChevronDown size={16} className="text-[#666666]" />
-            </div>
+            <select
+              value={selectedDate}
+              onChange={e => { setSelectedDate(e.target.value); setCurrentPage(1) }}
+              className="flex items-center justify-between w-[140px] h-[44px] px-[12px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-[14px] text-[#212121] cursor-pointer outline-none appearance-none pr-[32px]"
+              style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center' }}
+            >
+              {dateOptions.map(d => <option key={d} value={d}>{d === 'All' ? 'All Dates' : d}</option>)}
+            </select>
           </div>
 
+          {/* Sub Category / Role filter */}
+          <div className="flex flex-col gap-[4px]">
+            <span className="text-[12px] font-medium text-[#666666]">{isSalary ? 'Role' : 'Sub Category'}</span>
+            <select
+              value={selectedSubCat}
+              onChange={e => { setSelectedSubCat(e.target.value); setCurrentPage(1) }}
+              className="flex items-center justify-between w-[160px] h-[44px] px-[12px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-[14px] text-[#212121] cursor-pointer outline-none appearance-none pr-[32px]"
+              style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center' }}
+            >
+              {subCatOptions.map(s => <option key={s} value={s}>{s === 'All' ? (isSalary ? 'All Roles' : 'All Sub Categories') : s}</option>)}
+            </select>
+          </div>
+
+          {/* Payment Method filter */}
           <div className="flex flex-col gap-[4px]">
             <span className="text-[12px] font-medium text-[#666666]">Payment Method</span>
-            <div className="flex items-center justify-between w-[120px] h-[44px] px-[16px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg cursor-pointer">
-              <span className="text-[14px] text-[#212121]">Card</span>
-              <ChevronDown size={16} className="text-[#666666]" />
-            </div>
+            <select
+              value={selectedMethod}
+              onChange={e => { setSelectedMethod(e.target.value); setCurrentPage(1) }}
+              className="flex items-center justify-between w-[140px] h-[44px] px-[12px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-[14px] text-[#212121] cursor-pointer outline-none appearance-none pr-[32px]"
+              style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center' }}
+            >
+              {methodOptions.map(m => <option key={m} value={m}>{m === 'All' ? 'All Methods' : m}</option>)}
+            </select>
           </div>
 
+          {/* Add button */}
           <div className="flex flex-col gap-[4px] justify-end h-[68px]">
-            <button className="h-[44px] px-[20px] bg-[#051F20] text-white rounded-lg text-[14px] font-medium">
+            <button className="h-[44px] px-[20px] bg-[#051F20] text-white rounded-lg text-[14px] font-medium hover:bg-[#0d3638] transition-colors">
               Add Expenses
             </button>
           </div>
         </div>
-
       </div>
 
-      {/* Main Table Card */}
+      {/* ── Main Table Card ── */}
       <div className="bg-white rounded-[12px] shadow-[0px_4px_10px_rgba(0,0,0,0.03)] border border-[#E9E9E9]">
-        
-        <div className="flex px-[20px] border-b border-[#E5E7EB]">
-          {['Utilities (12)', 'Maintenance', 'Salary', 'Security', 'Miscellaneous'].map((tab, i) => (
-            <div 
-              key={i}
-              className={`py-[16px] px-[12px] cursor-pointer border-b-2 font-medium text-[14px] leading-[20px] ${i === 0 ? 'border-[#212121] text-[#212121]' : 'border-transparent text-[#666666]'}`}
+
+        {/* Sub-tabs */}
+        <div className="flex px-[20px] border-b border-[#E5E7EB] overflow-x-auto">
+          {SUB_TABS.map(tab => (
+            <button
+              key={tab.key}
+              onClick={() => handleSubTabChange(tab.key)}
+              className={`py-[16px] px-[14px] cursor-pointer border-b-2 font-medium text-[14px] leading-[20px] whitespace-nowrap transition-colors
+                ${activeSubTab === tab.key
+                  ? 'border-[#212121] text-[#212121]'
+                  : 'border-transparent text-[#666666] hover:text-[#333]'}`}
             >
-              {tab}
-            </div>
+              {tab.label}
+              <span className={`ml-[6px] text-[12px] px-[7px] py-[2px] rounded-full
+                ${activeSubTab === tab.key
+                  ? 'bg-[#E4F0EB] text-[#235347]'
+                  : 'bg-[#F3F4F6] text-[#9CA3AF]'}`}>
+                {counts[tab.key]}
+              </span>
+            </button>
           ))}
         </div>
 
+        {/* Table */}
         <div className="overflow-x-auto w-full">
           <table className="w-full text-left border-collapse min-w-[1000px]">
             <thead>
-              <tr className="border-b border-[#E5E7EB] text-[12px] font-medium text-[#666666]">
-                <th className="py-[16px] px-[20px]">Date</th>
-                <th className="py-[16px] px-[20px]">Sub Category</th>
-                <th className="py-[16px] px-[20px]">Invoice ID</th>
-                <th className="py-[16px] px-[20px]">Paid By</th>
-                <th className="py-[16px] px-[20px]">Payment Method</th>
-                <th className="py-[16px] px-[20px]">Total Bill</th>
-                <th className="py-[16px] px-[20px]">Action</th>
+              <tr className="border-b border-[#E5E7EB] text-[12px] font-medium text-[#666666] bg-[#FAFAFA]">
+                {isSalary ? (
+                  <>
+                    <th className="py-[14px] px-[20px]">Date</th>
+                    <th className="py-[14px] px-[20px]">Staff Name</th>
+                    <th className="py-[14px] px-[20px]">Role</th>
+                    <th className="py-[14px] px-[20px]">Salary Month</th>
+                    <th className="py-[14px] px-[20px]">Invoice ID</th>
+                    <th className="py-[14px] px-[20px]">Payment Method</th>
+                    <th className="py-[14px] px-[20px]">Amount</th>
+                    <th className="py-[14px] px-[20px]">Action</th>
+                  </>
+                ) : (
+                  <>
+                    <th className="py-[14px] px-[20px]">Date</th>
+                    <th className="py-[14px] px-[20px]">Sub Category</th>
+                    <th className="py-[14px] px-[20px]">Invoice ID</th>
+                    <th className="py-[14px] px-[20px]">Paid By</th>
+                    <th className="py-[14px] px-[20px]">Payment Method</th>
+                    <th className="py-[14px] px-[20px]">Total Bill</th>
+                    <th className="py-[14px] px-[20px]">Action</th>
+                  </>
+                )}
               </tr>
             </thead>
             <tbody>
-              {expensesData.map((item, idx) => (
-                <tr key={item.id} className={`border-b border-[#E5E7EB] hover:bg-gray-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-[#FAFAFA]'}`}>
-                  <td className="py-[16px] px-[20px] text-[12px] text-[#212121] whitespace-nowrap">
-                    {item.date}
-                  </td>
-                  <td className="py-[16px] px-[20px] text-[12px] text-[#212121] font-medium whitespace-nowrap">
-                    {item.subCategory}
-                  </td>
-                  <td className="py-[16px] px-[20px] text-[12px] text-[#212121] whitespace-nowrap">
-                    {item.invoiceId}
-                  </td>
-                  <td className="py-[16px] px-[20px] whitespace-nowrap flex flex-col">
-                    <span className="text-[12px] text-[#212121] font-medium">{item.paidBy}</span>
-                    <span className="text-[10px] text-[#666666]">PID: {item.pid}</span>
-                  </td>
-                  <td className="py-[16px] px-[20px] whitespace-nowrap">
-                    <div className={`px-[12px] py-[4px] rounded-full inline-flex items-center justify-center gap-[4px] text-[12px] font-medium 
-                      ${item.paymentMethod === 'Card' ? 'bg-[#E1EFFF] text-[#416BFF]' : 
-                        item.paymentMethod === 'UPI' ? 'bg-[#EBE2FF] text-[#9D4DFF]' : 
-                        'bg-[#D8F5E5] text-[#34A853]'}`}>
-                      {item.paymentMethod === 'Card' && <div className="w-[12px] h-[8px] bg-[#416BFF] rounded-sm"></div>}
-                      {item.paymentMethod === 'UPI' && <div className="w-[12px] h-[12px] rounded-full border-2 border-[#9D4DFF] flex items-center justify-center"><div className="w-[4px] h-[4px] bg-[#9D4DFF] rounded-full"></div></div>}
-                      {item.paymentMethod === 'Cash' && <span className="text-[14px]">₹</span>}
-                      <span className="ml-[4px]">{item.paymentMethod}</span>
-                    </div>
-                  </td>
-                  <td className="py-[16px] px-[20px] text-[12px] text-[#212121] font-medium whitespace-nowrap">
-                    {item.totalBill}
-                  </td>
-                  <td className="py-[16px] px-[20px] whitespace-nowrap">
-                    <Pencil size={18} className="text-[#3b82f6] cursor-pointer" />
+              {pagedRows.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="py-[40px] text-center text-[14px] text-[#9CA3AF]">
+                    No records found
                   </td>
                 </tr>
-              ))}
+              ) : isSalary ? (
+                pagedRows.map((item, idx) => (
+                  <tr
+                    key={item.id}
+                    className={`border-b border-[#E5E7EB] hover:bg-gray-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-[#FAFAFA]'}`}
+                  >
+                    <td className="py-[14px] px-[20px] text-[13px] text-[#212121] whitespace-nowrap">{item.date}</td>
+                    <td className="py-[14px] px-[20px] text-[13px] text-[#212121] font-medium whitespace-nowrap">{item['Staff Name']}</td>
+                    <td className="py-[14px] px-[20px] whitespace-nowrap">
+                      <span className="px-[10px] py-[3px] rounded-full text-[12px] font-medium bg-[#EEF2FF] text-[#4F46E5]">
+                        {item['Role']}
+                      </span>
+                    </td>
+                    <td className="py-[14px] px-[20px] text-[13px] text-[#212121] whitespace-nowrap">{item['Salary Month']}</td>
+                    <td className="py-[14px] px-[20px] text-[13px] text-[#212121] whitespace-nowrap">{item['Invoice Id']}</td>
+                    <td className="py-[14px] px-[20px] whitespace-nowrap">
+                      <div className={`px-[12px] py-[4px] rounded-full inline-flex items-center gap-[6px] text-[12px] font-medium
+                        ${item.paymentMethod === 'Card' ? 'bg-[#E1EFFF] text-[#416BFF]' :
+                          item.paymentMethod === 'UPI'  ? 'bg-[#EBE2FF] text-[#9D4DFF]' :
+                          'bg-[#D8F5E5] text-[#34A853]'}`}>
+                        {item.paymentMethod === 'Card' && <div className="w-[12px] h-[8px] bg-[#416BFF] rounded-sm" />}
+                        {item.paymentMethod === 'UPI'  && <div className="w-[10px] h-[10px] rounded-full border-2 border-[#9D4DFF]" />}
+                        {item.paymentMethod === 'Cash' && <span className="text-[13px] leading-none">₹</span>}
+                        {item.paymentMethod}
+                      </div>
+                    </td>
+                    <td className="py-[14px] px-[20px] text-[13px] text-[#212121] font-semibold whitespace-nowrap">{item['Amount']}</td>
+                    <td className="py-[14px] px-[20px] whitespace-nowrap">
+                      <button className="text-[#3b82f6] hover:text-blue-700 transition-colors">
+                        <Pencil size={17} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                pagedRows.map((item, idx) => (
+                  <tr
+                    key={item.id}
+                    className={`border-b border-[#E5E7EB] hover:bg-gray-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-[#FAFAFA]'}`}
+                  >
+                    <td className="py-[14px] px-[20px] text-[13px] text-[#212121] whitespace-nowrap">{item.date}</td>
+                    <td className="py-[14px] px-[20px] text-[13px] text-[#212121] font-medium whitespace-nowrap">{item.subCategory}</td>
+                    <td className="py-[14px] px-[20px] text-[13px] text-[#212121] whitespace-nowrap">{item.invoiceId}</td>
+                    <td className="py-[14px] px-[20px] whitespace-nowrap">
+                      <span className="block text-[13px] text-[#212121] font-medium">{item.paidBy}</span>
+                      <span className="text-[11px] text-[#666666]">PID: {item.pid}</span>
+                    </td>
+                    <td className="py-[14px] px-[20px] whitespace-nowrap">
+                      <div className={`px-[12px] py-[4px] rounded-full inline-flex items-center gap-[6px] text-[12px] font-medium
+                        ${item.paymentMethod === 'Card' ? 'bg-[#E1EFFF] text-[#416BFF]' :
+                          item.paymentMethod === 'UPI'  ? 'bg-[#EBE2FF] text-[#9D4DFF]' :
+                          'bg-[#D8F5E5] text-[#34A853]'}`}>
+                        {item.paymentMethod === 'Card' && <div className="w-[12px] h-[8px] bg-[#416BFF] rounded-sm" />}
+                        {item.paymentMethod === 'UPI'  && <div className="w-[10px] h-[10px] rounded-full border-2 border-[#9D4DFF]" />}
+                        {item.paymentMethod === 'Cash' && <span className="text-[13px] leading-none">₹</span>}
+                        {item.paymentMethod}
+                      </div>
+                    </td>
+                    <td className="py-[14px] px-[20px] text-[13px] text-[#212121] font-medium whitespace-nowrap">{item.totalBill}</td>
+                    <td className="py-[14px] px-[20px] whitespace-nowrap">
+                      <button className="text-[#3b82f6] hover:text-blue-700 transition-colors">
+                        <Pencil size={17} />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
 
-        {/* Pagination */}
-        <div className="py-[16px] px-[20px] flex items-center justify-center bg-[#F9FAFB] rounded-b-[12px]">
-          <div className="flex gap-[8px]">
-            <button className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50">|&lt;</button>
-            <button className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50">&lt;</button>
-            {[1,2,3,4,5,6,7].map(num => (
-              <button 
+        {/* ── Pagination ── */}
+        <div className="py-[16px] px-[20px] flex items-center justify-between bg-[#F9FAFB] rounded-b-[12px] border-t border-[#E5E7EB]">
+          <span className="text-[13px] text-[#666666]">
+            Showing {filtered.length === 0 ? 0 : (safePage - 1) * ROWS_PER_PAGE + 1}–{Math.min(safePage * ROWS_PER_PAGE, filtered.length)} of {filtered.length} entries
+          </span>
+
+          <div className="flex gap-[6px] items-center">
+            {/* First */}
+            <button
+              onClick={() => goTo(1)}
+              disabled={safePage === 1}
+              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >|&lt;</button>
+
+            {/* Prev */}
+            <button
+              onClick={() => goTo(safePage - 1)}
+              disabled={safePage === 1}
+              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >&lt;</button>
+
+            {/* Page numbers */}
+            {pageNumbers.map(num => (
+              <button
                 key={num}
-                className={`w-[32px] h-[32px] rounded-full flex items-center justify-center text-[12px] shadow-sm cursor-pointer ${num === 1 ? 'bg-[#D6F1E6] border border-[#235347] text-[#235347] font-medium' : 'bg-[#E5E7EB] text-[#212121]'}`}
+                onClick={() => goTo(num)}
+                className={`w-[32px] h-[32px] rounded-full flex items-center justify-center text-[13px] font-medium transition-colors
+                  ${num === safePage
+                    ? 'bg-[#D6F1E6] border border-[#235347] text-[#235347]'
+                    : 'bg-[#E5E7EB] text-[#212121] hover:bg-gray-300 cursor-pointer'}`}
               >
                 {num}
               </button>
             ))}
-            <button className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50">&gt;</button>
-            <button className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50">&gt;|</button>
+
+            {/* Next */}
+            <button
+              onClick={() => goTo(safePage + 1)}
+              disabled={safePage === totalPages}
+              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >&gt;</button>
+
+            {/* Last */}
+            <button
+              onClick={() => goTo(totalPages)}
+              disabled={safePage === totalPages}
+              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >&gt;|</button>
           </div>
         </div>
 
       </div>
-
     </div>
   )
 }

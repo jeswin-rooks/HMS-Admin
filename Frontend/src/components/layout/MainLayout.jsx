@@ -10,7 +10,7 @@ const menuItems = [
 
 const MainLayout = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen bg-[#F1F1F1] font-['Poppins']">
+    <div className="h-screen flex flex-col bg-[#F1F1F1] font-['Poppins'] overflow-hidden">
       <header className="h-[88px] w-full px-[40px] flex items-center justify-between bg-[#ACE3CE] border-b-2 border-[rgba(130,143,143,0.25)] relative z-20">
         
           <Link to="/dashboard" className="flex items-center gap-[20px] no-underline">
@@ -43,7 +43,7 @@ const MainLayout = ({ children }) => {
         </div>
       </header>
 
-      <main className="flex-1 w-full relative">
+      <main className="flex-1 w-full relative overflow-y-auto">
         {children}
       </main>
     </div>

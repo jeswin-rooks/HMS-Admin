@@ -1,12 +1,17 @@
 [
-  { "name": "Amoxicillin 500mg", "category": "Medicine", "stock": "1,240", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
-  { "name": "Amoxicillin 500mg", "category": "Supplies", "stock": "450", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
-  { "name": "Amoxicillin 500mg", "category": "Equipment", "stock": "450", "batch": "BN-99201-X", "date": "11 Aug 2025" },
-  { "name": "Amoxicillin 500mg", "category": "Medicine", "stock": "450", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
-  { "name": "Amoxicillin 500mg", "category": "Supplies", "stock": "1,240", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
-  { "name": "Amoxicillin 500mg", "category": "Equipment", "stock": "12", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
-  { "name": "Amoxicillin 500mg", "category": "Medicine", "stock": "5,000", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
-  { "name": "Amoxicillin 500mg", "category": "Supplies", "stock": "5,000", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
-  { "name": "Amoxicillin 500mg", "category": "Equipment", "stock": "12", "batch": "#BN-99201-X", "date": "11 Aug 2025" },
-  { "name": "Amoxicillin 500mg", "category": "Medicine", "stock": "1,240", "batch": "#BN-99201-X", "date": "11 Aug 2025" }
+  { "name": "Amoxicillin 500mg", "category": "Medicine", "stock": "1,240", "stockNum": 1240, "batch": "#BN-99201-X", "date": "11 Aug 2025", "status": "available" },
+  { "name": "Paracetamol 650mg", "category": "Medicine", "stock": "450", "stockNum": 450, "batch": "#BN-99202-Y", "date": "12 Aug 2025", "status": "available" },
+  { "name": "Surgical Gloves (L)", "category": "Supplies", "stock": "800", "stockNum": 800, "batch": "#BN-99203-Z", "date": "13 Aug 2025", "status": "available" },
+  { "name": "IV Drip Set", "category": "Supplies", "stock": "320", "stockNum": 320, "batch": "#BN-99204-A", "date": "14 Aug 2025", "status": "available" },
+  { "name": "Blood Pressure Monitor", "category": "Equipment", "stock": "15", "stockNum": 15, "batch": "#BN-99205-B", "date": "15 Aug 2025", "status": "available" },
+  { "name": "Metformin 500mg", "category": "Medicine", "stock": "5,000", "stockNum": 5000, "batch": "#BN-99206-C", "date": "16 Aug 2025", "status": "available" },
+  { "name": "Syringes 5ml", "category": "Supplies", "stock": "2,400", "stockNum": 2400, "batch": "#BN-99207-D", "date": "17 Aug 2025", "status": "available" },
+  { "name": "Pulse Oximeter", "category": "Equipment", "stock": "210", "stockNum": 210, "batch": "#BN-99208-E", "date": "18 Aug 2025", "status": "available" },
+  { "name": "Atorvastatin 10mg", "category": "Medicine", "stock": "18", "stockNum": 18, "batch": "#BN-99209-F", "date": "19 Aug 2025", "status": "low_stock" },
+  { "name": "Face Masks (N95)", "category": "Supplies", "stock": "12", "stockNum": 12, "batch": "#BN-99210-G", "date": "20 Aug 2025", "status": "low_stock" },
+  { "name": "Insulin (Regular)", "category": "Medicine", "stock": "8", "stockNum": 8, "batch": "#BN-99211-H", "date": "21 Aug 2025", "status": "low_stock" },
+  { "name": "Diagnostic Kit", "category": "Equipment", "stock": "5", "stockNum": 5, "batch": "#BN-99212-I", "date": "22 Aug 2025", "status": "low_stock" },
+  { "name": "Ibuprofen 400mg", "category": "Medicine", "stock": "0", "stockNum": 0, "batch": "#BN-99213-J", "date": "23 Aug 2025", "status": "out_of_stock" },
+  { "name": "Sterile Bandages", "category": "Supplies", "stock": "0", "stockNum": 0, "batch": "#BN-99214-K", "date": "24 Aug 2025", "status": "out_of_stock" },
+  { "name": "ECG Machine", "category": "Equipment", "stock": "0", "stockNum": 0, "batch": "#BN-99215-L", "date": "25 Aug 2025", "status": "out_of_stock" }
 ]
