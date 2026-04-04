@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Total Staff",
+    "amount": "100",
+    "iconColor": "blue"
+  },
+  {
+    "title": "Active Staff",
+    "amount": "80",
+    "iconColor": "yellow"
+  },
+  {
+    "title": "Present Today",
+    "amount": "90",
+    "iconColor": "green"
+  },
+  {
+    "title": "Absent Today",
+    "amount": "10",
+    "iconColor": "red"
+  }
+]
