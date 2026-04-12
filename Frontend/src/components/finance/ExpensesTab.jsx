@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react'
-import { Search, ChevronDown, Pencil } from 'lucide-react'
+import { Search, Pencil } from 'lucide-react'
+import AddExpenseModal from './AddExpenseModal'
 
 const ROWS_PER_PAGE = 7
 
@@ -12,11 +13,13 @@ const SUB_TABS = [
 ]
 
 const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
+  const [rows, setRows]                       = useState(expensesData)
   const [searchQuery, setSearchQuery]         = useState('')
   const [selectedDate, setSelectedDate]       = useState('All')
   const [selectedSubCat, setSelectedSubCat]   = useState('All')
   const [selectedMethod, setSelectedMethod]   = useState('All')
   const [currentPage, setCurrentPage]         = useState(1)
+  const [showAddModal, setShowAddModal]       = useState(false)
 
   /* ── Reset page whenever the active tab changes ── */
   const handleSubTabChange = (key) => {
@@ -30,8 +33,8 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
 
   /* ── Derive data for the active sub-tab ── */
   const tabData = useMemo(
-    () => expensesData.filter(r => r.category === activeSubTab),
-    [expensesData, activeSubTab]
+    () => rows.filter(r => r.category === activeSubTab),
+    [rows, activeSubTab]
   )
 
   const isSalary = activeSubTab === 'salary'
@@ -94,10 +97,22 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
   const counts = useMemo(() => {
     const c = {}
     SUB_TABS.forEach(t => {
-      c[t.key] = expensesData.filter(r => r.category === t.key).length
+      c[t.key] = rows.filter(r => r.category === t.key).length
     })
     return c
-  }, [expensesData])
+  }, [rows])
+
+  const handleSaveExpense = (newExpense) => {
+    const nextId = rows.length ? Math.max(...rows.map((r) => r.id || 0)) + 1 : 1
+    setRows((prev) => [...prev, { ...newExpense, id: nextId }])
+    onSubTabChange(newExpense.category)
+    setSearchQuery('')
+    setSelectedSubCat('All')
+    setSelectedMethod('All')
+    setSelectedDate('All')
+    setShowAddModal(false)
+    setCurrentPage(1)
+  }
 
   return (
     <div className="flex flex-col gap-[20px]">
@@ -160,7 +175,10 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
 
           {/* Add button */}
           <div className="flex flex-col gap-[4px] justify-end h-[68px]">
-            <button className="h-[44px] px-[20px] bg-[#051F20] text-white rounded-lg text-[14px] font-medium hover:bg-[#0d3638] transition-colors">
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="h-[44px] px-[20px] bg-[#051F20] text-white rounded-lg text-[14px] font-medium hover:bg-[#0d3638] transition-colors"
+            >
               Add Expenses
             </button>
           </div>
@@ -351,6 +369,14 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
         </div>
 
       </div>
+
+      {showAddModal && (
+        <AddExpenseModal
+          activeCategory={activeSubTab}
+          onClose={() => setShowAddModal(false)}
+          onSave={handleSaveExpense}
+        />
+      )}
     </div>
   )
 }
