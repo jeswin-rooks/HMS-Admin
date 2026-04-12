@@ -68,9 +68,6 @@ const DashboardPage = () => {
           />
         </div>
 
-        <footer className="w-full flex justify-center text-center text-[13px] text-[#666666] py-[20px]">
-          © 2024 HospitalMS Multi-Branch Enterprise Suite. All rights reserved.
-        </footer>
       </PageLayout>
 
       <NewBedModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />

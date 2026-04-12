@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { Search, ChevronDown } from 'lucide-react'
+import Pagination from '../common/Pagination'
 
 const InventoryTab = ({ activeSubTab, onSubTabChange, inventoryData }) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -139,41 +140,12 @@ const InventoryTab = ({ activeSubTab, onSubTabChange, inventoryData }) => {
         </div>
 
         {/* Pagination */}
-        <div className="py-[20px] bg-white flex justify-end px-[24px] border-t border-[rgba(130,143,143,0.25)] rounded-b-[16px]">
-          <div className="flex gap-[8px] items-center">
-            <button
-              onClick={() => goToPage(1)}
-              disabled={safePage === 1}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >|&lt;</button>
-            <button
-              onClick={() => goToPage(safePage - 1)}
-              disabled={safePage === 1}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&lt;</button>
-
-            {pageWindow.map(num => (
-              <button
-                key={num}
-                onClick={() => goToPage(num)}
-                className={`w-[32px] h-[32px] rounded-full border flex items-center justify-center text-[13px] font-medium cursor-pointer ${num === safePage ? 'bg-[#E0E8E5] border-[#235347] text-[#212121]' : 'bg-[#FAFAFA] border-[#E5E7EB] text-[#666666] hover:bg-gray-100'}`}
-              >
-                {num}
-              </button>
-            ))}
-
-            <button
-              onClick={() => goToPage(safePage + 1)}
-              disabled={safePage === totalPages}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;</button>
-            <button
-              onClick={() => goToPage(totalPages)}
-              disabled={safePage === totalPages}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;|</button>
-          </div>
-        </div>
+        <Pagination
+          safePage={safePage}
+          totalPages={totalPages}
+          goToPage={goToPage}
+          pageWindow={pageWindow}
+        />
 
       </div>
     </div>

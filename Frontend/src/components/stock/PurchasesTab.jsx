@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { Search, ChevronDown, Pencil, CreditCard, Smartphone, Banknote } from 'lucide-react'
+import Pagination from '../common/Pagination'
 
 const PurchasesTab = ({ purchasesData }) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -184,45 +185,16 @@ const PurchasesTab = ({ purchasesData }) => {
         </div>
         
         {/* Pagination */}
-        <div className="py-[20px] bg-[#FAFAFA] flex justify-center border-t border-[rgba(130,143,143,0.25)]">
-          <div className="flex gap-[8px] items-center">
-            <button
-              onClick={() => goToPage(1)}
-              disabled={safePage === 1}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >|&lt;</button>
-            <button
-              onClick={() => goToPage(safePage - 1)}
-              disabled={safePage === 1}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&lt;</button>
-
-            {pageWindow.map(num => (
-              <button
-                key={num}
-                onClick={() => goToPage(num)}
-                className={`w-[32px] h-[32px] rounded-full border flex items-center justify-center text-[13px] font-medium cursor-pointer ${num === safePage ? 'bg-[#E0E8E5] border-[#235347] text-[#212121]' : 'bg-[#E5E7EB] border-transparent text-[#666666] hover:bg-gray-300'}`}
-              >
-                {num}
-              </button>
-            ))}
-
-            <button
-              onClick={() => goToPage(safePage + 1)}
-              disabled={safePage === totalPages}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;</button>
-            <button
-              onClick={() => goToPage(totalPages)}
-              disabled={safePage === totalPages}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;|</button>
-          </div>
-        </div>
-
+        <Pagination
+          safePage={safePage}
+          totalPages={totalPages}
+          goToPage={goToPage}
+          pageWindow={pageWindow}
+        />
       </div>
+
     </div>
-  ) // ...existing code...
+  )
 }
 
 export default PurchasesTab

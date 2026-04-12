@@ -1,5 +1,6 @@
-import React, { useState, useMemo } from 'react'
-import { Search } from 'lucide-react'
+import React, { useMemo, useState } from 'react'
+import { Plus, Search, ChevronDown, Check, Edit2, Download, Trash2, Tag, Smartphone, CreditCard, Banknote } from 'lucide-react'
+import Pagination from '../common/Pagination'
 import billingData from '../../data/billing.json'
 
 import PackageCard          from './PackageCard'
@@ -94,44 +95,12 @@ const BillingTab = () => {
         )}
 
         {/* ── Pagination ── */}
-        <div className="py-[14px] px-[20px] flex items-center justify-between border-t border-[#E5E7EB] bg-[#FAFAFA]">
-          <span className="text-[12px] text-[#9CA3AF]">
-            Showing {filtered.length === 0 ? 0 : (safePage - 1) * CARDS_PER_PAGE + 1}–{Math.min(safePage * CARDS_PER_PAGE, filtered.length)} of {filtered.length} packages
-          </span>
-
-          <div className="flex gap-[6px] items-center">
-            <button
-              onClick={() => goTo(1)} disabled={safePage === 1}
-              className="w-[30px] h-[30px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[11px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >|&lt;</button>
-            <button
-              onClick={() => goTo(safePage - 1)} disabled={safePage === 1}
-              className="w-[30px] h-[30px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[11px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&lt;</button>
-
-            {pageNumbers.map(num => (
-              <button
-                key={num}
-                onClick={() => goTo(num)}
-                className={`w-[30px] h-[30px] rounded-full flex items-center justify-center text-[12px] font-medium transition-colors
-                  ${num === safePage
-                    ? 'bg-[#D6F1E6] border border-[#235347] text-[#235347]'
-                    : 'bg-[#E5E7EB] text-[#212121] hover:bg-gray-300 cursor-pointer'}`}
-              >
-                {num}
-              </button>
-            ))}
-
-            <button
-              onClick={() => goTo(safePage + 1)} disabled={safePage === totalPages}
-              className="w-[30px] h-[30px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[11px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;</button>
-            <button
-              onClick={() => goTo(totalPages)} disabled={safePage === totalPages}
-              className="w-[30px] h-[30px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[11px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;|</button>
-          </div>
-        </div>
+        <Pagination
+          safePage={safePage}
+          totalPages={totalPages}
+          goToPage={goTo}
+          pageWindow={pageNumbers}
+        />
       </div>
 
       {/* ── Modals ── */}
