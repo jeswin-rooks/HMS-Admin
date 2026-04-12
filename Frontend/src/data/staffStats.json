@@ -1,0 +1,6 @@
+[
+  { "title": "Total Staff",    "value": "100", "iconBg": "bg-[#DBEAFE]", "iconColor": "text-[#1D4ED8]", "iconName": "Users" },
+  { "title": "Active Staff",   "value": "80",  "iconBg": "bg-[#FFF3CD]", "iconColor": "text-[#FFC107]", "iconName": "Check" },
+  { "title": "Present Today",  "value": "90",  "iconBg": "bg-[#D4EDDA]", "iconColor": "text-[#28A745]", "iconName": "CheckCircle" },
+  { "title": "Absent Today",   "value": "10",  "iconBg": "bg-[#FAD7DA]", "iconColor": "text-[#E63946]", "iconName": "Ban" }
+]

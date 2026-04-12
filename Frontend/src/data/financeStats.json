@@ -1,27 +1,7 @@
 [
-  {
-    "title": "Utilities",
-    "percentage": "35%",
-    "amount": "₹5,05,500"
-  },
-  {
-    "title": "Maintenance",
-    "percentage": "25%",
-    "amount": "₹2,10,625"
-  },
-  {
-    "title": "Salary",
-    "percentage": "15%",
-    "amount": "₹1,26,375"
-  },
-  {
-    "title": "Security",
-    "percentage": "15%",
-    "amount": "₹1,26,375"
-  },
-  {
-    "title": "Miscellaneous",
-    "percentage": "15%",
-    "amount": "₹1,26,375"
-  }
+  { "title": "Utilities",     "percentage": "35%", "value": "₹5,05,500" },
+  { "title": "Maintenance",   "percentage": "25%", "value": "₹2,10,625" },
+  { "title": "Salary",        "percentage": "15%", "value": "₹1,26,375" },
+  { "title": "Security",      "percentage": "15%", "value": "₹1,26,375" },
+  { "title": "Miscellaneous", "percentage": "15%", "value": "₹1,26,375" }
 ]

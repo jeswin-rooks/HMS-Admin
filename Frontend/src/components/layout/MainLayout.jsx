@@ -5,7 +5,7 @@ const menuItems = [
   { path: '/dashboard', label: 'Facility & Bed Management', icon: '▭' },
   { path: '/stock', label: 'Inventory & Orders', icon: '▦' },
   { path: '/finance', label: 'Finance & Operations', icon: '☰' },
-  { path: '/follow-up', label: 'Staff Management', icon: '◔' },
+  { path: '/staff', label: 'Staff Management', icon: '◔' },
 ]
 
 const MainLayout = ({ children }) => {

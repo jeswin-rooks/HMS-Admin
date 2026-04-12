@@ -5,7 +5,7 @@ import DashboardPage from './pages/DashboardPage'
 import PatientsPage from './pages/PatientsPage'
 import FinancePage from './pages/FinancePage'
 import StockPage from './pages/StockPage'
-import FollowUpPage from './pages/FollowUpPage'
+import StaffPage from './pages/StaffPage'
 import { DataProvider } from './context/DataContext'
 import './style.css'
 
@@ -17,7 +17,7 @@ const App = () => {
           <MainLayout>
             <Routes>
               <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/follow-up" element={<FollowUpPage />} />
+              <Route path="/staff" element={<StaffPage />} />
               <Route path="/patients" element={<PatientsPage />} />
               <Route path="/finance" element={<FinancePage />} />
               <Route path="/stock" element={<StockPage />} />
