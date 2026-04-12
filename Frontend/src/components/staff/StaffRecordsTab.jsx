@@ -1,8 +1,56 @@
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import { Search, ChevronDown, Eye, Pencil } from 'lucide-react'
 import doctorImg from '../assets/doctor.jpg'
 
 const StaffRecordsTab = ({ staffData }) => {
+  const [searchQuery, setSearchQuery] = useState('')
+  const [departmentFilter, setDepartmentFilter] = useState('')
+  const [statusFilter, setStatusFilter] = useState('')
+  const [attendanceFilter, setAttendanceFilter] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const ROWS_PER_PAGE = 6
+
+  const departmentOptions = useMemo(() => [...new Set(staffData.map((item) => item.dept))], [staffData])
+  const statusOptions = useMemo(() => [...new Set(staffData.map((item) => item.status))], [staffData])
+  const attendanceOptions = useMemo(() => [...new Set(staffData.map((item) => item.attendance))], [staffData])
+
+  const filteredRows = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase()
+    return staffData.filter((item) => {
+      const matchesSearch =
+        q.length === 0 ||
+        item.name.toLowerCase().includes(q) ||
+        item.pid.toLowerCase().includes(q) ||
+        item.role.toLowerCase().includes(q)
+
+      const matchesDepartment = departmentFilter ? item.dept === departmentFilter : true
+      const matchesStatus = statusFilter ? item.status === statusFilter : true
+      const matchesAttendance = attendanceFilter ? item.attendance === attendanceFilter : true
+
+      return matchesSearch && matchesDepartment && matchesStatus && matchesAttendance
+    })
+  }, [staffData, searchQuery, departmentFilter, statusFilter, attendanceFilter])
+
+  const totalPages = Math.max(1, Math.ceil(filteredRows.length / ROWS_PER_PAGE))
+  const safePage = Math.min(currentPage, totalPages)
+  const pagedRows = filteredRows.slice((safePage - 1) * ROWS_PER_PAGE, safePage * ROWS_PER_PAGE)
+
+  const goToPage = (nextPage) => {
+    setCurrentPage(Math.max(1, Math.min(nextPage, totalPages)))
+  }
+
+  const handleFilterChange = (setter, value) => {
+    setter(value)
+    setCurrentPage(1)
+  }
+
+  const pageWindow = useMemo(() => {
+    const maxButtons = 7
+    const start = Math.max(1, Math.min(safePage - 3, totalPages - (maxButtons - 1)))
+    const end = Math.min(totalPages, start + (maxButtons - 1))
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i)
+  }, [safePage, totalPages])
+
   return (
     <div className="flex flex-col gap-5">
       
@@ -14,31 +62,60 @@ const StaffRecordsTab = ({ staffData }) => {
           <input 
             type="text" 
             placeholder="Enter Doctor Name etc.." 
+            value={searchQuery}
+            onChange={(e) => handleFilterChange(setSearchQuery, e.target.value)}
             className="bg-transparent border-none outline-none text-[14px] text-[#4B5563] w-full"
           />
         </div>
 
         <div className="flex items-center gap-5">
           <div className="flex flex-col gap-1">
-            <span className="text-[12px] font-medium text-[#666666]">Date</span>
-            <div className="flex items-center justify-between w-35 h-11 px-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg cursor-pointer">
-              <span className="text-[14px] text-[#212121]">Today</span>
+            <span className="text-[12px] font-medium text-[#666666]">Department</span>
+            <div className="flex items-center justify-between w-35 h-11 px-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg cursor-pointer relative">
+              <select
+                className="appearance-none bg-transparent border-none outline-none text-[14px] text-[#212121] w-full"
+                value={departmentFilter}
+                onChange={(e) => handleFilterChange(setDepartmentFilter, e.target.value)}
+              >
+                <option value="">All</option>
+                {departmentOptions.map((dept) => (
+                  <option key={dept} value={dept}>{dept}</option>
+                ))}
+              </select>
               <ChevronDown size={16} className="text-[#666666]" />
             </div>
           </div>
           
           <div className="flex flex-col gap-1">
             <span className="text-[12px] font-medium text-[#666666]">Status</span>
-            <div className="flex items-center justify-between w-35 h-11 px-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg cursor-pointer">
-              <span className="text-[14px] text-[#212121]">Active</span>
+            <div className="flex items-center justify-between w-35 h-11 px-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg cursor-pointer relative">
+              <select
+                className="appearance-none bg-transparent border-none outline-none text-[14px] text-[#212121] w-full"
+                value={statusFilter}
+                onChange={(e) => handleFilterChange(setStatusFilter, e.target.value)}
+              >
+                <option value="">All</option>
+                {statusOptions.map((status) => (
+                  <option key={status} value={status}>{status}</option>
+                ))}
+              </select>
               <ChevronDown size={16} className="text-[#666666]" />
             </div>
           </div>
 
           <div className="flex flex-col gap-1">
             <span className="text-[12px] font-medium text-[#666666]">Attendance</span>
-            <div className="flex items-center justify-between w-35 h-11 px-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg cursor-pointer">
-              <span className="text-[14px] text-[#212121]">Present</span>
+            <div className="flex items-center justify-between w-35 h-11 px-4 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg cursor-pointer relative">
+              <select
+                className="appearance-none bg-transparent border-none outline-none text-[14px] text-[#212121] w-full"
+                value={attendanceFilter}
+                onChange={(e) => handleFilterChange(setAttendanceFilter, e.target.value)}
+              >
+                <option value="">All</option>
+                {attendanceOptions.map((attendance) => (
+                  <option key={attendance} value={attendance}>{attendance}</option>
+                ))}
+              </select>
               <ChevronDown size={16} className="text-[#666666]" />
             </div>
           </div>
@@ -74,7 +151,7 @@ const StaffRecordsTab = ({ staffData }) => {
               </tr>
             </thead>
             <tbody>
-              {staffData.map((item, idx) => (
+              {pagedRows.map((item, idx) => (
                 <tr key={item.id} className={`border-b border-[#E5E7EB] hover:bg-gray-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-[#FAFAFA]'}`}>
                   <td className="py-4 px-5 whitespace-nowrap flex items-center gap-3">
                     <img 
@@ -125,18 +202,35 @@ const StaffRecordsTab = ({ staffData }) => {
         {/* Pagination */}
         <div className="py-4 px-5 flex items-center justify-center bg-[#F9FAFB] rounded-b-xl border-t border-[#E5E7EB]">
           <div className="flex gap-2">
-            <button className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50">|&lt;</button>
-            <button className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50">&lt;</button>
-            {[1,2,3,4,5,6,7].map(num => (
+            <button
+              onClick={() => goToPage(1)}
+              disabled={safePage === 1}
+              className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >|&lt;</button>
+            <button
+              onClick={() => goToPage(safePage - 1)}
+              disabled={safePage === 1}
+              className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >&lt;</button>
+            {pageWindow.map(num => (
               <button 
                 key={num}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-[12px] shadow-sm cursor-pointer ${num === 1 ? 'bg-[#D6F1E6] border border-[#235347] text-[#235347] font-medium' : 'bg-[#E5E7EB] text-[#212121]'}`}
+                onClick={() => goToPage(num)}
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-[12px] shadow-sm cursor-pointer ${num === safePage ? 'bg-[#D6F1E6] border border-[#235347] text-[#235347] font-medium' : 'bg-[#E5E7EB] text-[#212121]'}`}
               >
                 {num}
               </button>
             ))}
-            <button className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50">&gt;</button>
-            <button className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50">&gt;|</button>
+            <button
+              onClick={() => goToPage(safePage + 1)}
+              disabled={safePage === totalPages}
+              className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >&gt;</button>
+            <button
+              onClick={() => goToPage(totalPages)}
+              disabled={safePage === totalPages}
+              className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
+            >&gt;|</button>
           </div>
         </div>
 

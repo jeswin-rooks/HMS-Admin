@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Search, Edit, X, Check, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 
@@ -18,15 +18,42 @@ const BedManagementTable = ({
   const { updateBedStatus } = useData();
   const [editingId, setEditingId] = useState(null);
   const [editStatus, setEditStatus] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const ROWS_PER_PAGE = 8;
 
   // Filter data based on search and dropdown filters
-  const filteredData = data.filter((row) => {
+  const filteredData = useMemo(() => data.filter((row) => {
     const matchesSearch = row.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           row.roomNo.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesDept = departmentFilter ? row.department === departmentFilter : true;
     const matchesStatus = statusFilter ? row.status === statusFilter : true;
     return matchesSearch && matchesDept && matchesStatus;
-  });
+  }), [data, searchQuery, departmentFilter, statusFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filteredData.length / ROWS_PER_PAGE));
+  const safePage = Math.min(currentPage, totalPages);
+  const pagedData = filteredData.slice((safePage - 1) * ROWS_PER_PAGE, safePage * ROWS_PER_PAGE);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, departmentFilter, statusFilter, activeTab]);
+
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [currentPage, totalPages]);
+
+  const goToPage = (nextPage) => {
+    setCurrentPage(Math.max(1, Math.min(nextPage, totalPages)));
+  };
+
+  const pageWindow = useMemo(() => {
+    const maxButtons = 7;
+    const start = Math.max(1, Math.min(safePage - 3, totalPages - (maxButtons - 1)));
+    const end = Math.min(totalPages, start + (maxButtons - 1));
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  }, [safePage, totalPages]);
 
   return (
     <div className="flex-1 overflow-hidden flex flex-col bg-white">
@@ -118,7 +145,7 @@ const BedManagementTable = ({
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-[rgba(130,143,143,0.25)]">
-            {filteredData.map((bed, idx) => (
+            {pagedData.map((bed, idx) => (
               <tr key={idx} className="h-[69px] hover:bg-gray-50 transition-colors">
                 <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
                   {bed.id}
@@ -193,32 +220,48 @@ const BedManagementTable = ({
       <div className="bg-[#F3F6F9] h-[73px] px-[16px] flex items-center justify-center border-[rgba(130,143,143,0.25)] rounded-b-[12px] border-t-[1px]">
         <nav className="relative z-0 inline-flex flex-row items-start px-[6px] gap-[6px] w-[512px] h-[40px]" aria-label="Pagination">
           
-          <button className="box-border relative w-[40px] h-[40px] opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] bg-transparent">
+          <button
+            onClick={() => goToPage(1)}
+            disabled={safePage === 1}
+            className="box-border relative w-[40px] h-[40px] opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] bg-transparent disabled:cursor-not-allowed"
+          >
             <ChevronsLeft size={22} className="opacity-40" />
             <span className="sr-only">First Page</span>
           </button>
           
-          <button className="box-border relative w-[40px] h-[40px] opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] bg-transparent">
+          <button
+            onClick={() => goToPage(safePage - 1)}
+            disabled={safePage === 1}
+            className="box-border relative w-[40px] h-[40px] opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] bg-transparent disabled:cursor-not-allowed"
+          >
             <ChevronLeft size={22} className="opacity-40"/>
             <span className="sr-only">Previous Page</span>
           </button>
           
-          <button className="box-border relative w-[40px] h-[40px] bg-[#D6F1E6] border border-[#235347] rounded-[100px] flex items-center justify-center">
-            <span className="font-['Poppins'] font-medium text-[14px] leading-[21px] text-center text-[#051F20]">1</span>
-          </button>
-          
-          {[2, 3, 4, 5, 6, 7].map(num => (
-            <button key={num} className="box-border relative w-[40px] h-[40px] bg-[rgba(130,143,143,0.25)] border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center">
+          {pageWindow.map((num) => (
+            <button
+              key={num}
+              onClick={() => goToPage(num)}
+              className={`box-border relative w-[40px] h-[40px] rounded-[100px] flex items-center justify-center ${num === safePage ? 'bg-[#D6F1E6] border border-[#235347]' : 'bg-[rgba(130,143,143,0.25)] border border-[rgba(130,143,143,0.25)]'}`}
+            >
               <span className="font-['Poppins'] font-medium text-[14px] leading-[21px] text-center text-[#212121]">{num}</span>
             </button>
           ))}
 
-          <button className="box-border relative w-[40px] h-[40px] bg-white opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121]">
+          <button
+            onClick={() => goToPage(safePage + 1)}
+            disabled={safePage === totalPages}
+            className="box-border relative w-[40px] h-[40px] bg-white opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] disabled:cursor-not-allowed"
+          >
             <ChevronRight size={22} className="opacity-40"/>
             <span className="sr-only">Next Page</span>
           </button>
 
-          <button className="box-border relative w-[40px] h-[40px] bg-white opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121]">
+          <button
+            onClick={() => goToPage(totalPages)}
+            disabled={safePage === totalPages}
+            className="box-border relative w-[40px] h-[40px] bg-white opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] disabled:cursor-not-allowed"
+          >
             <ChevronsRight size={22} className="opacity-40"/>
             <span className="sr-only">Last Page</span>
           </button>
