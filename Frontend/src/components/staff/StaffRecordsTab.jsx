@@ -2,7 +2,8 @@ import React, { useMemo, useState } from 'react'
 import { Search, ChevronDown, Eye, Pencil } from 'lucide-react'
 import doctorImg from '../assets/doctor.jpg'
 
-const StaffRecordsTab = ({ staffData }) => {
+const StaffRecordsTab = ({ staffData, onEditStaff, onViewStaff }) => {
+  const [activeStaffTab, setActiveStaffTab] = useState('doctors')
   const [searchQuery, setSearchQuery] = useState('')
   const [departmentFilter, setDepartmentFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
@@ -10,13 +11,35 @@ const StaffRecordsTab = ({ staffData }) => {
   const [currentPage, setCurrentPage] = useState(1)
   const ROWS_PER_PAGE = 6
 
+  const staffTabs = useMemo(() => ([
+    { key: 'doctors', label: 'Doctors' },
+    { key: 'therapist', label: 'Therapist' },
+    { key: 'receptionists', label: 'Receptionists' },
+    { key: 'pharmacy', label: 'Pharmacy Staff' },
+    { key: 'cleaning', label: 'Cleaning and Security Staff' }
+  ]), [])
+
+  const isDoctorRow = (item) => {
+    const role = (item.role || '').toLowerCase()
+    const id = (item.pid || '').toLowerCase()
+    return role.includes('doctor') || id.includes('#doc')
+  }
+
+  const baseRows = useMemo(() => {
+    if (activeStaffTab === 'doctors') {
+      return staffData.filter(isDoctorRow)
+    }
+    const nonDoctorRows = staffData.filter((item) => !isDoctorRow(item))
+    return nonDoctorRows.length ? nonDoctorRows : staffData
+  }, [staffData, activeStaffTab])
+
   const departmentOptions = useMemo(() => [...new Set(staffData.map((item) => item.dept))], [staffData])
   const statusOptions = useMemo(() => [...new Set(staffData.map((item) => item.status))], [staffData])
   const attendanceOptions = useMemo(() => [...new Set(staffData.map((item) => item.attendance))], [staffData])
 
   const filteredRows = useMemo(() => {
     const q = searchQuery.trim().toLowerCase()
-    return staffData.filter((item) => {
+    return baseRows.filter((item) => {
       const matchesSearch =
         q.length === 0 ||
         item.name.toLowerCase().includes(q) ||
@@ -29,7 +52,7 @@ const StaffRecordsTab = ({ staffData }) => {
 
       return matchesSearch && matchesDepartment && matchesStatus && matchesAttendance
     })
-  }, [staffData, searchQuery, departmentFilter, statusFilter, attendanceFilter])
+  }, [baseRows, searchQuery, departmentFilter, statusFilter, attendanceFilter])
 
   const totalPages = Math.max(1, Math.ceil(filteredRows.length / ROWS_PER_PAGE))
   const safePage = Math.min(currentPage, totalPages)
@@ -43,6 +66,20 @@ const StaffRecordsTab = ({ staffData }) => {
     setter(value)
     setCurrentPage(1)
   }
+
+  const tabCounts = useMemo(() => {
+    const doctors = staffData.filter(isDoctorRow).length
+    const nonDoctors = staffData.filter((item) => !isDoctorRow(item)).length
+    const fallbackCount = nonDoctors || staffData.length
+
+    return {
+      doctors,
+      therapist: fallbackCount,
+      receptionists: fallbackCount,
+      pharmacy: fallbackCount,
+      cleaning: fallbackCount
+    }
+  }, [staffData])
 
   const pageWindow = useMemo(() => {
     const maxButtons = 7
@@ -127,13 +164,17 @@ const StaffRecordsTab = ({ staffData }) => {
       <div className="bg-white rounded-xl shadow-[0px_4px_10px_rgba(0,0,0,0.03)] border border-[#E9E9E9]">
         
         <div className="flex px-5 border-b border-[#E5E7EB]">
-          {['Doctors (12)', 'Therapist', 'Receptionists', 'Pharmacy Staff', 'Cleaning and Security Staff'].map((tab, i) => (
-            <div 
-              key={i}
-              className={`py-4 px-3 cursor-pointer border-b-2 font-medium text-[14px] leading-5 ${i === 0 ? 'border-[#212121] text-[#212121]' : 'border-transparent text-[#666666]'}`}
+          {staffTabs.map((tab) => (
+            <button
+              key={tab.key}
+              onClick={() => {
+                setActiveStaffTab(tab.key)
+                setCurrentPage(1)
+              }}
+              className={`py-4 px-3 cursor-pointer border-b-2 font-medium text-[14px] leading-5 ${activeStaffTab === tab.key ? 'border-[#212121] text-[#212121]' : 'border-transparent text-[#666666]'}`}
             >
-              {tab}
-            </div>
+              {tab.label} ({tabCounts[tab.key]})
+            </button>
           ))}
         </div>
 
@@ -189,8 +230,12 @@ const StaffRecordsTab = ({ staffData }) => {
                   </td>
                   <td className="py-4 px-5 whitespace-nowrap">
                     <div className="flex items-center gap-3 text-[#3B82F6] cursor-pointer">
-                      <Eye size={18} />
-                      <Pencil size={18} />
+                      <button onClick={() => onViewStaff?.(item)}>
+                        <Eye size={18} />
+                      </button>
+                      <button onClick={() => onEditStaff?.(item)}>
+                        <Pencil size={18} />
+                      </button>
                     </div>
                   </td>
                 </tr>

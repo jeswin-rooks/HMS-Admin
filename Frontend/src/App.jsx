@@ -13,7 +13,7 @@ const App = () => {
   return (
     <DataProvider>
       <BrowserRouter>
-        <div className="h-screen flex flex-col bg-[#F1F1F1] font-sans text-gray-900 overflow-hidden">
+        <div className="min-h-screen flex flex-col bg-[#F1F1F1] font-sans text-gray-900">
           <MainLayout>
             <Routes>
               <Route path="/dashboard" element={<DashboardPage />} />
