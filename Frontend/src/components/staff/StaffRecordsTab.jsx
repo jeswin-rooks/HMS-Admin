@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from 'react'
-import { Search, ChevronDown, Eye, Pencil } from 'lucide-react'
+import { Search, ChevronDown, Eye, Pencil, Edit2, Check, ExternalLink } from 'lucide-react'
 import doctorImg from '../assets/doctor.jpg'
+import Pagination from '../common/Pagination'
 
-const StaffRecordsTab = ({ staffData, onEditStaff, onViewStaff }) => {
+const StaffRecordsTab = ({ staffData = [], onEditStaff, onViewStaff }) => {
   const [activeStaffTab, setActiveStaffTab] = useState('doctors')
   const [searchQuery, setSearchQuery] = useState('')
   const [departmentFilter, setDepartmentFilter] = useState('')
@@ -245,39 +246,12 @@ const StaffRecordsTab = ({ staffData, onEditStaff, onViewStaff }) => {
         </div>
 
         {/* Pagination */}
-        <div className="py-4 px-5 flex items-center justify-center bg-[#F9FAFB] rounded-b-xl border-t border-[#E5E7EB]">
-          <div className="flex gap-2">
-            <button
-              onClick={() => goToPage(1)}
-              disabled={safePage === 1}
-              className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >|&lt;</button>
-            <button
-              onClick={() => goToPage(safePage - 1)}
-              disabled={safePage === 1}
-              className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&lt;</button>
-            {pageWindow.map(num => (
-              <button 
-                key={num}
-                onClick={() => goToPage(num)}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-[12px] shadow-sm cursor-pointer ${num === safePage ? 'bg-[#D6F1E6] border border-[#235347] text-[#235347] font-medium' : 'bg-[#E5E7EB] text-[#212121]'}`}
-              >
-                {num}
-              </button>
-            ))}
-            <button
-              onClick={() => goToPage(safePage + 1)}
-              disabled={safePage === totalPages}
-              className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;</button>
-            <button
-              onClick={() => goToPage(totalPages)}
-              disabled={safePage === totalPages}
-              className="w-8 h-8 rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm cursor-pointer hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;|</button>
-          </div>
-        </div>
+        <Pagination
+          safePage={safePage}
+          totalPages={totalPages}
+          goToPage={goToPage}
+          pageWindow={pageWindow}
+        />
 
       </div>
 

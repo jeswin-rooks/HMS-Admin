@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import { Search, Pencil } from 'lucide-react'
 import AddExpenseModal from './AddExpenseModal'
+import Pagination from '../common/Pagination'
 
 const ROWS_PER_PAGE = 7
 
@@ -318,56 +319,12 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
         </div>
 
         {/* ── Pagination ── */}
-        <div className="py-[16px] px-[20px] flex items-center justify-between bg-[#F9FAFB] rounded-b-[12px] border-t border-[#E5E7EB]">
-          <span className="text-[13px] text-[#666666]">
-            Showing {filtered.length === 0 ? 0 : (safePage - 1) * ROWS_PER_PAGE + 1}–{Math.min(safePage * ROWS_PER_PAGE, filtered.length)} of {filtered.length} entries
-          </span>
-
-          <div className="flex gap-[6px] items-center">
-            {/* First */}
-            <button
-              onClick={() => goTo(1)}
-              disabled={safePage === 1}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >|&lt;</button>
-
-            {/* Prev */}
-            <button
-              onClick={() => goTo(safePage - 1)}
-              disabled={safePage === 1}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&lt;</button>
-
-            {/* Page numbers */}
-            {pageNumbers.map(num => (
-              <button
-                key={num}
-                onClick={() => goTo(num)}
-                className={`w-[32px] h-[32px] rounded-full flex items-center justify-center text-[13px] font-medium transition-colors
-                  ${num === safePage
-                    ? 'bg-[#D6F1E6] border border-[#235347] text-[#235347]'
-                    : 'bg-[#E5E7EB] text-[#212121] hover:bg-gray-300 cursor-pointer'}`}
-              >
-                {num}
-              </button>
-            ))}
-
-            {/* Next */}
-            <button
-              onClick={() => goTo(safePage + 1)}
-              disabled={safePage === totalPages}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;</button>
-
-            {/* Last */}
-            <button
-              onClick={() => goTo(totalPages)}
-              disabled={safePage === totalPages}
-              className="w-[32px] h-[32px] rounded-full bg-white border border-[#E5E7EB] flex items-center justify-center text-[#666666] text-[12px] shadow-sm hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed"
-            >&gt;|</button>
-          </div>
-        </div>
-
+        <Pagination
+          safePage={safePage}
+          totalPages={totalPages}
+          goToPage={goTo}
+          pageWindow={pageNumbers}
+        />
       </div>
 
       {showAddModal && (

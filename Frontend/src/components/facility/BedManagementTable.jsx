@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Search, Edit, X, Check, ChevronsLeft, ChevronLeft, ChevronRight, ChevronsRight } from 'lucide-react';
+import { Search, Edit, X, Check } from 'lucide-react';
 import { useData } from '../../context/DataContext';
+import Pagination from '../common/Pagination';
 
 const BedManagementTable = ({
   data,
@@ -217,57 +218,12 @@ const BedManagementTable = ({
       </div>
       
       {/* Pagination */}
-      <div className="bg-[#F3F6F9] h-[73px] px-[16px] flex items-center justify-center border-[rgba(130,143,143,0.25)] rounded-b-[12px] border-t-[1px]">
-        <nav className="relative z-0 inline-flex flex-row items-start px-[6px] gap-[6px] w-[512px] h-[40px]" aria-label="Pagination">
-          
-          <button
-            onClick={() => goToPage(1)}
-            disabled={safePage === 1}
-            className="box-border relative w-[40px] h-[40px] opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] bg-transparent disabled:cursor-not-allowed"
-          >
-            <ChevronsLeft size={22} className="opacity-40" />
-            <span className="sr-only">First Page</span>
-          </button>
-          
-          <button
-            onClick={() => goToPage(safePage - 1)}
-            disabled={safePage === 1}
-            className="box-border relative w-[40px] h-[40px] opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] bg-transparent disabled:cursor-not-allowed"
-          >
-            <ChevronLeft size={22} className="opacity-40"/>
-            <span className="sr-only">Previous Page</span>
-          </button>
-          
-          {pageWindow.map((num) => (
-            <button
-              key={num}
-              onClick={() => goToPage(num)}
-              className={`box-border relative w-[40px] h-[40px] rounded-[100px] flex items-center justify-center ${num === safePage ? 'bg-[#D6F1E6] border border-[#235347]' : 'bg-[rgba(130,143,143,0.25)] border border-[rgba(130,143,143,0.25)]'}`}
-            >
-              <span className="font-['Poppins'] font-medium text-[14px] leading-[21px] text-center text-[#212121]">{num}</span>
-            </button>
-          ))}
-
-          <button
-            onClick={() => goToPage(safePage + 1)}
-            disabled={safePage === totalPages}
-            className="box-border relative w-[40px] h-[40px] bg-white opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] disabled:cursor-not-allowed"
-          >
-            <ChevronRight size={22} className="opacity-40"/>
-            <span className="sr-only">Next Page</span>
-          </button>
-
-          <button
-            onClick={() => goToPage(totalPages)}
-            disabled={safePage === totalPages}
-            className="box-border relative w-[40px] h-[40px] bg-white opacity-38 border border-[rgba(130,143,143,0.25)] rounded-[100px] flex items-center justify-center text-[#212121] disabled:cursor-not-allowed"
-          >
-            <ChevronsRight size={22} className="opacity-40"/>
-            <span className="sr-only">Last Page</span>
-          </button>
-
-        </nav>
-      </div>
+      <Pagination
+        safePage={safePage}
+        totalPages={totalPages}
+        goToPage={goToPage}
+        pageWindow={pageWindow}
+      />
     </div>
   );
 };
