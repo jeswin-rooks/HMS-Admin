@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StaffTabs = ({ activeTab, onTabChange }) => {
+const StaffTabs = ({ activeTab, onTabChange, onAddStaff }) => {
   return (
     <div className="flex justify-between items-end border-b border-[#E5E7EB] w-full">
       <div className="flex gap-8">
@@ -22,7 +22,10 @@ const StaffTabs = ({ activeTab, onTabChange }) => {
         </div>
       </div>
       <div className="pb-3">
-        <button className="h-10 px-5 bg-[#051F20] text-white rounded-lg text-[14px] font-medium">
+        <button
+          onClick={onAddStaff}
+          className="h-10 px-5 bg-[#051F20] text-white rounded-lg text-[14px] font-medium"
+        >
           Add Staff
         </button>
       </div>

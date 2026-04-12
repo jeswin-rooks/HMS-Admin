@@ -10,11 +10,11 @@ const menuItems = [
 
 const MainLayout = ({ children }) => {
   return (
-    <div className="h-screen flex flex-col bg-[#F1F1F1] font-['Poppins'] overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-[#F1F1F1] font-['Poppins']">
       <header className="h-[88px] w-full px-[40px] flex items-center justify-between bg-[#ACE3CE] border-b-2 border-[rgba(130,143,143,0.25)] relative z-20">
         
           <Link to="/dashboard" className="flex items-center gap-[20px] no-underline">
-            <span className="w-[56px] h-[56px] rounded-full bg-[#051F20]" aria-hidden="true" />
+            <span className="w-[44px] h-[44px] rounded-full bg-[#051F20]" aria-hidden="true" />
             <span className="text-[#051F20] font-medium text-[15px] leading-[22px] w-[81px]">App Name</span>
           </Link>
 
@@ -38,12 +38,12 @@ const MainLayout = ({ children }) => {
           </nav>
     
 
-        <div className="bg-[#051F20] text-white w-[56px] h-[56px] rounded-[30px] flex items-center justify-center font-semibold text-[24px] leading-[36px]" aria-label="User initials">
+        <div className="bg-[#051F20] text-white w-[44px] h-[44px] rounded-[30px] flex items-center justify-center font-semibold text-[20px] leading-[36px]" aria-label="User initials">
           SA
         </div>
       </header>
 
-      <main className="flex-1 w-full relative overflow-y-auto">
+      <main className="flex-1 w-full relative">
         {children}
       </main>
     </div>
