@@ -1,0 +1,12 @@
+[
+  { "id": 1, "name": "Dr. James Wilson", "pid": "#DOC-001", "role": "Senior Surgeon", "dept": "Surgery Dept.", "attendance": "Present", "fee": "500", "salary": "12,500", "status": "Active" },
+  { "id": 2, "name": "Dr. Maria Garcia", "pid": "#DOC-005", "role": "Neurologist", "dept": "Neurology", "attendance": "Absent", "fee": "500", "salary": "11,000", "status": "Active" },
+  { "id": 3, "name": "Dr. Maria Garcia", "pid": "#DOC-005", "role": "Pediatrician", "dept": "Pediatrics", "attendance": "Present", "fee": "500", "salary": "9,800", "status": "Active" },
+  { "id": 4, "name": "Dr. Maria Garcia", "pid": "#DOC-005", "role": "Pediatrician", "dept": "Pediatrics", "attendance": "Absent", "fee": "500", "salary": "9,800", "status": "Active" },
+  { "id": 5, "name": "Dr. Robert Chen", "pid": "#DOC-009", "role": "Cardiologist", "dept": "Cardiology", "attendance": "Present", "fee": "500", "salary": "14,200", "status": "Active" },
+  { "id": 6, "name": "Dr. Robert Chen", "pid": "#DOC-009", "role": "Cardiologist", "dept": "Cardiology", "attendance": "Present", "fee": "500", "salary": "14,200", "status": "Active" },
+  { "id": 7, "name": "Dr. Maria Garcia", "pid": "#DOC-005", "role": "Neurologist", "dept": "Neurology", "attendance": "Absent", "fee": "500", "salary": "11,000", "status": "Active" },
+  { "id": 8, "name": "Dr. Robert Chen", "pid": "#DOC-009", "role": "Cardiologist", "dept": "Cardiology", "attendance": "Present", "fee": "500", "salary": "14,200", "status": "Inactive" },
+  { "id": 9, "name": "Dr. Maria Garcia", "pid": "#DOC-005", "role": "Pediatrician", "dept": "Pediatrics", "attendance": "Absent", "fee": "500", "salary": "9,800", "status": "Inactive" },
+  { "id": 10, "name": "Dr. Maria Garcia", "pid": "#DOC-005", "role": "Neurologist", "dept": "Neurology", "attendance": "Absent", "fee": "500", "salary": "11,000", "status": "Inactive" }
+]

@@ -2,19 +2,19 @@ import React from 'react'
 
 const FinanceStats = ({ stats }) => {
   return (
-    <div className="flex gap-[20px] w-full justify-between items-stretch">
+    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
       {stats.map((stat, index) => (
         <div 
           key={index}
-          className="flex-1 bg-white rounded-lg p-[20px] shadow-[0px_4px_10px_rgba(0,0,0,0.03)] border border-[#E9E9E9]"
+          className="bg-[#EDFFF0] rounded-xl p-6 flex flex-col justify-between shadow-[0px_4px_8px_3px_rgba(0,0,0,0.15),0px_1px_3px_rgba(0,0,0,0.3)] border border-[#cad8cf] h-[166px]"
         >
-          <div className="flex justify-between items-start mb-[16px]">
-            <span className="text-[#666666] font-medium text-[14px] leading-[20px]">{stat.title}</span>
-            <span className="text-[#F14B4B] font-bold text-[14px] leading-[20px]">{stat.percentage}</span>
+          <div className="flex justify-between items-start mb-4">
+            <h3 className="text-[#666666] font-medium text-[18px]">{stat.title}</h3>
+            <span className="text-[#F14B4B] font-bold text-[14px] leading-5">{stat.percentage}</span>
           </div>
-          <div className="text-[28px] font-bold text-[#212121] leading-[36px]">
+          <p className="text-[36px] font-bold text-[#212121] leading-none">
             {stat.amount}
-          </div>
+          </p>
         </div>
       ))}
     </div>
