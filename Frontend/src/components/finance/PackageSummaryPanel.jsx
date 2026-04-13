@@ -3,7 +3,7 @@ import React from 'react'
 const SummaryRow = ({ label, value, accent }) => (
   <div className="flex justify-between items-center py-[5px] border-b border-[#F3F4F6] last:border-0">
     <span className="text-[12px] text-[#666666]">{label}</span>
-    <span className={`text-[13px] font-medium ${accent ? 'text-[#E53E3E]' : 'text-[#212121]'}`}>
+    <span className={`text-[13px] font-medium ${accent ? 'text-[#099a34]' : 'text-[#212121]'}`}>
       {accent && value < 0 ? `-₹${Math.abs(value)}` : `₹${value}`}
     </span>
   </div>
@@ -33,8 +33,8 @@ const PackageSummaryPanel = ({ summary }) => {
       <SummaryRow label="Package Discount"        value={summary.packageDiscount || 0} accent />
 
       <div className="mt-[10px] pt-[10px] border-t-2 border-[#235347] flex justify-between items-center">
-        <span className="text-[13px] font-bold text-[#212121]">Final Package Price</span>
-        <span className="text-[16px] font-bold text-[#235347]">
+        <span className="text-[13px] font-bold text-[#1D4ED8]">Final Package Price</span>
+        <span className="text-[16px] font-bold text-[#1D4ED8]">
           ₹{total.toLocaleString('en-IN')}
         </span>
       </div>

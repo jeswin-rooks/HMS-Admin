@@ -197,7 +197,7 @@ const StaffRecordsTab = ({ staffData = [], onEditStaff, onViewStaff }) => {
                 <tr key={item.id} className={`border-b border-[#E5E7EB] hover:bg-gray-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-[#FAFAFA]'}`}>
                   <td className="py-4 px-5 whitespace-nowrap flex items-center gap-3">
                     <img 
-                      src={doctorImg} 
+                      src={item.photo || doctorImg} 
                       alt="avatar" 
                       className="w-10 h-10 rounded-full object-cover" 
                     />

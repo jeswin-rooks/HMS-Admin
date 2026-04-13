@@ -81,15 +81,14 @@ const BillingTab = () => {
             No packages found
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-[1px] bg-[#F3F4F6]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-[16px] p-[16px] bg-[#F8FAFC]">
             {pagedCards.map((pkg, idx) => (
-              <div key={pkg.id} className="bg-white">
-                <PackageCard
-                  pkg={pkg}
-                  index={(safePage - 1) * CARDS_PER_PAGE + idx + 1}
-                  onClick={(p) => setViewPkg(p)}
-                />
-              </div>
+              <PackageCard
+                key={pkg.id}
+                pkg={pkg}
+                index={(safePage - 1) * CARDS_PER_PAGE + idx + 1}
+                onClick={(p) => setViewPkg(p)}
+              />
             ))}
           </div>
         )}

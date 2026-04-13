@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { Bed, Ban, CheckCircle, Trash2 } from 'lucide-react'
+import { Bed, Ban, CheckCircle, BrushCleaning } from 'lucide-react'
 import BedManagementTable from '../components/facility/BedManagementTable'
 import NewBedModal from '../components/facility/NewBedModal'
 import { useData } from '../context/DataContext'
 import PageLayout from '../components/common/PageLayout'
 
-const iconMap = { Bed, Ban, CheckCircle, Trash2 }
+const iconMap = { Bed, Ban, CheckCircle, BrushCleaning, Trash2: BrushCleaning }
 const colorMap = {
   blue:   { iconBg: 'bg-[#DBEAFE]', iconColor: 'text-[#1D4ED8]' },
   red:    { iconBg: 'bg-[#FAD7DA]', iconColor: 'text-[#E63946]' },

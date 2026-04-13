@@ -11,7 +11,7 @@ const PageLayout = ({ stats = [], statsColumns = 4, children }) => {
           <StatsGrid stats={stats} columns={statsColumns} />
           {children}
           
-          <footer className="w-full flex justify-center text-center text-[13px] text-[#666666] py-[20px] mt-auto">
+          <footer className="w-full flex justify-center text-center text-[13px] text-[#666666] py-[20px] mt-auto bg-white">
             © 2024 HospitalMS Multi-Branch Enterprise Suite. All rights reserved.
           </footer>
         </div>

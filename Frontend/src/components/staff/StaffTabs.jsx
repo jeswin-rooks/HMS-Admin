@@ -21,14 +21,16 @@ const StaffTabs = ({ activeTab, onTabChange, onAddStaff }) => {
           </span>
         </div>
       </div>
-      <div className="pb-3">
-        <button
-          onClick={onAddStaff}
-          className="h-10 px-5 bg-[#051F20] text-white rounded-lg text-[14px] font-medium"
-        >
-          Add Staff
-        </button>
-      </div>
+      {activeTab === 'records' && (
+        <div className="pb-3">
+          <button
+            onClick={onAddStaff}
+            className="h-10 px-5 bg-[#051F20] text-white rounded-lg text-[14px] font-medium"
+          >
+            Add Staff
+          </button>
+        </div>
+      )}
     </div>
   )
 }
