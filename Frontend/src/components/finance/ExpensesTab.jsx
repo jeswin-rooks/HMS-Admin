@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import { Search, Pencil } from 'lucide-react'
 import AddExpenseModal from './AddExpenseModal'
+import EditExpenseModal from './EditExpenseModal'
 import Pagination from '../common/Pagination'
 
 const ROWS_PER_PAGE = 7
@@ -21,6 +22,7 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
   const [selectedMethod, setSelectedMethod]   = useState('All')
   const [currentPage, setCurrentPage]         = useState(1)
   const [showAddModal, setShowAddModal]       = useState(false)
+  const [editingExpense, setEditingExpense]   = useState(null)
 
   /* ── Reset page whenever the active tab changes ── */
   const handleSubTabChange = (key) => {
@@ -31,7 +33,7 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
     setSelectedMethod('All')
     setSelectedDate('All')
   }
-
+ 
   /* ── Derive data for the active sub-tab ── */
   const tabData = useMemo(
     () => rows.filter(r => r.category === activeSubTab),
@@ -113,6 +115,24 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
     setSelectedDate('All')
     setShowAddModal(false)
     setCurrentPage(1)
+  }
+
+  const handleOpenEdit = (expense) => {
+    setEditingExpense(expense)
+  }
+
+  const handleSaveEditedExpense = (updatedExpense) => {
+    setRows((prev) => prev.map((item) => (item.id === updatedExpense.id ? updatedExpense : item)))
+    setEditingExpense(null)
+
+    if (updatedExpense.category !== activeSubTab) {
+      onSubTabChange(updatedExpense.category)
+      setSearchQuery('')
+      setSelectedSubCat('All')
+      setSelectedMethod('All')
+      setSelectedDate('All')
+      setCurrentPage(1)
+    }
   }
 
   return (
@@ -275,7 +295,10 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
                     </td>
                     <td className="py-[14px] px-[20px] text-[13px] text-[#212121] font-semibold whitespace-nowrap">{item['Amount']}</td>
                     <td className="py-[14px] px-[20px] whitespace-nowrap">
-                      <button className="text-[#3b82f6] hover:text-blue-700 transition-colors">
+                      <button
+                        onClick={() => handleOpenEdit(item)}
+                        className="text-[#3b82f6] hover:text-blue-700 transition-colors"
+                      >
                         <Pencil size={17} />
                       </button>
                     </td>
@@ -307,7 +330,10 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
                     </td>
                     <td className="py-[14px] px-[20px] text-[13px] text-[#212121] font-medium whitespace-nowrap">{item.totalBill}</td>
                     <td className="py-[14px] px-[20px] whitespace-nowrap">
-                      <button className="text-[#3b82f6] hover:text-blue-700 transition-colors">
+                      <button
+                        onClick={() => handleOpenEdit(item)}
+                        className="text-[#3b82f6] hover:text-blue-700 transition-colors"
+                      >
                         <Pencil size={17} />
                       </button>
                     </td>
@@ -332,6 +358,14 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
           activeCategory={activeSubTab}
           onClose={() => setShowAddModal(false)}
           onSave={handleSaveExpense}
+        />
+      )}
+
+      {editingExpense && (
+        <EditExpenseModal
+          expense={editingExpense}
+          onClose={() => setEditingExpense(null)}
+          onSave={handleSaveEditedExpense}
         />
       )}
     </div>
