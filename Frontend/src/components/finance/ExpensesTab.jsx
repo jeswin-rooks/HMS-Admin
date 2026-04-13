@@ -14,6 +14,59 @@ const SUB_TABS = [
   { key: 'miscellaneous', label: 'Miscellaneous' },
 ]
 
+const DATE_FILTER_OPTIONS = [
+  { value: 'All', label: 'All Dates' },
+  { value: 'today', label: 'Today' },
+  { value: 'last_week', label: 'Last Week' },
+  { value: 'last_month', label: 'Last Month' },
+  { value: 'last_year', label: 'Last Year' },
+]
+
+const parseExpenseDate = (value) => {
+  if (!value) return null
+
+  const [day, mon, year] = String(value).trim().split(' ')
+  const monthMap = {
+    Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+    Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11,
+  }
+
+  const month = monthMap[mon]
+  if (month === undefined) return null
+
+  const parsed = new Date(Number(year), month, Number(day))
+  return Number.isNaN(parsed.getTime()) ? null : parsed
+}
+
+const startOfDay = (date) => new Date(date.getFullYear(), date.getMonth(), date.getDate())
+
+const matchesDateFilter = (dateValue, selectedDateFilter) => {
+  if (selectedDateFilter === 'All') return true
+
+  const recordDate = parseExpenseDate(dateValue)
+  if (!recordDate) return false
+
+  const today = startOfDay(new Date())
+  const recordDay = startOfDay(recordDate)
+  const msPerDay = 24 * 60 * 60 * 1000
+  const dayDiff = Math.floor((today - recordDay) / msPerDay)
+
+  if (selectedDateFilter === 'today') {
+    return dayDiff === 0
+  }
+  if (selectedDateFilter === 'last_week') {
+    return dayDiff >= 1 && dayDiff <= 7
+  }
+  if (selectedDateFilter === 'last_month') {
+    return dayDiff >= 1 && dayDiff <= 30
+  }
+  if (selectedDateFilter === 'last_year') {
+    return dayDiff >= 1 && dayDiff <= 365
+  }
+
+  return true
+}
+
 const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
   const [rows, setRows]                       = useState(expensesData)
   const [searchQuery, setSearchQuery]         = useState('')
@@ -53,11 +106,6 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
     () => ['All', ...new Set(tabData.map(r => r.paymentMethod))],
     [tabData]
   )
-  const dateOptions = useMemo(
-    () => ['All', ...new Set(tabData.map(r => r.date))],
-    [tabData]
-  )
-
   /* ── Apply filters ── */
   const filtered = useMemo(() => {
     return tabData.filter(r => {
@@ -71,7 +119,7 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
           (r.subCategory || '').toLowerCase().includes(q) ||
           (r.invoiceId || '').toLowerCase().includes(q) ||
           (r.paidBy || '').toLowerCase().includes(q)
-      const matchDate   = selectedDate   === 'All' || r.date === selectedDate
+      const matchDate   = matchesDateFilter(r.date, selectedDate)
       const matchSubCat = isSalary
         ? selectedSubCat === 'All' || r['Role'] === selectedSubCat
         : selectedSubCat === 'All' || r.subCategory === selectedSubCat
@@ -148,7 +196,7 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
             type="text"
             value={searchQuery}
             onChange={e => { setSearchQuery(e.target.value); setCurrentPage(1) }}
-            placeholder="Search by name, invoice, sub-category…"
+            placeholder="Enter Doctor Name etc.."
             className="bg-transparent border-none outline-none text-[14px] text-[#4B5563] w-full"
           />
         </div>
@@ -164,7 +212,9 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
               className="flex items-center justify-between w-[140px] h-[44px] px-[12px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg text-[14px] text-[#212121] cursor-pointer outline-none appearance-none pr-[32px]"
               style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666666' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E\")", backgroundRepeat: 'no-repeat', backgroundPosition: 'right 10px center' }}
             >
-              {dateOptions.map(d => <option key={d} value={d}>{d === 'All' ? 'All Dates' : d}</option>)}
+              {DATE_FILTER_OPTIONS.map((option) => (
+                <option key={option.value} value={option.value}>{option.label}</option>
+              ))}
             </select>
           </div>
 

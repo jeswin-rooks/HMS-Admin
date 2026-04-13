@@ -64,9 +64,9 @@ const AddExpenseModal = ({ activeCategory, onClose, onSave }) => {
   }
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center">
       <div className="w-full max-w-[760px] rounded-xl bg-[#F1F2F4] shadow-2xl overflow-hidden border border-[#CBD2D9]">
-        <div className="h-[44px] px-5 flex items-center justify-between bg-[#E7EAEE] border-b border-[#D5DAE0]">
+        <div className="h-[44px] px-5 py-10 flex items-center justify-between bg-[#E7EAEE] border-b border-[#D5DAE0]">
           <h2 className="text-[28px] font-bold text-[#1B2E2A] leading-none">Add Expenses</h2>
           <button onClick={onClose} className="text-[#5E6B72] hover:text-[#1B2E2A]">
             <X size={20} />

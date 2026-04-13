@@ -29,7 +29,7 @@ const StaffDetailModal = ({ staff, onClose, onEdit }) => {
         </div>
 
         <div className="p-5 flex gap-4 items-center border-b border-[#D5DAE0] bg-white">
-          <img src={doctorImg} alt="staff avatar" className="w-14 h-14 rounded-full object-cover border border-[#E5E7EB]" />
+          <img src={staff.photo || doctorImg} alt="staff avatar" className="w-14 h-14 rounded-full object-cover border border-[#E5E7EB]" />
           <div className="flex flex-col">
             <span className="text-[18px] font-semibold text-[#111827]">{staff.name}</span>
             <span className="text-[13px] text-[#6B7280]">{staff.pid || '#N/A'}</span>

@@ -97,14 +97,7 @@ const PackageDetailModal = ({ pkg, onClose, onEdit }) => {
           {/* RIGHT column — Summary */}
           <div className="w-[240px] flex-shrink-0 flex flex-col gap-[16px]">
             <PackageSummaryPanel summary={pkg.packageSummary || {}} />
-
-            {/* Package Discount callout */}
-            <div className="bg-[#FFF5F5] border border-[#FED7D7] rounded-[8px] p-[12px]">
-              <p className="text-[11px] text-[#9CA3AF] uppercase">Package Discount</p>
-              <p className="text-[15px] font-bold text-[#E53E3E] mt-[2px]">
-                -₹{Math.abs(pkg.packageSummary?.packageDiscount || 0).toLocaleString('en-IN')}
-              </p>
-            </div>
+           
           </div>
         </div>
 

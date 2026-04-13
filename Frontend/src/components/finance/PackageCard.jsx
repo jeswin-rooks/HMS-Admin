@@ -4,23 +4,23 @@ const PackageCard = ({ pkg, index, onClick }) => {
   return (
     <div
       onClick={() => onClick(pkg)}
-      className="bg-white p-[18px] flex items-center justify-between cursor-pointer hover:bg-[#F0FAF5] transition-all duration-200 group"
+      className="bg-[#ECEFF3] border border-[#DCE3EA] rounded-[10px] px-[8px] py-[12px] flex items-center justify-between cursor-pointer hover:bg-[#E6EDF4] transition-colors duration-200"
     >
-      {/* Left: index + info */}
-      <div className="flex items-center gap-[16px]">
-        <span className="text-[15px] font-semibold text-[#9CA3AF] min-w-[22px]">{index}</span>
+      <div className="flex items-center gap-[14px]">
+        <div className="w-[40px] h-[40px] rounded-full bg-[#F5F7FA] flex items-center justify-center">
+          <span className="text-[18px] leading-none font-semibold text-[#2B2B2B]">{index}</span>
+        </div>
         <div className="flex flex-col gap-[3px]">
-          <span className="text-[14px] font-semibold text-[#212121] group-hover:text-[#235347] transition-colors leading-tight">
+          <span className="text-[16px] leading-tight font-semibold text-[#2B2B2B]">
             {pkg.name}
           </span>
-          <span className="text-[12px] text-[#9CA3AF]">{pkg.type}</span>
+          <span className="text-[12px] text-[#6B7280]">#{pkg.id}</span>
         </div>
       </div>
 
-      {/* Right: fee */}
       <div className="flex flex-col items-end gap-[2px]">
-        <span className="text-[11px] text-[#9CA3AF] uppercase tracking-wide">Package Fee</span>
-        <span className="text-[14px] font-bold text-[#212121] group-hover:text-[#235347] transition-colors">
+        <span className="text-[10px] text-[#7A838F]">Package Price</span>
+        <span className="text-[16px] leading-none font-bold text-[#1F2937]">
           ₹{pkg.packageFee.toLocaleString('en-IN')}
         </span>
       </div>
