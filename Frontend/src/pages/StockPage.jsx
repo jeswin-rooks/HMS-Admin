@@ -22,7 +22,7 @@ const StockPage = () => {
 
   return (
     <PageLayout stats={stockStats}>
-      <div className="flex flex-col gap-[20px] w-full">
+      <div className="flex flex-col gap-5 w-full px-5">
         <StockTabs activeTab={activeTab} onTabChange={setActiveTab} />
         {activeTab === 'inventory' ? (
           <InventoryTab

@@ -13,7 +13,7 @@ const FinancePage = () => {
 
   return (
     <PageLayout stats={financeStatsData} statsColumns={5}>
-      <div className="flex flex-col gap-[20px] w-full">
+      <div className="flex flex-col gap-[20px] w-full px-5">
         <FinanceTabs activeTab={activeTab} onTabChange={setActiveTab} />
         {activeTab === 'expenses' ? (
           <ExpensesTab
