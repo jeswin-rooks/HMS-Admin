@@ -31,7 +31,7 @@ const DashboardPage = () => {
     <>
       <PageLayout stats={dashboardStats}>
         {/* Title Tabs */}
-        <div className="w-[444px] h-[56px] flex flex-row items-center gap-[30px]">
+        <div className="w-[444px] h-[56px] flex flex-row items-center gap-[30px] px-5">
           <div
             className={`flex flex-row justify-center items-center py-[10px] gap-[10px] h-[56px] cursor-pointer ${activeTab === 'bedStatus' ? 'border-b-[3px] border-[#051F20]' : ''}`}
             onClick={() => setActiveTab('bedStatus')}
@@ -52,7 +52,7 @@ const DashboardPage = () => {
         </div>
 
         {/* Table */}
-        <div className="w-full flex flex-col">
+        <div className="w-full flex flex-col px-5">
           <BedManagementTable
             data={data.beds}
             departments={data.departments}

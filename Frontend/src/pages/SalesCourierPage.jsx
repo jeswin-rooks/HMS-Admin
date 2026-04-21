@@ -13,7 +13,7 @@ const SalesCourierPage = () => {
   ]
 
   return (
-    <div className="p-8">
+    <div className="px-5 py-8">
       <h1 className="text-2xl font-bold mb-4">Sales & Courier Management</h1>
       <p>Data linked to context!</p>
       <StatsOverviewSection stats={stats} />

@@ -53,7 +53,7 @@ const StaffPage = () => {
 
   return (
     <PageLayout stats={staffStats}>
-      <div className="flex flex-col gap-5 w-full">
+      <div className="flex flex-col gap-5 w-full px-5">
         <StaffTabs activeTab={activeTab} onTabChange={setActiveTab} onAddStaff={handleOpenAdd} />
         {activeTab === 'records' ? (
           <StaffRecordsTab staffData={staffList} onEditStaff={handleOpenEdit} onViewStaff={handleOpenView} />

@@ -14,7 +14,7 @@ const FollowUpPage = () => {
 
   // example usage
   return (
-    <div className="p-8">
+    <div className="px-5 py-8">
       <h1 className="text-2xl font-bold mb-4">Follow Up & Cleaning Management</h1>
       <p>Data linked to context!</p>
       <StatsOverviewSection stats={stats} />
