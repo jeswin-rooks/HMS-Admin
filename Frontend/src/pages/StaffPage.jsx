@@ -51,6 +51,7 @@ const StaffPage = () => {
   const [showStaffModal, setShowStaffModal] = useState(false)
   const [editingStaff, setEditingStaff] = useState(null)
   const [viewingStaff, setViewingStaff] = useState(null)
+  const [attendanceModalSignal, setAttendanceModalSignal] = useState(0)
 
   const handleOpenAdd = () => {
     setEditingStaff(null)
@@ -64,6 +65,10 @@ const StaffPage = () => {
 
   const handleOpenView = (staff) => {
     setViewingStaff(staff)
+  }
+
+  const handleOpenAttendance = () => {
+    setAttendanceModalSignal((prev) => prev + 1)
   }
 
   const handleSaveStaff = (payload) => {
@@ -82,11 +87,16 @@ const StaffPage = () => {
   return (
     <PageLayout stats={staffStats}>
       <div className="flex flex-col gap-5 w-full px-5">
-        <StaffTabs activeTab={activeTab} onTabChange={setActiveTab} onAddStaff={handleOpenAdd} />
+        <StaffTabs
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onAddStaff={handleOpenAdd}
+          onOpenAttendance={handleOpenAttendance}
+        />
         {activeTab === 'records' ? (
           <StaffRecordsTab staffData={staffList} onEditStaff={handleOpenEdit} onViewStaff={handleOpenView} />
         ) : (
-          <AttendanceTab staffData={staffList} />
+          <AttendanceTab staffData={staffList} openAttendanceModalSignal={attendanceModalSignal} />
         )}
       </div>
 

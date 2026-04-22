@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Search, ChevronDown, X, Eye, User } from 'lucide-react'
 import Pagination from '../common/Pagination'
 
@@ -21,7 +21,7 @@ const formatMockTime = (idx, type) => {
   return `${String(baseOutHour).padStart(2, '0')}:${baseOutMin} PM`
 }
 
-const AttendanceTab = ({ staffData = [] }) => {
+const AttendanceTab = ({ staffData = [], openAttendanceModalSignal = 0 }) => {
   const [searchQuery, setSearchQuery] = useState('')
   const [departmentFilter, setDepartmentFilter] = useState('')
   const [attendanceFilter, setAttendanceFilter] = useState('')
@@ -82,6 +82,12 @@ const AttendanceTab = ({ staffData = [] }) => {
     })
     setShowAttendanceModal(true)
   }
+
+  useEffect(() => {
+    if (openAttendanceModalSignal > 0) {
+      openAttendanceModal()
+    }
+  }, [openAttendanceModalSignal])
 
   const saveAttendance = () => {
     if (!attendanceForm.staffId) return
@@ -162,14 +168,6 @@ const AttendanceTab = ({ staffData = [] }) => {
             </div>
           </div>
 
-          <div className="flex flex-col justify-end h-[68px]">
-            <button
-              onClick={openAttendanceModal}
-              className="h-9 px-4 bg-[#051F20] text-white rounded-lg text-[12px] font-medium"
-            >
-              Attendance
-            </button>
-          </div>
         </div>
       </div>
 
