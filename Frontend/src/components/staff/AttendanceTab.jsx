@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react'
-import { Search, ChevronDown, X, Eye, User } from 'lucide-react'
+import { ChevronDown, X, Eye, User } from 'lucide-react'
 import Pagination from '../common/Pagination'
+import { SearchBarIcon } from '../common/CustomUiIcons'
 
 const ROWS_PER_PAGE = 7
 
@@ -117,7 +118,7 @@ const AttendanceTab = ({ staffData = [] }) => {
     <div className="flex flex-col gap-5">
       <div className="bg-white rounded-xl p-5 flex justify-between items-center shadow-[0px_4px_10px_rgba(0,0,0,0.03)] border border-[#E9E9E9]">
         <div className="flex items-center gap-2.5 w-85 h-12 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-4">
-          <Search size={20} className="text-[#9CA3AF]" />
+          <SearchBarIcon />
           <input
             type="text"
             placeholder="Search staff by name, id, role..."
