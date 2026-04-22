@@ -1,6 +1,6 @@
 import React from 'react'
 
-const StaffTabs = ({ activeTab, onTabChange, onAddStaff }) => {
+const StaffTabs = ({ activeTab, onTabChange, onAddStaff, onOpenAttendance }) => {
   return (
     <div className="flex justify-between items-end border-b border-[#E5E7EB] w-full">
       <div className="flex gap-8">
@@ -28,6 +28,17 @@ const StaffTabs = ({ activeTab, onTabChange, onAddStaff }) => {
             className="h-10 px-5 bg-[#051F20] text-white rounded-lg text-[14px] font-medium"
           >
             Add Staff
+          </button>
+        </div>
+      )}
+
+      {activeTab === 'attendance' && (
+        <div className="pb-3">
+          <button
+            onClick={onOpenAttendance}
+            className="h-10 px-5 bg-[#051F20] text-white rounded-lg text-[14px] font-medium"
+          >
+            Attendance
           </button>
         </div>
       )}

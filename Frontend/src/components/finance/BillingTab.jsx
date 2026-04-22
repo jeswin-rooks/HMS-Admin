@@ -1,5 +1,4 @@
-import React, { useMemo, useState } from 'react'
-import { Plus, ChevronDown, Check, Edit2, Download, Trash2, Tag, Smartphone, CreditCard, Banknote } from 'lucide-react'
+import React, { useEffect, useMemo, useState } from 'react'
 import Pagination from '../common/Pagination'
 import billingData from '../../data/billing.json'
 import { SearchBarIcon } from '../common/CustomUiIcons'
@@ -10,12 +9,16 @@ import PackageDetailModal   from './PackageDetailModal'
 
 const CARDS_PER_PAGE = 10
 
-const BillingTab = () => {
+const BillingTab = ({ onViewModeChange }) => {
   const [packages, setPackages]         = useState(billingData)
   const [searchQuery, setSearchQuery]   = useState('')
   const [currentPage, setCurrentPage]   = useState(1)
-  const [showCreate, setShowCreate]     = useState(false)
-  const [viewPkg, setViewPkg]           = useState(null)   // for detail modal
+  const [viewMode, setViewMode]         = useState('list')
+  const [activePackage, setActivePackage] = useState(null)
+
+  useEffect(() => {
+    onViewModeChange?.(viewMode)
+  }, [onViewModeChange, viewMode])
 
   /* ── Filter by search ── */
   const filtered = useMemo(() => {
@@ -42,14 +45,47 @@ const BillingTab = () => {
   }, [safePage, totalPages])
 
   /* ── Handlers ── */
-  const handleSave = (newPkg) => {
-    setPackages(prev => [...prev, newPkg])
+  const handleSave = (pkg) => {
+    if (viewMode === 'edit' && activePackage) {
+      setPackages((prev) => prev.map((p) => (p.id === activePackage.id ? pkg : p)))
+    } else {
+      setPackages((prev) => [...prev, pkg])
+    }
+    setActivePackage(null)
+    setViewMode('list')
   }
 
   const handleEdit = (pkg) => {
-    setViewPkg(null)
-    // You can open an edit modal here; for now we open the create modal pre-filled
-    // For simplicity we just close the detail view
+    setActivePackage(pkg)
+    setViewMode('edit')
+  }
+
+  const handleClosePage = () => {
+    setActivePackage(null)
+    setViewMode('list')
+  }
+
+  if (viewMode === 'create' || viewMode === 'edit') {
+    return (
+      <CreatePackageModal
+        asPage
+        mode={viewMode}
+        initialPackage={viewMode === 'edit' ? activePackage : null}
+        onClose={handleClosePage}
+        onSave={handleSave}
+      />
+    )
+  }
+
+  if (viewMode === 'view' && activePackage) {
+    return (
+      <PackageDetailModal
+        asPage
+        pkg={activePackage}
+        onClose={handleClosePage}
+        onEdit={handleEdit}
+      />
+    )
   }
 
   return (
@@ -68,7 +104,7 @@ const BillingTab = () => {
         </div>
 
         <button
-          onClick={() => setShowCreate(true)}
+          onClick={() => setViewMode('create')}
           className="h-[40px] px-[20px] bg-[#051F20] text-white rounded-[8px] text-[13px] font-medium hover:bg-[#0d3638] transition-colors"
         >
           Create Package
@@ -88,7 +124,10 @@ const BillingTab = () => {
                 key={pkg.id}
                 pkg={pkg}
                 index={(safePage - 1) * CARDS_PER_PAGE + idx + 1}
-                onClick={(p) => setViewPkg(p)}
+                onClick={(p) => {
+                  setActivePackage(p)
+                  setViewMode('view')
+                }}
               />
             ))}
           </div>
@@ -102,22 +141,6 @@ const BillingTab = () => {
           pageWindow={pageNumbers}
         />
       </div>
-
-      {/* ── Modals ── */}
-      {showCreate && (
-        <CreatePackageModal
-          onClose={() => setShowCreate(false)}
-          onSave={handleSave}
-        />
-      )}
-
-      {viewPkg && (
-        <PackageDetailModal
-          pkg={viewPkg}
-          onClose={() => setViewPkg(null)}
-          onEdit={handleEdit}
-        />
-      )}
     </>
   )
 }

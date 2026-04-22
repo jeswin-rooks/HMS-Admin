@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const SolidBedIcon = () => (
   <svg width="23" height="17" viewBox="0 0 23 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,31 +26,31 @@ const StaffIcon = () => (
 )
 
 const menuItems = [
-  { path: '/dashboard', label: 'Facility & Bed Management', icon: <SolidBedIcon /> },
-  { path: '/stock', label: 'Inventory & Orders', icon: <InventoryIcon /> },
-  { path: '/finance', label: 'Finance & Operations', icon: <FinanceIcon /> },
-  { path: '/staff', label: 'Staff Management', icon: <StaffIcon /> },
+  { path: '/dashboard', label: 'Facility & Bed Management', icon: <SolidBedIcon />, width: 'w-[277px]' },
+  { path: '/stock', label: 'Inventory & Orders', icon: <InventoryIcon />, width: 'w-[230px]' },
+  { path: '/finance', label: 'Finance & Operations', icon: <FinanceIcon />, width: 'w-[230px]' },
+  { path: '/staff', label: 'Staff Management', icon: <StaffIcon />, width: 'w-[230px]' },
 ]
 
 const MainLayout = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col bg-[#F1F1F1] font-['Poppins']">
-      <header className="h-[88px] w-full px-[40px] flex items-center justify-between bg-[#ACE3CE] border-b-2 border-[rgba(130,143,143,0.25)] relative z-20">
-        
-          <Link to="/dashboard" className="flex items-center gap-[20px] no-underline">
-            <span className="w-[44px] h-[44px] rounded-full bg-[#051F20]" aria-hidden="true" />
+      <header className="h-[88px] w-full bg-[#ACE3CE] border-b-2 border-[rgba(130,143,143,0.25)] relative z-20 px-[40px] py-4">
+        <div className="w-full max-w-[1360px] mx-auto h-[56px] flex items-center gap-[60px]">
+          <Link to="/dashboard" className="w-[157px] h-[56px] flex items-center justify-center gap-[20px] no-underline shrink-0">
+            <span className="w-[56px] h-[56px] rounded-full bg-[#051F20]" aria-hidden="true" />
             <span className="text-[#051F20] font-medium text-[15px] leading-[22px] w-[81px]">App Name</span>
           </Link>
 
-          <nav className="flex items-center gap-[20px]">
+          <nav className="h-[47px] flex items-start gap-[20px] flex-1">
             {menuItems.map((item, idx) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center px-4 py-2 gap-[10px] rounded-lg transition-all h-[47px] ${
+                  `${item.width} h-[47px] flex items-center px-4 py-2 gap-[10px] transition-all shrink-0 ${
                     isActive 
-                    ? 'bg-[#D6F1E6] border-r-4 border-[#235347] shadow-[inset_0px_0px_0px_0px_transparent]' 
+                    ? 'bg-[#D6F1E6] border-r-4 border-[#235347] rounded-[8px]' 
                     : 'bg-transparent text-[#212121]'
                   }`
                 }
@@ -58,14 +58,14 @@ const MainLayout = ({ children }) => {
                 <div className="flex items-center justify-center w-6 h-6" aria-hidden="true">
                   {item.icon}
                 </div>
-                <span className="text-[#212121] font-medium text-[15px] leading-[22px]">{item.label}</span>
+                <span className="text-[#212121] font-medium text-[15px] leading-[22px] whitespace-nowrap">{item.label}</span>
               </NavLink>
             ))}
           </nav>
-    
 
-        <div className="bg-[#051F20] text-white w-[44px] h-[44px] rounded-[30px] flex items-center justify-center font-semibold text-[20px] leading-[36px]" aria-label="User initials">
-          SA
+          <div className="bg-[#051F20] text-white w-[56px] h-[56px] rounded-[30px] flex items-center justify-center font-semibold text-[24px] leading-[36px] shrink-0" aria-label="User initials">
+            SA
+          </div>
         </div>
       </header>
 
