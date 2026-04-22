@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react'
-import { Plus, Search, ChevronDown, Check, Edit2, Download, Trash2, Tag, Smartphone, CreditCard, Banknote } from 'lucide-react'
+import { Plus, ChevronDown, Check, Edit2, Download, Trash2, Tag, Smartphone, CreditCard, Banknote } from 'lucide-react'
 import Pagination from '../common/Pagination'
 import billingData from '../../data/billing.json'
+import { SearchBarIcon } from '../common/CustomUiIcons'
 
 import PackageCard          from './PackageCard'
 import CreatePackageModal   from './CreatePackageModal'
@@ -56,7 +57,7 @@ const BillingTab = () => {
       {/* ── Toolbar ── */}
       <div className="bg-white rounded-[12px] p-[20px] flex justify-between items-center shadow-[0px_4px_10px_rgba(0,0,0,0.03)] border border-[#E9E9E9]">
         <div className="flex items-center gap-[10px] w-[300px] h-[44px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-[14px]">
-          <Search size={16} className="text-[#9CA3AF] flex-shrink-0" />
+          <SearchBarIcon />
           <input
             type="text"
             value={searchQuery}

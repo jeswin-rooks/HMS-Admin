@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Search, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import Pagination from '../common/Pagination'
+import { SearchBarIcon } from '../common/CustomUiIcons'
 
 const InventoryTab = ({ activeSubTab, onSubTabChange, inventoryData }) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -62,7 +63,7 @@ const InventoryTab = ({ activeSubTab, onSubTabChange, inventoryData }) => {
       {/* Toolbar */}
       <div className="w-full p-6 flex justify-between items-end border-b border-[rgba(130,143,143,0.25)] bg-white rounded-t-[16px]">
         <div className="w-[300px] h-[48px] bg-[#F3F6F9] rounded-[8px] border border-[#E5E7EB] flex items-center px-[16px] gap-[10px]">
-          <Search size={18} className="text-[#666666]" />
+          <SearchBarIcon />
           <input 
             type="text" 
             placeholder="Enter Doctor Name etc..."
