@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const SolidBedIcon = () => (
   <svg width="23" height="17" viewBox="0 0 23 17" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,31 +26,31 @@ const StaffIcon = () => (
 )
 
 const menuItems = [
-  { path: '/dashboard', label: 'Facility & Bed Management', icon: <SolidBedIcon /> },
-  { path: '/stock', label: 'Inventory & Orders', icon: <InventoryIcon /> },
-  { path: '/finance', label: 'Finance & Operations', icon: <FinanceIcon /> },
-  { path: '/staff', label: 'Staff Management', icon: <StaffIcon /> },
+  { path: '/dashboard', label: 'Facility & Bed Management', icon: <SolidBedIcon />, width: 'xl:w-[220px] 2xl:w-[277px]' },
+  { path: '/stock', label: 'Inventory & Orders', icon: <InventoryIcon />, width: 'xl:w-[190px] 2xl:w-[230px]' },
+  { path: '/finance', label: 'Finance & Operations', icon: <FinanceIcon />, width: 'xl:w-[190px] 2xl:w-[230px]' },
+  { path: '/staff', label: 'Staff Management', icon: <StaffIcon />, width: 'xl:w-[190px] 2xl:w-[230px]' },
 ]
 
 const MainLayout = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col bg-[#F1F1F1] font-['Poppins']">
-      <header className="h-[88px] w-full px-[40px] flex items-center justify-between bg-[#ACE3CE] border-b-2 border-[rgba(130,143,143,0.25)] relative z-20">
-        
-          <Link to="/dashboard" className="flex items-center gap-[20px] no-underline">
-            <span className="w-[44px] h-[44px] rounded-full bg-[#051F20]" aria-hidden="true" />
+  <header className="h-[88px] w-full bg-[#ACE3CE] border-b-2 border-[rgba(130,143,143,0.25)] relative z-20 xl:px-0 2xl:px-[40px] py-4">
+        <div className="w-full xl:max-w-full 2xl:max-w-[1360px] mx-auto h-[56px] flex items-center xl:gap-6 2xl:gap-[60px]">
+          <Link to="/dashboard" className="xl:w-[144px] 2xl:w-[157px] h-[56px] flex items-center justify-center xl:gap-4 2xl:gap-[20px] no-underline shrink-0">
+            <span className="xl:w-[48px] xl:h-[48px] 2xl:w-[56px] 2xl:h-[56px] rounded-full bg-[#051F20]" aria-hidden="true" />
             <span className="text-[#051F20] font-medium text-[15px] leading-[22px] w-[81px]">App Name</span>
           </Link>
 
-          <nav className="flex items-center gap-[20px]">
+          <nav className="h-[47px] flex items-start xl:gap-3 2xl:gap-[20px] flex-1">
             {menuItems.map((item, idx) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center px-4 py-2 gap-[10px] rounded-lg transition-all h-[47px] ${
+                  `${item.width} h-[47px] flex items-center xl:px-3 2xl:px-4 py-2 gap-[10px] transition-all shrink-0 ${
                     isActive 
-                    ? 'bg-[#D6F1E6] border-r-4 border-[#235347] shadow-[inset_0px_0px_0px_0px_transparent]' 
+                    ? 'bg-[#D6F1E6] border-r-4 border-[#235347] rounded-[8px]' 
                     : 'bg-transparent text-[#212121]'
                   }`
                 }
@@ -58,14 +58,14 @@ const MainLayout = ({ children }) => {
                 <div className="flex items-center justify-center w-6 h-6" aria-hidden="true">
                   {item.icon}
                 </div>
-                <span className="text-[#212121] font-medium text-[15px] leading-[22px]">{item.label}</span>
+                <span className="text-[#212121] font-medium xl:text-[14px] 2xl:text-[15px] leading-[22px] whitespace-nowrap">{item.label}</span>
               </NavLink>
             ))}
           </nav>
-    
 
-        <div className="bg-[#051F20] text-white w-[44px] h-[44px] rounded-[30px] flex items-center justify-center font-semibold text-[20px] leading-[36px]" aria-label="User initials">
-          SA
+          <div className="bg-[#051F20] text-white xl:w-[48px] xl:h-[48px] 2xl:w-[56px] 2xl:h-[56px] rounded-[30px] flex items-center justify-center font-semibold xl:text-[20px] 2xl:text-[24px] leading-[36px] shrink-0" aria-label="User initials">
+            SA
+          </div>
         </div>
       </header>
 

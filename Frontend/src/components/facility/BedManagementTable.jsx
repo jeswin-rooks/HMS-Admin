@@ -60,8 +60,8 @@ const BedManagementTable = ({
   return (
     <div className="flex-1 overflow-hidden flex flex-col bg-white">
       {/* Action Bar */}
-      <div className="p-6 flex flex-col md:flex-row justify-between items-center md:gap-4 gap-4 bg-white border-b border-[rgba(130,143,143,0.25)]">
-        <div className="relative w-full md:w-[350px]">
+      <div className="xl:px-6 2xl:px-[30px] xl:py-6 2xl:py-[30px] flex flex-col md:flex-row justify-between items-end xl:gap-5 2xl:gap-[30px] bg-white border-b border-[rgba(130,143,143,0.25)]">
+        <div className="relative w-full xl:w-[300px] 2xl:w-[350px]">
           <div className="absolute inset-y-0 left-0 pl-[15px] flex items-center pointer-events-none">
             <SearchBarIcon />
           </div>
@@ -74,8 +74,8 @@ const BedManagementTable = ({
           />
         </div>
 
-        <div className="flex gap-[30px] items-end w-full md:w-auto">
-          <div className="flex flex-col w-[169px]">
+        <div className="flex xl:gap-5 2xl:gap-[30px] items-end w-full md:w-auto justify-end">
+          <div className="flex flex-col xl:w-[150px] 2xl:w-[169px]">
             <label className="text-[16px] leading-[24px] font-medium text-[#666666] mb-[15px]" htmlFor="dept-filter">Department</label>
             <div className="relative">
               <select
@@ -92,7 +92,7 @@ const BedManagementTable = ({
             </div>
           </div>
 
-          <div className="flex flex-col w-[169px]">
+          <div className="flex flex-col xl:w-[150px] 2xl:w-[169px]">
             <label className="text-[16px] leading-[24px] font-medium text-[#666666] mb-[15px]" htmlFor="status-filter">Status</label>
             <div className="relative">
               <select
