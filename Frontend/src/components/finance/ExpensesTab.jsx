@@ -333,7 +333,7 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
                     <td className="py-[14px] px-[20px] text-[13px] text-[#212121] whitespace-nowrap">{item['Salary Month']}</td>
                     <td className="py-[14px] px-[20px] text-[13px] text-[#212121] whitespace-nowrap">{item['Invoice Id']}</td>
                     <td className="py-[14px] px-[20px] whitespace-nowrap">
-                      <div className={`px-[12px] py-[4px] rounded-full inline-flex items-center gap-[6px] text-[12px] font-medium
+                      <div className={`px-[10px] py-[4px] w-[120px] rounded-full inline-flex items-center justify-center gap-[6px] text-[12px] font-medium
                         ${item.paymentMethod === 'Card' ? 'bg-[#E1EFFF] text-[#416BFF]' :
                           item.paymentMethod === 'UPI'  ? 'bg-[#EBE2FF] text-[#9D4DFF]' :
                           'bg-[#D8F5E5] text-[#34A853]'}`}>
@@ -368,7 +368,7 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
                       <span className="text-[11px] text-[#666666]">PID: {item.pid}</span>
                     </td>
                     <td className="py-[14px] px-[20px] whitespace-nowrap">
-                      <div className={`px-[12px] py-[4px] rounded-full inline-flex items-center gap-[6px] text-[12px] font-medium
+                      <div className={`px-[12px] py-[4px] w-[120px] rounded-full inline-flex items-center justify-center gap-[6px] text-[12px] font-medium
                         ${item.paymentMethod === 'Card' ? 'bg-[#E1EFFF] text-[#416BFF]' :
                           item.paymentMethod === 'UPI'  ? 'bg-[#EBE2FF] text-[#9D4DFF]' :
                           'bg-[#D8F5E5] text-[#34A853]'}`}>
