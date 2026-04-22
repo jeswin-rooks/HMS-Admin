@@ -61,11 +61,11 @@ const DashboardPage = () => {
     <>
       <PageLayout stats={dashboardStats}>
         {/* Title Tabs */}
-        <div className="w-full max-w-[559px] h-[56px] flex flex-row items-center xl:gap-5 2xl:gap-[30px]">
+        <div className="w-[559px] h-[56px] flex flex-row items-center gap-[30px]">
           {[
-            { key: 'rooms', label: 'Rooms', width: 'xl:w-[70px] 2xl:w-[85px]' },
-            { key: 'bedStatus', label: 'Bed Status', width: 'xl:w-[118px] 2xl:w-[131px]' },
-            { key: 'cleaningManagement', label: 'Cleaning Management', width: 'xl:w-[251px] 2xl:w-[283px]' },
+            { key: 'rooms', label: 'Rooms', width: 'w-[85px]' },
+            { key: 'bedStatus', label: 'Bed Status', width: 'w-[131px]' },
+            { key: 'cleaningManagement', label: 'Cleaning Management', width: 'w-[283px]' },
           ].map((tab) => (
             <button
               key={tab.key}
@@ -73,7 +73,7 @@ const DashboardPage = () => {
               className={`${tab.width} h-[56px] py-[10px] flex items-center justify-center ${activeTab === tab.key ? 'border-b-[3px] border-[#051F20]' : ''}`}
               onClick={() => setActiveTab(tab.key)}
             >
-              <h2 className={`font-semibold xl:text-[22px] 2xl:text-[24px] leading-[36px] whitespace-nowrap ${activeTab === tab.key ? 'text-[#051F20]' : 'text-[#666666]'}`}>
+              <h2 className={`font-semibold text-[24px] leading-[36px] ${activeTab === tab.key ? 'text-[#051F20]' : 'text-[#666666]'}`}>
                 {tab.label}
               </h2>
             </button>
