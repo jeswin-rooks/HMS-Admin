@@ -9,19 +9,23 @@ const PageLayout = ({
   hideStats = false,
   children
 }) => {
+  const shouldPullUpContent = !hidePageHeader
+
   return (
-    <div className="flex-1 flex flex-col min-h-[calc(100vh-80px)] font-['Poppins']">
+    <div className="flex-1 flex flex-col min-h-[calc(100vh-88px)] font-['Poppins']">
       {!hidePageHeader && <PageHeader />}
-      <div className={`flex-1 flex justify-center pb-[50px] ${hidePageHeader && hideStats ? '' : 'relative'}`}>
-        <div className={`w-full max-w-full flex flex-col items-start z-10 gap-[30px] px-5 xl:px-0 ${hidePageHeader && hideStats ? 'pt-5' : 'absolute top-[-90px]'}`}>
+      <div className={`w-full max-w-[1440px] mx-auto px-[40px] flex flex-col gap-[30px] ${shouldPullUpContent ? '-mt-[83px]' : 'mt-[20px]'}`}>
+        <div className="w-full max-w-[1360px] mx-auto flex flex-col gap-[30px]">
           {!hideStats && <StatsGrid stats={stats} columns={statsColumns} />}
           {children}
-          
-          <footer className=" w-full flex justify-center text-center text-[13px] text-[#666666] py-[20px] mt-auto bg-white">
-            © 2024 HospitalMS Multi-Branch Enterprise Suite. All rights reserved.
-          </footer>
         </div>
       </div>
+
+      <footer className="w-full bg-white border-t border-[rgba(130,143,143,0.25)] px-[40px] py-[24px] mt-auto">
+        <div className="w-full max-w-[1360px] mx-auto h-[24px] flex items-center justify-center text-center text-[13px] leading-[24px] text-[#666666]">
+          © 2024 HospitalMS Multi-Branch Enterprise Suite. All rights reserved.
+        </div>
+      </footer>
     </div>
   )
 }

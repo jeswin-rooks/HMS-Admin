@@ -45,7 +45,7 @@ const colorMap = {
 
 const DashboardPage = () => {
   const { data } = useData()
-  const [activeTab, setActiveTab] = useState('bedStatus')
+  const [activeTab, setActiveTab] = useState('rooms')
   const [departmentFilter, setDepartmentFilter] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
   const [searchQuery, setSearchQuery] = useState('')
@@ -61,28 +61,27 @@ const DashboardPage = () => {
     <>
       <PageLayout stats={dashboardStats}>
         {/* Title Tabs */}
-        <div className="w-[444px] h-[56px] flex flex-row items-center gap-[30px] px-5">
-          <div
-            className={`flex flex-row justify-center items-center py-[10px] gap-[10px] h-[56px] cursor-pointer ${activeTab === 'bedStatus' ? 'border-b-[3px] border-[#051F20]' : ''}`}
-            onClick={() => setActiveTab('bedStatus')}
-          >
-            <h2 className={`font-semibold text-[20px] leading-[36px] ${activeTab === 'bedStatus' ? 'text-[#051F20]' : 'text-[#666666]'}`}>
-              Bed Status
-            </h2>
-          </div>
-
-          <div
-            className={`flex flex-row justify-center items-center py-[10px] gap-[10px] h-[56px] cursor-pointer ${activeTab === 'cleaningManagement' ? 'border-b-[3px] border-[#051F20]' : ''}`}
-            onClick={() => setActiveTab('cleaningManagement')}
-          >
-            <h2 className={`font-semibold text-[20px] leading-[36px] ${activeTab === 'cleaningManagement' ? 'text-[#051F20]' : 'text-[#666666]'}`}>
-              Cleaning Management
-            </h2>
-          </div>
+        <div className="w-[559px] h-[56px] flex flex-row items-center gap-[30px]">
+          {[
+            { key: 'rooms', label: 'Rooms', width: 'w-[85px]' },
+            { key: 'bedStatus', label: 'Bed Status', width: 'w-[131px]' },
+            { key: 'cleaningManagement', label: 'Cleaning Management', width: 'w-[283px]' },
+          ].map((tab) => (
+            <button
+              key={tab.key}
+              type="button"
+              className={`${tab.width} h-[56px] py-[10px] flex items-center justify-center ${activeTab === tab.key ? 'border-b-[3px] border-[#051F20]' : ''}`}
+              onClick={() => setActiveTab(tab.key)}
+            >
+              <h2 className={`font-semibold text-[24px] leading-[36px] ${activeTab === tab.key ? 'text-[#051F20]' : 'text-[#666666]'}`}>
+                {tab.label}
+              </h2>
+            </button>
+          ))}
         </div>
 
         {/* Table */}
-        <div className="w-full flex flex-col px-5">
+        <div className="w-full bg-white border border-[rgba(130,143,143,0.25)] shadow-[0px_1px_2px_rgba(0,0,0,0.05)] rounded-[12px] overflow-hidden">
           <BedManagementTable
             data={data.beds}
             departments={data.departments}
