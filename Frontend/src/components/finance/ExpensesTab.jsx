@@ -1,8 +1,14 @@
 import React, { useState, useMemo } from 'react'
-import { Search, Pencil } from 'lucide-react'
 import AddExpenseModal from './AddExpenseModal'
 import EditExpenseModal from './EditExpenseModal'
 import Pagination from '../common/Pagination'
+import {
+  EditActionIcon,
+  PaymentCardIcon,
+  PaymentCashIcon,
+  PaymentUpiIcon,
+  SearchBarIcon,
+} from '../common/CustomUiIcons'
 
 const ROWS_PER_PAGE = 7
 
@@ -191,7 +197,7 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
 
         {/* Search */}
         <div className="flex items-center gap-[10px] w-[340px] h-[48px] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-[16px]">
-          <Search size={20} className="text-[#9CA3AF]" />
+          <SearchBarIcon />
           <input
             type="text"
             value={searchQuery}
@@ -337,9 +343,9 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
                         ${item.paymentMethod === 'Card' ? 'bg-[#E1EFFF] text-[#416BFF]' :
                           item.paymentMethod === 'UPI'  ? 'bg-[#EBE2FF] text-[#9D4DFF]' :
                           'bg-[#D8F5E5] text-[#34A853]'}`}>
-                        {item.paymentMethod === 'Card' && <div className="w-[12px] h-[8px] bg-[#416BFF] rounded-sm" />}
-                        {item.paymentMethod === 'UPI'  && <div className="w-[10px] h-[10px] rounded-full border-2 border-[#9D4DFF]" />}
-                        {item.paymentMethod === 'Cash' && <span className="text-[13px] leading-none">₹</span>}
+                        {item.paymentMethod === 'Card' && <PaymentCardIcon />}
+                        {item.paymentMethod === 'UPI'  && <PaymentUpiIcon />}
+                        {item.paymentMethod === 'Cash' && <PaymentCashIcon />}
                         {item.paymentMethod}
                       </div>
                     </td>
@@ -349,7 +355,7 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
                         onClick={() => handleOpenEdit(item)}
                         className="text-[#3b82f6] hover:text-blue-700 transition-colors"
                       >
-                        <Pencil size={17} />
+                        <EditActionIcon />
                       </button>
                     </td>
                   </tr>
@@ -372,9 +378,9 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
                         ${item.paymentMethod === 'Card' ? 'bg-[#E1EFFF] text-[#416BFF]' :
                           item.paymentMethod === 'UPI'  ? 'bg-[#EBE2FF] text-[#9D4DFF]' :
                           'bg-[#D8F5E5] text-[#34A853]'}`}>
-                        {item.paymentMethod === 'Card' && <div className="w-[12px] h-[8px] bg-[#416BFF] rounded-sm" />}
-                        {item.paymentMethod === 'UPI'  && <div className="w-[10px] h-[10px] rounded-full border-2 border-[#9D4DFF]" />}
-                        {item.paymentMethod === 'Cash' && <span className="text-[13px] leading-none">₹</span>}
+                        {item.paymentMethod === 'Card' && <PaymentCardIcon />}
+                        {item.paymentMethod === 'UPI'  && <PaymentUpiIcon />}
+                        {item.paymentMethod === 'Cash' && <PaymentCashIcon />}
                         {item.paymentMethod}
                       </div>
                     </td>
@@ -384,7 +390,7 @@ const ExpensesTab = ({ activeSubTab, onSubTabChange, expensesData }) => {
                         onClick={() => handleOpenEdit(item)}
                         className="text-[#3b82f6] hover:text-blue-700 transition-colors"
                       >
-                        <Pencil size={17} />
+                        <EditActionIcon />
                       </button>
                     </td>
                   </tr>

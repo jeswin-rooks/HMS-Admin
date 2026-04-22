@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Search, Edit, X, Check } from 'lucide-react';
+import { X } from 'lucide-react';
 import { useData } from '../../context/DataContext';
 import Pagination from '../common/Pagination';
+import { EditActionIcon, SaveActionIcon, SearchBarIcon } from '../common/CustomUiIcons';
 
 const BedManagementTable = ({
   data,
@@ -62,7 +63,7 @@ const BedManagementTable = ({
       <div className="p-6 flex flex-col md:flex-row justify-between items-center md:gap-4 gap-4 bg-white border-b border-[rgba(130,143,143,0.25)]">
         <div className="relative w-full md:w-[350px]">
           <div className="absolute inset-y-0 left-0 pl-[15px] flex items-center pointer-events-none">
-            <Search className="h-5 w-5 text-[#666666]" />
+            <SearchBarIcon />
           </div>
           <input
             type="text"
@@ -190,7 +191,7 @@ const BedManagementTable = ({
                         }}
                         className="text-green-600 hover:text-green-900 transition-colors w-[24px] h-[24px]"
                       >
-                        <Check size={20} />
+                        <SaveActionIcon />
                       </button>
                       <button 
                         onClick={() => setEditingId(null)}
@@ -205,9 +206,9 @@ const BedManagementTable = ({
                         setEditingId(bed.id);
                         setEditStatus(bed.status);
                       }}
-                      className="bg-[#1D4ED8] hover:bg-blue-800 transition-colors w-[24px] h-[24px] flex items-center justify-center rounded-[4px]"
+                      className="text-[#1D4ED8] hover:text-blue-800 transition-colors w-[24px] h-[24px] flex items-center justify-center"
                     >
-                      <Edit size={14} className="text-white" />
+                      <EditActionIcon />
                     </button>
                   )}
                 </td>

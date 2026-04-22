@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from 'react'
-import { Search, ChevronDown, Eye, Pencil, Edit2, Check, ExternalLink } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import doctorImg from '../assets/doctor.jpg'
 import Pagination from '../common/Pagination'
+import { EditActionIcon, SearchBarIcon, StaffEyeIcon } from '../common/CustomUiIcons'
 
 const StaffRecordsTab = ({ staffData = [], onEditStaff, onViewStaff }) => {
   const [activeStaffTab, setActiveStaffTab] = useState('doctors')
@@ -96,7 +97,7 @@ const StaffRecordsTab = ({ staffData = [], onEditStaff, onViewStaff }) => {
       <div className="bg-white rounded-xl p-5 flex justify-between items-center shadow-[0px_4px_10px_rgba(0,0,0,0.03)] border border-[#E9E9E9]">
         
         <div className="flex items-center gap-2.5 w-85 h-12 bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg px-4">
-          <Search size={20} className="text-[#9CA3AF]" />
+          <SearchBarIcon />
           <input 
             type="text" 
             placeholder="Enter Doctor Name etc.." 
@@ -232,10 +233,10 @@ const StaffRecordsTab = ({ staffData = [], onEditStaff, onViewStaff }) => {
                   <td className="py-4 px-5 whitespace-nowrap">
                     <div className="flex items-center gap-3 text-[#3B82F6] cursor-pointer">
                       <button onClick={() => onViewStaff?.(item)}>
-                        <Eye size={18} />
+                        <StaffEyeIcon />
                       </button>
                       <button onClick={() => onEditStaff?.(item)}>
-                        <Pencil size={18} />
+                        <EditActionIcon />
                       </button>
                     </div>
                   </td>

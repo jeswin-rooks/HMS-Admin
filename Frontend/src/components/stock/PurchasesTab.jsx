@@ -1,6 +1,13 @@
 import React, { useMemo, useState } from 'react'
-import { Search, ChevronDown, Pencil, CreditCard, Smartphone, Banknote } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import Pagination from '../common/Pagination'
+import {
+  EditActionIcon,
+  PaymentCardIcon,
+  PaymentCashIcon,
+  PaymentUpiIcon,
+  SearchBarIcon,
+} from '../common/CustomUiIcons'
 
 const PurchasesTab = ({ purchasesData }) => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -58,7 +65,7 @@ const PurchasesTab = ({ purchasesData }) => {
       {/* Purchases Toolbar */}
       <div className="bg-white rounded-[16px] border border-[rgba(130,143,143,0.25)] p-[24px] flex justify-between items-end shadow-sm">
         <div className="w-[300px] h-[48px] bg-[#F3F6F9] rounded-[8px] border border-[#E5E7EB] flex items-center px-[16px] gap-[10px]">
-          <Search size={18} className="text-[#666666]" />
+          <SearchBarIcon />
           <input 
             type="text" 
             placeholder="Enter Doctor Name etc..."
@@ -154,17 +161,17 @@ const PurchasesTab = ({ purchasesData }) => {
                   <td className="py-[16px] px-[24px]">
                     {row.method === 'Card' && (
                       <div className="flex items-center justify-center gap-2 bg-[#E0F2FE] text-[#2563EB] text-[12px] font-medium w-[80px] h-[28px] rounded-[16px]">
-                        <CreditCard size={14} /> Card
+                        <PaymentCardIcon /> Card
                       </div>
                     )}
                     {row.method === 'UPI' && (
                       <div className="flex items-center justify-center gap-2 bg-[#F3E8FF] text-[#9333EA] text-[12px] font-medium w-[80px] h-[28px] rounded-[16px]">
-                        <Smartphone size={14} /> UPI
+                        <PaymentUpiIcon /> UPI
                       </div>
                     )}
                     {row.method === 'Cash' && (
                       <div className="flex items-center justify-center gap-2 bg-[#DCFCE7] text-[#16A34A] text-[12px] font-medium w-[80px] h-[28px] rounded-[16px]">
-                        <Banknote size={14} /> Cash
+                        <PaymentCashIcon /> Cash
                       </div>
                     )}
                   </td>
@@ -175,7 +182,7 @@ const PurchasesTab = ({ purchasesData }) => {
                   <td className="py-[16px] px-[24px] text-[14px] text-[#212121]">{row.total}</td>
                   <td className="py-[16px] px-[24px]">
                     <button className="text-[#2563EB] hover:text-blue-700 transition-colors">
-                      <Pencil size={18} />
+                      <EditActionIcon />
                     </button>
                   </td>
                 </tr>
