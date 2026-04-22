@@ -1,5 +1,5 @@
-import React, { useMemo, useState } from 'react'
-import { Search, ChevronDown, X, Eye, User } from 'lucide-react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { ChevronDown, X, Eye, User } from 'lucide-react'
 import Pagination from '../common/Pagination'
 import { SearchBarIcon } from '../common/CustomUiIcons'
 

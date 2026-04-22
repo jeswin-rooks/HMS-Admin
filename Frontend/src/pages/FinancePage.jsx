@@ -10,11 +10,20 @@ import BillingTab from '../components/finance/BillingTab'
 const FinancePage = () => {
   const [activeTab, setActiveTab] = useState('expenses')
   const [activeSubTab, setActiveSubTab] = useState('utilities')
+  const [billingViewMode, setBillingViewMode] = useState('list')
+
+  const isPackageFormMode =
+    activeTab === 'billing' && (billingViewMode === 'create' || billingViewMode === 'edit' || billingViewMode === 'view')
 
   return (
-    <PageLayout stats={financeStatsData} statsColumns={5}>
+    <PageLayout
+      stats={financeStatsData}
+      statsColumns={5}
+      hidePageHeader={isPackageFormMode}
+      hideStats={isPackageFormMode}
+    >
       <div className="flex flex-col gap-[20px] w-full px-5">
-        <FinanceTabs activeTab={activeTab} onTabChange={setActiveTab} />
+        {!isPackageFormMode && <FinanceTabs activeTab={activeTab} onTabChange={setActiveTab} />}
         {activeTab === 'expenses' ? (
           <ExpensesTab
             activeSubTab={activeSubTab}
@@ -22,7 +31,7 @@ const FinancePage = () => {
             expensesData={expensesData}
           />
         ) : (
-          <BillingTab />
+          <BillingTab onViewModeChange={setBillingViewMode} />
         )}
       </div>
     </PageLayout>
