@@ -172,7 +172,7 @@ const BedManagementTable = ({
                       ))}
                     </select>
                   ) : (
-                    <span className={`px-[10px] py-[4px] h-[32px] inline-flex flex-row items-center gap-[6px] text-[13px] leading-[24px] rounded-full ${
+                    <span className={`px-[10px] py-[4px] h-[32px] w-[140px] inline-flex items-center justify-center text-center text-[13px] leading-[24px] rounded-full ${
                       bed.status === 'Available' ? 'bg-[#D4EDDA] text-[#28A745]' : 
                       bed.status === 'Cleaning Required' ? 'bg-[#FAD7DA] text-[#E63946]' : 'bg-[#FFF3CD] text-[#A16207]'
                     }`}>
