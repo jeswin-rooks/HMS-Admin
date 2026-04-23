@@ -17,9 +17,11 @@ const BedManagementTable = ({
   onAddNew,
   activeTab
 }) => {
-  const { updateBedStatus } = useData();
+  const { updateBedStatus, updateBed } = useData();
   const [editingId, setEditingId] = useState(null);
   const [editStatus, setEditStatus] = useState('');
+  const [editRoomNo, setEditRoomNo] = useState('');
+  const [editDepartment, setEditDepartment] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const ROWS_PER_PAGE = 8;
   const isRoomsView = activeTab === 'rooms';
@@ -161,10 +163,31 @@ const BedManagementTable = ({
                   {isRoomsView ? (bed.floor ?? '1st Floor') : bed.id}
                 </td>
                 <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
-                  {bed.roomNo}
+                  {isRoomsView && editingId === bed.id ? (
+                    <input
+                      type="text"
+                      className="w-[90px] border border-[#235347] rounded-md px-2 py-1 text-[13px] bg-white text-[#212121]"
+                      value={editRoomNo}
+                      onChange={(e) => setEditRoomNo(e.target.value)}
+                    />
+                  ) : (
+                    bed.roomNo
+                  )}
                 </td>
                 <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
-                  {bed.department}
+                  {isRoomsView && editingId === bed.id ? (
+                    <select
+                      className="border border-[#235347] rounded-md px-2 py-1 text-[13px] bg-white text-[#212121]"
+                      value={editDepartment}
+                      onChange={(e) => setEditDepartment(e.target.value)}
+                    >
+                      {departments.map((dept, i) => (
+                        <option key={i} value={dept}>{dept}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    bed.department
+                  )}
                 </td>
                 <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
                   {isRoomsView ? (bed.numberOfBeds ?? 4) : (bed.dischargeDate || '12-08-2000')}
@@ -192,11 +215,42 @@ const BedManagementTable = ({
                 )}
                 <td className="px-[24px] whitespace-nowrap text-sm font-medium">
                   {isRoomsView ? (
-                    <button
-                      className="text-[#1D4ED8] hover:text-blue-800 transition-colors w-[24px] h-[24px] flex items-center justify-center"
-                    >
-                      <EditActionIcon />
-                    </button>
+                    editingId === bed.id ? (
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            updateBed(bed.id, { roomNo: editRoomNo, department: editDepartment });
+                            setEditingId(null);
+                            setEditRoomNo('');
+                            setEditDepartment('');
+                          }}
+                          className="text-green-600 hover:text-green-900 transition-colors w-[24px] h-[24px]"
+                        >
+                          <SaveActionIcon />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditingId(null);
+                            setEditRoomNo('');
+                            setEditDepartment('');
+                          }}
+                          className="text-red-600 hover:text-red-900 transition-colors w-[24px] h-[24px]"
+                        >
+                          <X size={20} />
+                        </button>
+                      </div>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setEditingId(bed.id);
+                          setEditRoomNo(bed.roomNo);
+                          setEditDepartment(bed.department);
+                        }}
+                        className="text-[#1D4ED8] hover:text-blue-800 transition-colors w-[24px] h-[24px] flex items-center justify-center"
+                      >
+                        <EditActionIcon />
+                      </button>
+                    )
                   ) : editingId === bed.id ? (
                     <div className="flex items-center gap-2">
                       <button

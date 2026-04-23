@@ -76,8 +76,17 @@ export const DataProvider = ({ children }) => {
     });
   };
 
+  const updateBed = (bedId, updates) => {
+    setData(prev => {
+      const newBeds = prev.beds.map(bed =>
+        bed.id === bedId ? { ...bed, ...updates } : bed
+      );
+      return { ...prev, beds: newBeds };
+    });
+  };
+
   return (
-    <DataContext.Provider value={{ data, updateBedStatus, addBed }}>
+    <DataContext.Provider value={{ data, updateBedStatus, addBed, updateBed }}>
       {children}
     </DataContext.Provider>
   );

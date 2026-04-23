@@ -26,29 +26,29 @@ const StaffIcon = () => (
 )
 
 const menuItems = [
-  { path: '/dashboard', label: 'Facility & Bed Management', icon: <SolidBedIcon />, width: 'w-[205px] 2xl:w-[277px]' },
-  { path: '/stock', label: 'Inventory & Orders', icon: <InventoryIcon />, width: 'w-[170px] 2xl:w-[230px]' },
-  { path: '/finance', label: 'Finance & Operations', icon: <FinanceIcon />, width: 'w-[170px] 2xl:w-[230px]' },
-  { path: '/staff', label: 'Staff Management', icon: <StaffIcon />, width: 'w-[170px] 2xl:w-[230px]' },
+  { path: '/dashboard', label: 'Facility & Bed Management', icon: <SolidBedIcon />, width: 'w-[277px]' },
+  { path: '/stock', label: 'Inventory & Orders', icon: <InventoryIcon />, width: 'w-[230px]' },
+  { path: '/finance', label: 'Finance & Operations', icon: <FinanceIcon />, width: 'w-[230px]' },
+  { path: '/staff', label: 'Staff Management', icon: <StaffIcon />, width: 'w-[230px]' },
 ]
 
 const MainLayout = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col bg-[#F1F1F1] font-['Poppins']">
-      <header className="h-[88px] w-full bg-[#ACE3CE] border-b-2 border-[rgba(130,143,143,0.25)] relative z-20 px-[20px] xl:px-[30px] py-4">
-        <div className="w-full max-w-[1440px] mx-auto h-[56px] flex items-center gap-6 xl:gap-8 2xl:gap-[60px]">
-          <Link to="/dashboard" className="w-[132px] 2xl:w-[157px] h-[56px] flex items-center justify-center gap-3 2xl:gap-[20px] no-underline shrink-0">
-            <span className="w-[48px] h-[48px] 2xl:w-[56px] 2xl:h-[56px] rounded-full bg-[#051F20]" aria-hidden="true" />
-            <span className="text-[#051F20] font-medium text-[13px] 2xl:text-[15px] leading-[22px] w-[72px] 2xl:w-[81px]">App Name</span>
+      <header className="h-[88px] w-full bg-[#ACE3CE] border-b-2 border-[rgba(130,143,143,0.25)] relative z-20 px-[40px] py-[16px]">
+        <div className="w-full max-w-[1244px] mx-auto h-[56px] flex items-center justify-center gap-[60px]">
+          <Link to="/dashboard" className="w-[157px] h-[56px] flex items-center justify-center gap-[20px] no-underline shrink-0">
+            <span className="w-[56px] h-[56px] rounded-full bg-[#051F20]" aria-hidden="true" />
+            <span className="text-[#051F20] font-medium text-[15px] leading-[22px] w-[81px]">App Name</span>
           </Link>
 
-          <nav className="h-[47px] flex items-start gap-3 2xl:gap-[20px] flex-1 min-w-0">
-            {menuItems.map((item, idx) => (
+          <nav className="w-[1027px] h-[47px] flex items-start gap-[20px] flex-1">
+            {menuItems.map((item) => (
               <NavLink
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `${item.width} h-[47px] flex items-center px-3 2xl:px-4 py-2 gap-2 2xl:gap-[10px] transition-all shrink-0 ${isActive
+                  `${item.width} h-[47px] flex items-center px-4 py-2 gap-[10px] transition-all shrink-0 ${isActive
                     ? 'bg-[#D6F1E6] border-r-4 border-[#235347] rounded-[8px]'
                     : 'bg-transparent text-[#212121]'
                   }`
@@ -57,12 +57,12 @@ const MainLayout = ({ children }) => {
                 <div className="flex items-center justify-center w-6 h-6" aria-hidden="true">
                   {item.icon}
                 </div>
-                <span className="text-[#212121] font-medium text-[13px] 2xl:text-[15px] leading-[22px] whitespace-nowrap">{item.label}</span>
+                <span className="text-[#212121] font-medium text-[15px] leading-[22px] whitespace-nowrap">{item.label}</span>
               </NavLink>
             ))}
           </nav>
 
-          <div className="bg-[#051F20] text-white w-[48px] h-[48px] 2xl:w-[56px] 2xl:h-[56px] rounded-[30px] flex items-center justify-center font-semibold text-[20px] 2xl:text-[24px] leading-[36px] shrink-0" aria-label="User initials">
+          <div className="bg-[#051F20] text-white w-[56px] h-[56px] rounded-[30px] flex items-center justify-center font-semibold text-[24px] leading-[36px] shrink-0" aria-label="User initials">
             SA
           </div>
         </div>
