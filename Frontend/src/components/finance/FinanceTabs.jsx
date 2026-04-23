@@ -2,20 +2,20 @@ import React from 'react'
 
 const FinanceTabs = ({ activeTab, onTabChange }) => {
   return (
-    <div className="flex gap-[32px] border-b border-[#E5E7EB] w-full">
+    <div className="w-[300px] h-[56px] flex items-center gap-[30px]">
       <div 
-        className={`py-[12px] cursor-pointer border-b-2 ${activeTab === 'expenses' ? 'border-[#212121]' : 'border-transparent'}`}
+        className={`h-[56px] py-[10px] cursor-pointer flex items-center ${activeTab === 'expenses' ? 'border-b-[3px] border-[#051F20]' : ''}`}
         onClick={() => onTabChange('expenses')}
       >
-        <span className={`text-[18px] font-semibold leading-[28px] ${activeTab === 'expenses' ? 'text-[#212121]' : 'text-[#666666]'}`}>
+        <span className={`text-[24px] font-semibold leading-[36px] ${activeTab === 'expenses' ? 'text-[#051F20]' : 'text-[#666666]'}`}>
           Expenses
         </span>
       </div>
       <div 
-        className={`py-[12px] cursor-pointer border-b-2 ${activeTab === 'billing' ? 'border-[#212121]' : 'border-transparent'}`}
+        className={`h-[56px] py-[10px] cursor-pointer flex items-center ${activeTab === 'billing' ? 'border-b-[3px] border-[#051F20]' : ''}`}
         onClick={() => onTabChange('billing')}
       >
-        <span className={`text-[18px] font-semibold leading-[28px] ${activeTab === 'billing' ? 'text-[#212121]' : 'text-[#666666]'}`}>
+        <span className={`text-[24px] font-semibold leading-[36px] ${activeTab === 'billing' ? 'text-[#051F20]' : 'text-[#666666]'}`}>
           Billing
         </span>
       </div>

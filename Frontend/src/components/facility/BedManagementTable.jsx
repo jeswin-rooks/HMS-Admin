@@ -22,15 +22,18 @@ const BedManagementTable = ({
   const [editStatus, setEditStatus] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const ROWS_PER_PAGE = 8;
+  const isRoomsView = activeTab === 'rooms';
 
   // Filter data based on search and dropdown filters
   const filteredData = useMemo(() => data.filter((row) => {
-    const matchesSearch = row.id.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          row.roomNo.toLowerCase().includes(searchQuery.toLowerCase());
+    const floorLabel = row.floor ?? '1st Floor';
+    const matchesSearch = row.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      row.roomNo.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      floorLabel.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesDept = departmentFilter ? row.department === departmentFilter : true;
-    const matchesStatus = statusFilter ? row.status === statusFilter : true;
+    const matchesStatus = isRoomsView ? true : (statusFilter ? row.status === statusFilter : true);
     return matchesSearch && matchesDept && matchesStatus;
-  }), [data, searchQuery, departmentFilter, statusFilter]);
+  }), [data, searchQuery, departmentFilter, statusFilter, isRoomsView]);
 
   const totalPages = Math.max(1, Math.ceil(filteredData.length / ROWS_PER_PAGE));
   const safePage = Math.min(currentPage, totalPages);
@@ -58,9 +61,9 @@ const BedManagementTable = ({
   }, [safePage, totalPages]);
 
   return (
-    <div className="flex-1 overflow-hidden flex flex-col bg-white">
+    <div className="w-full flex flex-col gap-[18px]">
       {/* Action Bar */}
-      <div className="px-[30px] py-[30px] flex flex-col md:flex-row justify-between items-end gap-[30px] bg-white border-b border-[rgba(130,143,143,0.25)]">
+      <div className="px-[30px] py-[18px] flex flex-col md:flex-row justify-between items-end gap-[30px] bg-white border border-[rgba(130,143,143,0.25)] rounded-[12px]">
         <div className="relative w-full md:w-[350px]">
           <div className="absolute inset-y-0 left-0 pl-[15px] flex items-center pointer-events-none">
             <SearchBarIcon />
@@ -74,7 +77,7 @@ const BedManagementTable = ({
           />
         </div>
 
-    <div className="flex gap-[30px] items-end w-full md:w-auto justify-end">
+        <div className="flex gap-[30px] items-end w-full md:w-auto justify-end">
           <div className="flex flex-col w-[169px]">
             <label className="text-[16px] leading-[24px] font-medium text-[#666666] mb-[15px]" htmlFor="dept-filter">Department</label>
             <div className="relative">
@@ -92,22 +95,24 @@ const BedManagementTable = ({
             </div>
           </div>
 
-          <div className="flex flex-col w-[169px]">
-            <label className="text-[16px] leading-[24px] font-medium text-[#666666] mb-[15px]" htmlFor="status-filter">Status</label>
-            <div className="relative">
-              <select
-                id="status-filter"
-                className="appearance-none bg-[#F3F6F9] border border-[rgba(130,143,143,0.25)] text-[#212121] text-[16px] h-[48px] rounded-lg focus:ring-teal-500 block w-full px-[10px]"
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value)}
-              >
-                <option value="">All</option>
-                {statuses.map((status, idx) => (
-                  <option key={idx} value={status}>{status}</option>
-                ))}
-              </select>
+          {!isRoomsView && (
+            <div className="flex flex-col w-[169px]">
+              <label className="text-[16px] leading-[24px] font-medium text-[#666666] mb-[15px]" htmlFor="status-filter">Status</label>
+              <div className="relative">
+                <select
+                  id="status-filter"
+                  className="appearance-none bg-[#F3F6F9] border border-[rgba(130,143,143,0.25)] text-[#212121] text-[16px] h-[48px] rounded-lg focus:ring-teal-500 block w-full px-[10px]"
+                  value={statusFilter}
+                  onChange={(e) => setStatusFilter(e.target.value)}
+                >
+                  <option value="">All</option>
+                  {statuses.map((status, idx) => (
+                    <option key={idx} value={status}>{status}</option>
+                  ))}
+                </select>
+              </div>
             </div>
-          </div>
+          )}
 
           {activeTab !== 'cleaningManagement' && (
             <button
@@ -122,12 +127,13 @@ const BedManagementTable = ({
       </div>
 
       {/* Table Section */}
-      <div className="flex-1 overflow-x-auto overflow-y-auto">
+      <div className="bg-white border border-[rgba(130,143,143,0.25)] rounded-[12px] overflow-hidden">
+        <div className="flex-1 overflow-x-auto overflow-y-auto">
         <table className="min-w-full divide-y divide-[rgba(130,143,143,0.25)]">
           <thead className="bg-[#F3F6F9] sticky top-0">
             <tr className="h-[69px]">
               <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
-                Bed ID
+                {isRoomsView ? 'Floor' : 'Bed ID'}
               </th>
               <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
                 Room No
@@ -136,11 +142,13 @@ const BedManagementTable = ({
                 Department
               </th>
               <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
-                Discharge date
+                {isRoomsView ? 'Number of Beds' : 'Discharge date'}
               </th>
-              <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
-                Status
-              </th>
+              {!isRoomsView && (
+                <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
+                  Status
+                </th>
+              )}
               <th scope="col" className="px-[24px] text-left text-[14px] font-medium text-[#666666]">
                 Action
               </th>
@@ -150,7 +158,7 @@ const BedManagementTable = ({
             {pagedData.map((bed, idx) => (
               <tr key={idx} className="h-[69px] hover:bg-gray-50 transition-colors">
                 <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
-                  {bed.id}
+                  {isRoomsView ? (bed.floor ?? '1st Floor') : bed.id}
                 </td>
                 <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
                   {bed.roomNo}
@@ -159,32 +167,39 @@ const BedManagementTable = ({
                   {bed.department}
                 </td>
                 <td className="px-[24px] whitespace-nowrap text-[14px] font-medium text-[#212121]">
-                  {bed.dischargeDate || '12-08-2000'}
+                  {isRoomsView ? (bed.numberOfBeds ?? 4) : (bed.dischargeDate || '12-08-2000')}
                 </td>
-                <td className="px-[24px] whitespace-nowrap">
-                  {editingId === bed.id ? (
-                    <select
-                      className="border border-[#235347] rounded-md px-2 py-1 text-[13px] bg-white text-[#212121]"
-                      value={editStatus}
-                      onChange={(e) => setEditStatus(e.target.value)}
-                    >
-                      {statuses.map((st, i) => (
-                        <option key={i} value={st}>{st}</option>
-                      ))}
-                    </select>
-                  ) : (
-                    <span className={`px-[10px] py-[4px] h-[32px] w-[140px] inline-flex items-center justify-center text-center text-[13px] leading-[24px] rounded-full ${
-                      bed.status === 'Available' ? 'bg-[#D4EDDA] text-[#28A745]' : 
-                      bed.status === 'Cleaning Required' ? 'bg-[#FAD7DA] text-[#E63946]' : 'bg-[#FFF3CD] text-[#A16207]'
-                    }`}>
-                      {bed.status}
-                    </span>
-                  )}
-                </td>
+                {!isRoomsView && (
+                  <td className="px-[24px] whitespace-nowrap">
+                    {editingId === bed.id ? (
+                      <select
+                        className="border border-[#235347] rounded-md px-2 py-1 text-[13px] bg-white text-[#212121]"
+                        value={editStatus}
+                        onChange={(e) => setEditStatus(e.target.value)}
+                      >
+                        {statuses.map((st, i) => (
+                          <option key={i} value={st}>{st}</option>
+                        ))}
+                      </select>
+                    ) : (
+                      <span className={`px-[10px] py-[4px] h-[32px] w-[140px] inline-flex items-center justify-center text-center text-[13px] leading-[24px] rounded-full ${bed.status === 'Available' ? 'bg-[#D4EDDA] text-[#28A745]' :
+                          bed.status === 'Cleaning Required' ? 'bg-[#FAD7DA] text-[#E63946]' : 'bg-[#FFF3CD] text-[#A16207]'
+                        }`}>
+                        {bed.status}
+                      </span>
+                    )}
+                  </td>
+                )}
                 <td className="px-[24px] whitespace-nowrap text-sm font-medium">
-                  {editingId === bed.id ? (
+                  {isRoomsView ? (
+                    <button
+                      className="text-[#1D4ED8] hover:text-blue-800 transition-colors w-[24px] h-[24px] flex items-center justify-center"
+                    >
+                      <EditActionIcon />
+                    </button>
+                  ) : editingId === bed.id ? (
                     <div className="flex items-center gap-2">
-                      <button 
+                      <button
                         onClick={() => {
                           updateBedStatus(bed.id, editStatus);
                           setEditingId(null);
@@ -193,7 +208,7 @@ const BedManagementTable = ({
                       >
                         <SaveActionIcon />
                       </button>
-                      <button 
+                      <button
                         onClick={() => setEditingId(null)}
                         className="text-red-600 hover:text-red-900 transition-colors w-[24px] h-[24px]"
                       >
@@ -201,7 +216,7 @@ const BedManagementTable = ({
                       </button>
                     </div>
                   ) : (
-                    <button 
+                    <button
                       onClick={() => {
                         setEditingId(bed.id);
                         setEditStatus(bed.status);
@@ -218,13 +233,15 @@ const BedManagementTable = ({
         </table>
       </div>
       
-      {/* Pagination */}
-      <Pagination
-        safePage={safePage}
-        totalPages={totalPages}
-        goToPage={goToPage}
-        pageWindow={pageWindow}
-      />
+        {/* Pagination */}
+        <Pagination
+          safePage={safePage}
+          totalPages={totalPages}
+          goToPage={goToPage}
+          pageWindow={pageWindow}
+        />
+      </div>
+
     </div>
   );
 };

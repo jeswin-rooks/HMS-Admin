@@ -58,10 +58,10 @@ const InventoryTab = ({ activeSubTab, onSubTabChange, inventoryData }) => {
   }, [safePage, totalPages])
 
   return (
-    <div className="w-full bg-[#f8fafc] rounded-2xl border border-[rgba(130,143,143,0.25)] flex flex-col shadow-sm">
-      
+    <div className="w-full flex flex-col gap-[20px]">
+
       {/* Toolbar */}
-      <div className="w-full p-6 flex justify-between items-end border-b border-[rgba(130,143,143,0.25)] bg-white rounded-t-[16px]">
+      <div className="w-full p-6 flex justify-between items-end bg-white rounded-[16px] border border-[rgba(130,143,143,0.25)] shadow-sm">
         <div className="w-[300px] h-[48px] bg-[#F3F6F9] rounded-[8px] border border-[#E5E7EB] flex items-center px-[16px] gap-[10px]">
           <SearchBarIcon />
           <input 
@@ -92,8 +92,8 @@ const InventoryTab = ({ activeSubTab, onSubTabChange, inventoryData }) => {
       </div>
 
       {/* Sub tabs & Table */}
-      <div className="flex flex-col bg-[#Fcfcfc]">
-        
+      <div className="flex flex-col bg-white rounded-[16px] border border-[rgba(130,143,143,0.25)] shadow-sm overflow-hidden">
+
         <div className="flex gap-[30px] px-[24px] border-b border-[rgba(130,143,143,0.25)] h-[48px] items-center">
           <span 
             onClick={() => onSubTabChange('available')}
@@ -150,7 +150,7 @@ const InventoryTab = ({ activeSubTab, onSubTabChange, inventoryData }) => {
 
       </div>
     </div>
-  ) // ...existing code...
+  )
 }
 
 export default InventoryTab

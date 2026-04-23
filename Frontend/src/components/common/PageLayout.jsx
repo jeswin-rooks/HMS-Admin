@@ -14,15 +14,15 @@ const PageLayout = ({
   return (
     <div className="flex-1 flex flex-col min-h-[calc(100vh-88px)] font-['Poppins']">
       {!hidePageHeader && <PageHeader />}
-      <div className={`w-full max-w-[1440px] mx-auto px-[40px] flex flex-col gap-[30px] ${shouldPullUpContent ? '-mt-[83px]' : 'mt-[20px]'}`}>
-        <div className="w-full max-w-[1360px] mx-auto flex flex-col gap-[30px]">
+      <div className={`w-full max-w-[1440px] mx-auto px-[20px] xl:px-[30px] flex flex-col gap-[30px] ${shouldPullUpContent ? '-mt-[83px]' : 'mt-[20px]'}`}>
+        <div className="w-full flex flex-col gap-[30px]">
           {!hideStats && <StatsGrid stats={stats} columns={statsColumns} />}
           {children}
         </div>
       </div>
 
-      <footer className="w-full bg-white border-t border-[rgba(130,143,143,0.25)] px-[40px] py-[24px] mt-auto">
-        <div className="w-full max-w-[1360px] mx-auto h-[24px] flex items-center justify-center text-center text-[13px] leading-[24px] text-[#666666]">
+      <footer className="w-full bg-transparent px-[20px] xl:px-[30px] py-[24px] mt-auto">
+        <div className="w-full h-[24px] flex items-center justify-center text-center text-[13px] leading-[24px] text-[#666666]">
           © 2024 HospitalMS Multi-Branch Enterprise Suite. All rights reserved.
         </div>
       </footer>
