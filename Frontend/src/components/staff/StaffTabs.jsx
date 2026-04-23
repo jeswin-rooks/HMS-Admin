@@ -2,30 +2,30 @@ import React from 'react'
 
 const StaffTabs = ({ activeTab, onTabChange, onAddStaff, onOpenAttendance }) => {
   return (
-    <div className="flex justify-between items-end border-b border-[#E5E7EB] w-full">
-      <div className="flex gap-8">
+    <div className="flex justify-between items-end w-full">
+      <div className="w-[420px] h-[56px] flex items-center gap-[30px]">
         <div 
-          className={`py-3 cursor-pointer border-b-2 ${activeTab === 'records' ? 'border-[#212121]' : 'border-transparent'}`}
+          className={`h-[56px] py-[10px] cursor-pointer flex items-center ${activeTab === 'records' ? 'border-b-[3px] border-[#051F20]' : ''}`}
           onClick={() => onTabChange('records')}
         >
-          <span className={`text-[18px] font-semibold leading-7 ${activeTab === 'records' ? 'text-[#212121]' : 'text-[#666666]'}`}>
+          <span className={`text-[24px] font-semibold leading-[36px] ${activeTab === 'records' ? 'text-[#051F20]' : 'text-[#666666]'}`}>
             Staff Records
           </span>
         </div>
         <div 
-          className={`py-3 cursor-pointer border-b-2 ${activeTab === 'attendance' ? 'border-[#212121]' : 'border-transparent'}`}
+          className={`h-[56px] py-[10px] cursor-pointer flex items-center ${activeTab === 'attendance' ? 'border-b-[3px] border-[#051F20]' : ''}`}
           onClick={() => onTabChange('attendance')}
         >
-          <span className={`text-[18px] font-semibold leading-7 ${activeTab === 'attendance' ? 'text-[#212121]' : 'text-[#666666]'}`}>
+          <span className={`text-[24px] font-semibold leading-[36px] ${activeTab === 'attendance' ? 'text-[#051F20]' : 'text-[#666666]'}`}>
             Attendance
           </span>
         </div>
       </div>
       {activeTab === 'records' && (
-        <div className="pb-3">
+        <div>
           <button
             onClick={onAddStaff}
-            className="h-10 px-5 bg-[#051F20] text-white rounded-lg text-[14px] font-medium"
+            className="h-[48px] px-[16px] bg-[#051F20] text-white rounded-[8px] text-[16px] leading-[24px] font-medium"
           >
             Add Staff
           </button>
@@ -33,10 +33,10 @@ const StaffTabs = ({ activeTab, onTabChange, onAddStaff, onOpenAttendance }) => 
       )}
 
       {activeTab === 'attendance' && (
-        <div className="pb-3">
+        <div>
           <button
             onClick={onOpenAttendance}
-            className="h-10 px-5 bg-[#051F20] text-white rounded-lg text-[14px] font-medium"
+            className="h-[48px] px-[16px] bg-[#051F20] text-white rounded-[8px] text-[16px] leading-[24px] font-medium"
           >
             Attendance
           </button>

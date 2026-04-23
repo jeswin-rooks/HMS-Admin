@@ -240,21 +240,21 @@ const AttendanceTab = ({ staffData = [], openAttendanceModalSignal = 0 }) => {
 
       {showAttendanceModal && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-          <div className="w-full max-w-[360px] rounded-xl bg-[#F1F2F4] shadow-2xl border border-[#CBD2D9] overflow-hidden">
-            <div className="h-8 px-3 flex items-center justify-between bg-[#E7EAEE] border-b border-[#D5DAE0]">
-              <h3 className="text-[13px] font-semibold text-[#1B2E2A]">Attendance</h3>
-              <button onClick={() => setShowAttendanceModal(false)} className="text-[#5E6B72] hover:text-[#1B2E2A]">
-                <X size={14} />
+          <div className="w-[658px] h-[278px] rounded-[12px] bg-[#F3F6F9] border border-[rgba(130,143,143,0.25)] flex flex-col items-center gap-[24px] pb-[24px] overflow-hidden">
+            <div className="w-[658px] h-[84px] px-[24px] py-[24px] flex items-center justify-between gap-[30px] bg-white border-b border-[rgba(130,143,143,0.25)] rounded-t-[12px]">
+              <h3 className="text-[24px] leading-[36px] font-semibold text-[#051F20]">Attendance</h3>
+              <button onClick={() => setShowAttendanceModal(false)} className="w-[24px] h-[24px] flex items-center justify-center text-[#051F20]">
+                <X size={24} />
               </button>
             </div>
 
-            <div className="p-3 grid grid-cols-2 gap-2">
-              <div className="flex flex-col gap-1">
-                <label className="text-[9px] text-[#6B7280]">Staff name</label>
+            <div className="w-[610px] h-[78px] flex items-start gap-[10px]">
+              <div className="w-[300px] h-[78px] flex flex-col">
+                <label className="w-[300px] h-[24px] text-[13px] leading-[24px] font-normal text-[#666666]">Staff name</label>
                 <select
                   value={attendanceForm.staffId}
                   onChange={(e) => setAttendanceForm((prev) => ({ ...prev, staffId: e.target.value }))}
-                  className="h-8 rounded-md border border-[#D7DBE0] bg-[#F7F8FA] px-2 text-[11px] text-[#212121]"
+                  className="w-[300px] h-[54px] bg-white border border-[rgba(130,143,143,0.25)] rounded-[8px] px-[10px] text-[16px] leading-[24px] font-normal text-[#212121]"
                 >
                   {staffData.map((item) => (
                     <option key={item.id} value={item.id}>{item.name}</option>
@@ -262,24 +262,29 @@ const AttendanceTab = ({ staffData = [], openAttendanceModalSignal = 0 }) => {
                 </select>
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label className="text-[9px] text-[#6B7280]">Leave Type</label>
-                <select
-                  value={attendanceForm.leaveType}
-                  onChange={(e) => setAttendanceForm((prev) => ({ ...prev, leaveType: e.target.value }))}
-                  className="h-8 rounded-md border border-[#D7DBE0] bg-[#F7F8FA] px-2 text-[11px] text-[#212121]"
-                >
-                  {leaveTypeOptions.map((option) => (
-                    <option key={option} value={option}>{option}</option>
-                  ))}
-                </select>
+              <div className="w-[300px] h-[78px] flex flex-col">
+                <label className="w-[300px] h-[24px] text-[13px] leading-[24px] font-normal text-[#666666]">Leave Type</label>
+                <div className="w-[300px] h-[54px] bg-white border border-[rgba(130,143,143,0.25)] rounded-[8px] px-[10px] flex items-center justify-between">
+                  <select
+                    value={attendanceForm.leaveType}
+                    onChange={(e) => setAttendanceForm((prev) => ({ ...prev, leaveType: e.target.value }))}
+                    className="w-full bg-transparent border-none outline-none text-[16px] leading-[24px] font-normal text-[#212121] appearance-none"
+                  >
+                    {leaveTypeOptions.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
+                  <span className="w-[34px] h-[34px] flex items-center justify-center rounded-full shrink-0">
+                    <ChevronDown size={24} className="text-[#212121]" />
+                  </span>
+                </div>
               </div>
             </div>
 
-            <div className="px-3 pb-3 flex justify-end">
+            <div className="w-[610px] h-[44px] flex items-center justify-end">
               <button
                 onClick={saveAttendance}
-                className="h-7 min-w-[56px] rounded-md bg-[#052B2C] text-white text-[10px] font-medium"
+                className="w-[100px] h-[44px] rounded-[8px] bg-[#051F20] text-white text-[16px] leading-[24px] font-medium shadow-[0px_4px_8px_3px_rgba(0,0,0,0.15),0px_1px_3px_rgba(0,0,0,0.3)]"
               >
                 Save
               </button>
@@ -290,49 +295,58 @@ const AttendanceTab = ({ staffData = [], openAttendanceModalSignal = 0 }) => {
 
       {selectedStaffForView && (
         <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-          <div className="w-full max-w-[720px] rounded-xl bg-[#F1F2F4] shadow-2xl border border-[#CBD2D9] overflow-hidden">
-            <div className="px-4 py-3 bg-white border-b border-[#D5DAE0] flex items-center">
-              <div className="w-10 h-10 rounded-full bg-[#D6F1E6] text-[#1F2937] flex items-center justify-center">
-                <User size={16} />
+          <div className="w-[658px] h-[455px] rounded-[12px] bg-[#F3F6F9] border border-[rgba(130,143,143,0.25)] flex flex-col items-center gap-[24px] pb-[24px] overflow-hidden">
+            <div className="w-[658px] h-[99px] px-[24px] py-[24px] bg-white border-b border-[rgba(130,143,143,0.25)] rounded-t-[12px] flex items-center">
+              <div className="w-[610px] h-[51px] flex items-center justify-between gap-[30px]">
+                <div className="flex-1 min-w-0 h-[51px] flex items-center justify-between gap-[20px]">
+                  <div className="flex-1 min-w-0 h-[51px] flex items-center gap-[20px]">
+                    <div className="w-[51px] h-[51px] rounded-full bg-[#D4EDDA] flex items-center justify-center p-[3px]">
+                      <User size={24} className="text-[#051F20]" />
+                    </div>
+                    <div className="flex-1 min-w-0 h-[51px] flex flex-col items-start">
+                      <p className="w-full h-[30px] text-[20px] leading-[30px] font-semibold text-[#212121] whitespace-nowrap">{selectedStaffForView.name}</p>
+                      <p className="w-full h-[21px] text-[14px] leading-[21px] font-medium text-[#666666]">ID: {selectedStaffForView.pid}</p>
+                    </div>
+                  </div>
+
+                  <div className="w-[220px] h-[45px] flex flex-col justify-center items-start shrink-0">
+                    <p className="w-full h-[21px] text-[14px] leading-[21px] font-medium text-[#212121]">{selectedStaffForView.role || '-'}</p>
+                    <p className="w-full h-[24px] text-[13px] leading-[24px] font-normal text-[#666666]">{selectedStaffForView.dept || '-'}</p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setSelectedStaffForView(null)}
+                  className="w-[24px] h-[24px] flex items-center justify-center text-[#212121]"
+                  aria-label="Close attendance details"
+                >
+                  <X size={24} />
+                </button>
               </div>
-              <div className="ml-3">
-                <p className="text-[22px] font-semibold text-[#212121] leading-none">{selectedStaffForView.name}</p>
-                <p className="text-[13px] text-[#6B7280] mt-1">ID: {selectedStaffForView.pid}</p>
-              </div>
-              <div className="ml-8">
-                <p className="text-[14px] font-medium text-[#212121]">{selectedStaffForView.role || '-'}</p>
-                <p className="text-[12px] text-[#6B7280]">{selectedStaffForView.dept || '-'}</p>
-              </div>
-              <button
-                onClick={() => setSelectedStaffForView(null)}
-                className="ml-auto text-[#5E6B72] hover:text-[#1B2E2A]"
-                aria-label="Close attendance details"
-              >
-                <X size={18} />
-              </button>
             </div>
 
-            <div className="p-4 bg-[#F1F2F4]">
-              <div className="rounded-xl border border-[#D7DBE0] overflow-hidden bg-white">
-                <table className="w-full text-left border-collapse">
-                  <thead>
-                    <tr className="bg-[#FAFAFA] border-b border-[#E5E7EB] text-[12px] text-[#666666]">
-                      <th className="py-3 px-4 font-medium">SL.NO</th>
-                      <th className="py-3 px-4 font-medium">Date</th>
-                      <th className="py-3 px-4 font-medium">Leave type</th>
+            <div className="w-[610px] h-[308px] rounded-[12px] border border-[rgba(130,143,143,0.25)] bg-white overflow-hidden">
+              <table className="w-full h-full text-left border-collapse">
+                <thead>
+                  <tr className="h-[56px] border-b border-[rgba(130,143,143,0.25)]">
+                    <th className="px-[24px] text-[14px] leading-[21px] font-medium text-[#666666]">SI.NO</th>
+                    <th className="px-[24px] text-[14px] leading-[21px] font-medium text-[#666666]">Date</th>
+                    <th className="px-[24px] text-[14px] leading-[21px] font-medium text-[#666666]">Leave type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedStaffHistory.map((row, index) => (
+                    <tr
+                      key={row.id}
+                      className={`h-[63px] ${index !== selectedStaffHistory.length - 1 ? 'border-b border-[rgba(130,143,143,0.25)]' : ''}`}
+                    >
+                      <td className="px-[24px] text-[14px] leading-[21px] font-medium text-[#212121]">{row.id}</td>
+                      <td className="px-[24px] text-[14px] leading-[21px] font-medium text-[#212121]">{row.date}</td>
+                      <td className="px-[24px] text-[14px] leading-[21px] font-medium text-[#212121]">{row.leaveType}</td>
                     </tr>
-                  </thead>
-                  <tbody>
-                    {selectedStaffHistory.map((row) => (
-                      <tr key={row.id} className="border-b border-[#E5E7EB] last:border-b-0 text-[13px] text-[#212121]">
-                        <td className="py-4 px-4">{row.id}</td>
-                        <td className="py-4 px-4">{row.date}</td>
-                        <td className="py-4 px-4">{row.leaveType}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

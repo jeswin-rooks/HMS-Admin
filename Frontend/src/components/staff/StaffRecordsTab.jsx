@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import { ChevronDown } from 'lucide-react'
 import doctorImg from '../assets/doctor.jpg'
+import femaledoctorImg from '../assets/female-doctor.jpg'
 import Pagination from '../common/Pagination'
 import { EditActionIcon, SearchBarIcon, StaffEyeIcon } from '../common/CustomUiIcons'
 
@@ -194,11 +195,16 @@ const StaffRecordsTab = ({ staffData = [], onEditStaff, onViewStaff }) => {
               </tr>
             </thead>
             <tbody>
-              {pagedRows.map((item, idx) => (
+              {pagedRows.map((item, idx) => {
+                const normalizedName = (item.name || '').trim().toLowerCase()
+                const isMariaGarcia = normalizedName === 'dr. maria garcia' || normalizedName === 'maria garcia'
+                const avatarSrc = item.photo || (isMariaGarcia ? femaledoctorImg : doctorImg)
+
+                return (
                 <tr key={item.id} className={`border-b border-[#E5E7EB] hover:bg-gray-50 transition-colors ${idx % 2 === 0 ? 'bg-white' : 'bg-[#FAFAFA]'}`}>
                   <td className="py-4 px-5 whitespace-nowrap flex items-center gap-3">
                     <img 
-                      src={item.photo || doctorImg} 
+                      src={avatarSrc} 
                       alt="avatar" 
                       className="w-10 h-10 rounded-full object-cover" 
                     />
@@ -232,7 +238,7 @@ const StaffRecordsTab = ({ staffData = [], onEditStaff, onViewStaff }) => {
                   </td>
                   <td className="py-4 px-5 whitespace-nowrap">
                     <div className="flex items-center gap-3 text-[#3B82F6] cursor-pointer">
-                      <button onClick={() => onViewStaff?.(item)}>
+                      <button onClick={() => onViewStaff?.({ ...item, photo: avatarSrc })}>
                         <StaffEyeIcon />
                       </button>
                       <button onClick={() => onEditStaff?.(item)}>
@@ -241,7 +247,8 @@ const StaffRecordsTab = ({ staffData = [], onEditStaff, onViewStaff }) => {
                     </div>
                   </td>
                 </tr>
-              ))}
+                )
+              })}
             </tbody>
           </table>
         </div>

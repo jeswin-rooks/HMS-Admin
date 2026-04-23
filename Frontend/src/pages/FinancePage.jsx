@@ -22,7 +22,7 @@ const FinancePage = () => {
       hidePageHeader={isPackageFormMode}
       hideStats={isPackageFormMode}
     >
-      <div className="flex flex-col gap-[20px] w-full px-5">
+      <div className="flex flex-col gap-[30px] w-full">
         {!isPackageFormMode && <FinanceTabs activeTab={activeTab} onTabChange={setActiveTab} />}
         {activeTab === 'expenses' ? (
           <ExpensesTab

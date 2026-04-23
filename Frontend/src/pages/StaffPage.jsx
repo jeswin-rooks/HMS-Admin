@@ -86,7 +86,7 @@ const StaffPage = () => {
 
   return (
     <PageLayout stats={staffStats}>
-      <div className="flex flex-col gap-5 w-full px-5">
+      <div className="flex flex-col gap-[30px] w-full">
         <StaffTabs
           activeTab={activeTab}
           onTabChange={setActiveTab}
